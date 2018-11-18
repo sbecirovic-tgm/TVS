@@ -18,7 +18,7 @@
 			return False;
 		}
 	*/
-		if ( $userName == 'swahl' and $password == '1' )
+		if ( $userName == 'swahl@student.tgm.ac.at' && $password == '1' )
 		{
 			return True;
 		}
@@ -26,6 +26,7 @@
 		{
 			return False;
 		}
+
 	}
 	
 

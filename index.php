@@ -1,8 +1,8 @@
 <?php
 session_start();
 include("php\conLdap.php");
-$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank');
 
+$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank');
 function checkIfUserInDatabase( $userName )
 {
 	global $db;
@@ -29,12 +29,15 @@ if(isset($_GET['login']))
 	$ergSchueler = preg_match($regularSchueler , $userName);
 	$ergLehrer = preg_match($regularLehrer, $userName);
 
-	if ( !($ergLehrer || $ergSchueler) )
+	echo $ergLehrer;
+	echo $ergSchueler;
+	if ( $ergLehrer == 1 || $ergSchueler == 1 )
 	{
 		// mit ldap überprüfen ob 
 		// wenn ja dannüberprüfen ob benutzer schon angelegt (wenn nicht anlegen)
 		if ( checkUserPass($userName, $password))
 		{
+
 			$kuerzel = substr($userName, 0, strpos($userName, "@")-1);
 			if ( !checkIfUserInDatabase($userName))
 			{
@@ -45,11 +48,12 @@ if(isset($_GET['login']))
 			
 			$_SESSION['userName'] = $kuerzel;
 			// weiterleiten auf die unterseite 
-			if ( $ergSchueler )
+			if ( $ergSchueler == 1)
 			{
 				header("Refresh:0; url=userAnsicht\startseite.html");
 			}
 			else
+			{
 				//header("Refresh:0; url=userAnsicht\startseite.html");
 			}
 			
@@ -66,7 +70,7 @@ if(isset($_GET['login']))
 	// error ausgeben
 	else
 	{
-		echo "Email ist keine gültige TGM Email Adresse!";
+		echo "Email ist keine g&uumlltige TGM Email Adresse!";
 		// javascript ausgeben
 		echo '<script type="text/javascript"> document.getElementById("navbarHeader").classList.add("show"); </script>';
 	}
