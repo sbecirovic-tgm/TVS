@@ -3,10 +3,27 @@ session_start();
 include("php\conLdap.php");
 
 $db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank');
-function checkIfUserInDatabase( $userName )
+
+/*
+ * $isSchueler: Wenn 0, dann schueler
+ *              Wenn 1, dann Leher
+ *              Wenn 2, dann Headadmin
+ */
+function checkIfUserInDatabase( $kuerzel, $isSchueler )
 {
 	global $db;
-	$sqlC = 'select count(kuerzel) as anzahl from schueler where kuerzel = "' . $userName . '"';
+	if ( $isSchueler == 0 )
+    {
+        $sqlC = 'select count(kuerzel) as anzahl from schueler where kuerzel = "' . $kuerzel . '"';
+    }
+    elseif ( $isSchueler == 1 )
+    {
+        $sqlC = 'select count(kuerzel) as anzahl from lehrer where kuerzel = "' . $kuerzel . '"';
+    }
+    elseif ( $isSchueler == 2 )
+    {
+        $sqlC = 'select count(kuerzel) as anzahl from superuser where kuerzel = "' . $kuerzel . '"';
+    }
 	$users = mysqli_query($db, $sqlC);
 	$userArray = mysqli_fetch_assoc($users);
 	if ( $userArray['anzahl'] < 1 )
@@ -17,6 +34,15 @@ function checkIfUserInDatabase( $userName )
 	{
 		return True;
 	}
+}
+
+function checkIfUserIsSuperUser ( $kuerzel )
+{
+    global $db;
+    $sqlC = 'select kuerzel from superuser';
+    $headadmin = mysqli_query($db, $sqlC);
+    $headadminArray = mysqli_fetch_assoc($headadmin);
+    return is_array($kuerzel, $headadminArray);
 }
 
 
@@ -37,13 +63,21 @@ if(isset($_GET['login']))
 		// wenn ja dannüberprüfen ob benutzer schon angelegt (wenn nicht anlegen)
 		if ( checkUserPass($userName, $password))
 		{
-
-			$kuerzel = substr($userName, 0, strpos($userName, "@")-1);
-			if ( !checkIfUserInDatabase($userName))
-			{
-				$sqlC2 = 'insert into schueler ( kuerzel, sName, gesToken ) values ( "' . $kuerzel . '" , NULL, 0);'; // NULL beim vollen Namen weil ich noch nicht genau weiß wie ichs rausbekomme (glaube nicht mit dem ldap)
-				$result = mysqli_query($db, $sqlC2);
-			}
+            $kuerzel = substr($userName, 0, strpos($userName, "@"));
+            if ( $ergSchueler == 1 )
+            {
+                if (!checkIfUserInDatabase($kuerzel, 0)) {
+                    $sqlC2 = 'insert into schueler ( kuerzel, sName, gesToken ) values ( "' . $kuerzel . '" , NULL, 0)'; // NULL beim vollen Namen weil ich noch nicht genau weiß wie ichs rausbekomme (glaube nicht mit dem ldap)
+                    $result = mysqli_query($db, $sqlC2);
+                }
+            }
+            elseif ( $ergLehrer == 1 )
+            {
+                if (!checkIfUserInDatabase($kuerzel, 1)) {
+                    $sqlC2 = 'insert into lehrer ( kuerzel, sName, gesToken ) values ( "' . $kuerzel . '" , NULL, 0)'; // NULL beim vollen Namen weil ich noch nicht genau weiß wie ichs rausbekomme (glaube nicht mit dem ldap)
+                    $result = mysqli_query($db, $sqlC2);
+                }
+            }
 
 			
 			$_SESSION['userName'] = $kuerzel;
@@ -54,7 +88,14 @@ if(isset($_GET['login']))
 			}
 			else
 			{
-				//header("Refresh:0; url=userAnsicht\startseite.html");
+			    if ( checkIfUserIsSuperUser($kuerzel))
+                {
+                    header("Refresh:0; url=headAnsicht\startseite.html");
+                }
+                else
+                {
+                    header("Refresh:0; url=adminAnsicht\startseite.html");
+                }
 			}
 			
 		}
