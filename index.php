@@ -13,8 +13,6 @@ if(isset($_GET['login']))
 	$ergSchueler = preg_match($regularSchueler , $userName);
 	$ergLehrer = preg_match($regularLehrer, $userName);
 
-	echo $ergLehrer;
-	echo $ergSchueler;
 	if ( $ergLehrer == 1 || $ergSchueler == 1 )
 	{
 		// mit ldap überprüfen ob 
@@ -25,22 +23,20 @@ if(isset($_GET['login']))
             if ( $ergSchueler == 1 )
             {
                 if (!checkIfUserInDatabase($kuerzel, 0)) {
-                    $sqlC2 = 'insert into schueler ( kuerzel, sName, gesToken ) values ( "' . $kuerzel . '" , NULL, 0)'; // NULL beim vollen Namen weil ich noch nicht genau weiß wie ichs rausbekomme (glaube nicht mit dem ldap)
-                    $result = mysqli_query($db, $sqlC2);
+                    insertSchueler($kuerzel, NULL);
                 }
             }
             elseif ( $ergLehrer == 1 )
             {
                 if (!checkIfUserInDatabase($kuerzel, 1)) {
-                    $sqlC2 = 'insert into lehrer ( kuerzel, sName, gesToken ) values ( "' . $kuerzel . '" , NULL, 0)'; // NULL beim vollen Namen weil ich noch nicht genau weiß wie ichs rausbekomme (glaube nicht mit dem ldap)
-                    $result = mysqli_query($db, $sqlC2);
+                    insertLehrer($kuerzel, NULL);
                 }
             }
 
 			
 			$_SESSION['userName'] = $kuerzel;
 			// weiterleiten auf die unterseite 
-			if ( $ergSchueler == 1)
+			if ( $ergSchueler == 1  && $ergLehrer != 1 )
 			{
 				header("Refresh:0; url=userAnsicht\startseite.html");
 			}
