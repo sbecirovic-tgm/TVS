@@ -1,50 +1,8 @@
 <?php
 session_start();
 include("php\conLdap.php");
-
+include("php\userCheck.php");
 $db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank');
-
-/*
- * $isSchueler: Wenn 0, dann schueler
- *              Wenn 1, dann Leher
- *              Wenn 2, dann Headadmin
- */
-function checkIfUserInDatabase( $kuerzel, $isSchueler )
-{
-	global $db;
-	if ( $isSchueler == 0 )
-    {
-        $sqlC = 'select count(kuerzel) as anzahl from schueler where kuerzel = "' . $kuerzel . '"';
-    }
-    elseif ( $isSchueler == 1 )
-    {
-        $sqlC = 'select count(kuerzel) as anzahl from lehrer where kuerzel = "' . $kuerzel . '"';
-    }
-    elseif ( $isSchueler == 2 )
-    {
-        $sqlC = 'select count(kuerzel) as anzahl from superuser where kuerzel = "' . $kuerzel . '"';
-    }
-	$users = mysqli_query($db, $sqlC);
-	$userArray = mysqli_fetch_assoc($users);
-	if ( $userArray['anzahl'] < 1 )
-	{
-		return False;
-	}
-	else
-	{
-		return True;
-	}
-}
-
-function checkIfUserIsSuperUser ( $kuerzel )
-{
-    global $db;
-    $sqlC = 'select kuerzel from superuser';
-    $headadmin = mysqli_query($db, $sqlC);
-    $headadminArray = mysqli_fetch_assoc($headadmin);
-    return is_array($kuerzel, $headadminArray);
-}
-
 
 if(isset($_GET['login']))
 {
