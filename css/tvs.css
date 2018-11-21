@@ -15,7 +15,15 @@ hr {
     padding-bottom: 40px;
     background-color: #f8f9fa;
   }
+
+  .abstand {
+    margin-top: 4em;
+  }
   
+.falsch {
+  color: #FF0000;
+}
+
   .form-signin {
     width: 100%;
     max-width: 330px;

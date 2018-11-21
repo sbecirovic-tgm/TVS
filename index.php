@@ -15,8 +15,8 @@ if(isset($_GET['login']))
 
 	if ( $ergLehrer == 1 || $ergSchueler == 1 )
 	{
-		// mit ldap überprüfen ob 
-		// wenn ja dannüberprüfen ob benutzer schon angelegt (wenn nicht anlegen)
+		// mit ldap ï¿½berprï¿½fen ob 
+		// wenn ja dannï¿½berprï¿½fen ob benutzer schon angelegt (wenn nicht anlegen)
 		if ( checkUserPass($userName, $password))
 		{
             $kuerzel = substr($userName, 0, strpos($userName, "@"));
@@ -56,7 +56,7 @@ if(isset($_GET['login']))
 		// error ausgeben
 		else
 		{
-			echo "Email oder Passwort sind falsch!";
+			echo "<div class='falsch'>Email oder Passwort sind falsch!</div>";
 			// javascript ausgeben
 			echo '<script type="text/javascript"> document.getElementById("navbarHeader").classList.add("show"); </script>';
 		}
@@ -65,7 +65,7 @@ if(isset($_GET['login']))
 	// error ausgeben
 	else
 	{
-		echo "Email ist keine g&uumlltige TGM Email Adresse!";
+		echo "<div class='falsch'>Email ist keine g&uumlltige TGM Email Adresse!</div>";
 		// javascript ausgeben
 		echo '<script type="text/javascript"> document.getElementById("navbarHeader").classList.add("show"); </script>';
 	}
