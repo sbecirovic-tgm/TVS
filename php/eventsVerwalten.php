@@ -5,7 +5,7 @@
  * Date: 19.11.2018
  * Time: 11:08
  */
-$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank');
+$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
 include("userCheck.php");
 function listAllEvents()
 {

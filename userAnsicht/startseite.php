@@ -7,7 +7,7 @@
  */
 session_start();
 
-$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank');
+$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
 $_SESSION['finished'] = False;
 $userName = $_SESSION['userName'];
 

@@ -8,7 +8,7 @@
 
 //session_start();
 
-$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank');
+$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
 
 function requestTokenBasic ( $awardTyp, $tokenAnzahl, $betreff, $beschreibung, $userKuerzel )
 {
@@ -84,16 +84,39 @@ function bewilligeToken ( $id, $datum, $zeit , $schuelerKuerzel, $userName, $tok
     $name = mysqli_query($db, $sqlC2);
     $nameArray = mysqli_fetch_assoc($name);
 
-    $results[1] = addTokenToLeistung($schuelerKuerzel, $nameArray['aName'] , $tokenNeu );
+    $results[1] = addTokenToLeistung($schuelerKuerzel, $nameArray['aName'] , $tokenNeu, getSaisonNumbFromDate($datum) );
     return $results;
 }
 
-function addTokenToLeistung ( $schuelerKuerzel, $aName, $token)
+function addTokenToLeistung ( $schuelerKuerzel, $aName, $token, $saisonNumb)
 {
     global $db;
-    $sqlC = "update leistung set tokenAnzahl = '$token' where aName = '$aName' and sKuerzel = '$schuelerKuerzel'";
-    return mysqli_query($db, $sqlC);
+
+    // schauen ob der Schüler schon genug token für einen Award hat
+    $sqlC = "select tokenAnzahl from leistung where aName = '$aName' and sKuerzel = '$schuelerKuerzel' and saisonNummer = '$saisonNumb'";
+    $token = mysqli_query($db, $sqlC);
+    $tokenArray = mysqli_fetch_assoc($token);
+    $anzahlToken = $tokenArray['tokenAnzahl'];
+    $anzahlToken += $token;
+
+    $sqlC2 = "select tokenLimit from award where name = '$aName'";
+    $tokenA = mysqli_query($db, $sqlC);
+    $tokenAArray = mysqli_fetch_assoc($tokenA);
+    $tokenLimit = $tokenAArray['tokenLimit'];
+    if ( $anzahlToken >= $tokenLimit )
+    {
+        $token = $anzahlToken - $tokenLimit;
+        //auszeichnung erstellen wenn
+        $sqlA = "insert into auszeichnung ( datum, zeit, skuerzel, awardName ) values ( CURDATE(), CURTIME(), '$schuelerKuerzel', '$aName' )";
+        mysqli_query($db, $sqlA);
+    }
+
+
+    $sqlC2 = "update leistung set tokenAnzahl = '$token' where aName = '$aName' and sKuerzel = '$schuelerKuerzel' and ";
+    return mysqli_query($db, $sqlC2);
 }
+
+
 
 function listAllReqests()
 {
