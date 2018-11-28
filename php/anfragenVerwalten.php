@@ -54,7 +54,7 @@ function deleteTokenRequest ( $id, $userKeurzel, $datum, $zeit )
 
     $sqlCeck = "select wirdBewilligt from anfrage where id = '$id' and datum = '$datum' and zeit = '$zeit' and skuerzel = '$userKeurzel'";
     $request = mysqli_query($db, $sqlCeck);
-    $requestArray = mysqli_fetch_assoc($db, $request);
+    $requestArray = mysqli_fetch_assoc($request);
     if ( $requestArray['wirdBewilligt'] == NULL )
     {
         $sqlC = "delete from anfrage where id = '$id' and datum = '$datum' and zeit = '$zeit' and skuerzel = '$userKeurzel'";
@@ -91,7 +91,6 @@ function bewilligeToken ( $id, $datum, $zeit , $schuelerKuerzel, $userName, $tok
 function addTokenToLeistung ( $schuelerKuerzel, $aName, $token, $saisonNumb)
 {
     global $db;
-
     // schauen ob der Schüler schon genug token für einen Award hat
     $sqlC = "select tokenAnzahl from leistung where aName = '$aName' and sKuerzel = '$schuelerKuerzel' and saisonNummer = '$saisonNumb'";
     $token = mysqli_query($db, $sqlC);
@@ -107,12 +106,12 @@ function addTokenToLeistung ( $schuelerKuerzel, $aName, $token, $saisonNumb)
     {
         $token = $anzahlToken - $tokenLimit;
         //auszeichnung erstellen wenn
-        $sqlA = "insert into auszeichnung ( datum, zeit, skuerzel, awardName ) values ( CURDATE(), CURTIME(), '$schuelerKuerzel', '$aName' )";
+        $sqlA = "insert into auszeichnung ( datum, zeit, skuerzel, awardName, saisonNummer ) values ( CURDATE(), CURTIME(), '$schuelerKuerzel', '$aName', $saisonNumb )";
         mysqli_query($db, $sqlA);
     }
 
 
-    $sqlC2 = "update leistung set tokenAnzahl = '$token' where aName = '$aName' and sKuerzel = '$schuelerKuerzel' and ";
+    $sqlC2 = "update leistung set tokenAnzahl = '$token' where aName = '$aName' and sKuerzel = '$schuelerKuerzel' and saisonNummer = '$saisonNumb'";
     return mysqli_query($db, $sqlC2);
 }
 
@@ -143,6 +142,48 @@ function listAllReqests()
     }
 
     return $out;
+}
+
+function listAllOpenReqests()
+{
+    return listAllRequestsToStatus("NULL");
+}
+
+function listAllRequestsToStatus ( $status )
+{
+    global $db;
+    $out = array();
+
+    $sqlC = "select * from anfrage where wirdBewilligt = '$status' order by datum desc, zeit desc";
+    $anfragen = mysqli_query($db, $sqlC);
+
+    for( $i = 0; $anfragen_array = mysqli_fetch_assoc($anfragen); $i++)
+    {
+        $out[$i] = array();
+        $out[$i]['datum'] = $anfragen_array['datum'];
+        $out[$i]['zeit'] = $anfragen_array['zeit'];
+        $out[$i]['aName'] = $anfragen_array['aName'];
+        $out[$i]['eName'] = $anfragen_array['eName'];
+        $out[$i]['eDatum'] = $anfragen_array['eDatum'];
+        $out[$i]['untName'] = $anfragen_array['untName'];
+        $out[$i]['tokenAnzahl'] = $anfragen_array['tokenAnzahl'];
+        $out[$i]['beschreibung'] = $anfragen_array['beschreibung'];
+        $out[$i]['betreff'] = $anfragen_array['betreff'];
+        $out[$i]['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
+        $out[$i]['kommentar'] = $anfragen_array['kommentar'];
+    }
+
+    return $out;
+}
+
+function listAllDeniedRequests()
+{
+    return listAllRequestsToStatus("False");
+}
+
+function listAllAcceptedRequests()
+{
+    return listAllRequestsToStatus("True");
 }
 
 

@@ -1,33 +1,28 @@
 <?php
-	function checkUserPass( $userName, $password )
-	{
-	/*
-		$ldap_dn = "cn=read-only-admin,dc=example,dc=com";
-		$ldap_password = "password";
-	
-		$ldap_con = ldap_connect("ldap.forumsys.com");
-	
-		ldap_set_option($ldap_con, LDAP_OPT_PROTOCOL_VERSION, 3);
-	
-		if(ldap_bind($ldap_con, $ldap_dn, $ldap_password)) 
-		{
-			return True;
-		}
-		else
-		{
-			return False;
-		}
-	*/
-		if ( ($userName == 'swahl@student.tgm.ac.at' && $password == '1') || ($userName == 'fgavric@student.tgm.ac.at' && $password == '2') || ($userName == 'khoeher@tgm.ac.at' && $password == '3'))
-		{
-			return True;
-		}
-		else
-		{
-			return False;
-		}
+$ldap_dn = "cn=proj_eis, ou=serviceusers,dc=tgm,dc=ac, dc=at";
+$ldap_password = "All4Ice!";
 
-	}
-	
+$ldap_con = ldap_connect("dc-01.tgm.ac.at");
 
+ldap_set_option($ldap_con, LDAP_OPT_PROTOCOL_VERSION, 3);
+
+if(ldap_bind($ldap_con, $ldap_dn, $ldap_password)) {
+
+    echo "Bind successful!";
+
+} else {
+    echo "Invalid user/pass or other errors!";
+}
+/*
+// https://www.youtube.com/watch?v=AEjGhzZpGlg phpinfo();
+
+if ( ($userName == 'swahl@student.tgm.ac.at' && $password == '1') || ($userName == 'fgavric@student.tgm.ac.at' && $password == '2') || ($userName == 'khoeher@tgm.ac.at' && $password == '3'))
+{
+    return True;
+}
+else
+{
+    return False;
+}
+*/
 ?>

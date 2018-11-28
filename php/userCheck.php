@@ -79,7 +79,7 @@ function makeLeistungProSchueler($kuerzel)
     return $out;
 }
 
-function getGesamteTokenProSchueler ( $kuerzel )
+function getGesamteTokenProSchueler ( $kuerzel, $saisonNummer )
 {
     global $db;
     $out = 0;
@@ -89,7 +89,7 @@ function getGesamteTokenProSchueler ( $kuerzel )
     {
         $out += $tokenArray['tokenAnzahl'];
     }
-    $sqlC = "select datum from auszeichnung where skuerzel = '$kuerzel'";
+    $sqlC = "select datum from auszeichnung where skuerzel = '$kuerzel' and saisonNummer = '$saisonNummer'";
     $auszeichnungen = mysqli_query($db, $sqlC);
     for ( ;$auszeichnungenArray = mysqli_fetch_assoc($auszeichnungen); )
     {
@@ -100,7 +100,7 @@ function getGesamteTokenProSchueler ( $kuerzel )
 
 }
 
-function getGesmateTokenProKat ( $kuerzel, $aName )
+function getGesmateTokenProKat ( $kuerzel, $aName, $saisonNummer )
 {
     global $db;
     $out = 0;
@@ -110,7 +110,7 @@ function getGesmateTokenProKat ( $kuerzel, $aName )
     {
         $out += $tokenArray['tokenAnzahl'];
     }
-    $sqlC = "select datum from auszeichnung where skuerzel = '$kuerzel' and aName = '$aName'";
+    $sqlC = "select datum from auszeichnung where skuerzel = '$kuerzel' and aName = '$aName' and saisonNummer = '$saisonNummer'";
     $auszeichnungen = mysqli_query($db, $sqlC);
     for ( ;$auszeichnungenArray = mysqli_fetch_assoc($auszeichnungen); )
     {
@@ -122,7 +122,17 @@ function getGesmateTokenProKat ( $kuerzel, $aName )
 
 function getGesamteAwards ( $kuerzel )
 {
+    global $db;
+    $sqlC = "select name from award";
+    $awards = mysqli_query($sqlC, $db);
 
+    $out = array();
+    for (; $awardsArray = mysqli_fetch_assoc($awards); )
+    {
+        array_push($out ,$awardsArray['name']);
+    }
+
+    return $out;
 }
 
 function updateSchueler ( $kuerzel, $kuerzelNeu ,$sName )

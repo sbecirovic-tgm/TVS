@@ -97,7 +97,8 @@ CREATE TABLE auszeichnung (
 		zeit TIME,
 		skuerzel VARCHAR(255),
 		awardName VARCHAR(255),
-		PRIMARY KEY ( datum, zeit, skuerzel ),
+		saisonNummer INTEGER,
+		PRIMARY KEY ( datum, zeit, skuerzel, saisonNummer ),
 		FOREIGN KEY ( skuerzel )
 		REFERENCES schueler(kuerzel)
 		ON UPDATE CASCADE
@@ -109,7 +110,7 @@ CREATE TABLE auszeichnung (
 ) ENGINE = INNODB;
 
 
-CREATE TABLE event (
+    CREATE TABLE event (
 		name VARCHAR(255),
 		datum DATE,
 		superKuerzel VARCHAR(255),
