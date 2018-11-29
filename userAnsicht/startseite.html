@@ -15,50 +15,103 @@
 <body>
     <!--HEADER-->
     <header>
-        <div class="navbar navbar-light bg-light shadow-sm">
-            <div class="container d-flex justify-content-between">
-                <a href="#" class="navbar-brand d-flex align-items-center">
-                    <strong>Tokenverwaltungssystem</strong>
-                </a>
+        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+            <div class="container">
+            <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Max Muster</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Auswahl1</a>
+                        <a class="dropdown-item" href="#">Auswahl2</a>
+                        <a class="dropdown-item" href="#">Auswahl3</a>
+                        <a class="dropdown-item" href="#">Auswahl4</a>
+                    </div>
+                </div>
             </div>
         </div>
+        </nav>
     </header>
     
     <!--Inhalt-->
+
     <div class="container">
-        <div class="col-sm-6">
-            <div class="row">
-                <div class="tokenAnfordern">
-                    <div class="row">
-                    <div class="col-sm-6">
-                        <!-- Example single danger button -->
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Action
-                            </button>
-                            <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
+        <div class="row">
+            <div class="col-sm-6 abstand">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Award-Typ auswählen</button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Award1</a>
+                                        <a class="dropdown-item" href="#">Award2</a>
+                                        <a class="dropdown-item" href="#">Award3</a>
+                                        <a class="dropdown-item" href="#">Award4</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-primary text-light" id="inputGroup-sizing-default">Token</span>
+                                    </div>
+                                    <input type="text" class="form-control tokens" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-primary text-light" id="inputGroup-sizing-default">Betreff</span>
+                                    </div>
+                                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="comment">Beschreibung:</label>
+                                    <textarea class="form-control" rows="3" id="beschreibung"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 text-center">
+                                <button type="button" class="btn btn-primary">Anfordern</button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-default">Token</span>
-                            </div>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                        </div>
-                    </div>
-                </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="tokenAnfordern">
-                    <h1>HALLO</h1>
+            <div class="col-sm-6 abstand">
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+            </div>
+            <div class="w-100"></div>
+            <div class="col-sm-6 abstand">
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 abstand">
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
                 </div>
             </div>
         </div>
