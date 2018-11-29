@@ -5,7 +5,7 @@
  * Date: 19.11.2018
  * Time: 16:40
  */
-$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank');
+$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
 
 /*
  * $isSchueler: Wenn 0, dann schueler
@@ -61,19 +61,77 @@ function insertSchueler ( $kuerzel, $sName )
 function makeLeistungProSchueler($kuerzel)
 {
     global $db;
+    include ("saisonVerwalten.php");
     $sqlAward = "select name from award";
     $awards = mysqli_query($db, $sqlAward);
     $out = true;
     for ( ;$awardArray = mysqli_fetch_assoc($awards); )
     {
         $aName = $awardArray['name'];
-        $sqlC = "insert into leistung ( aName, sKuerzel, tokenAnzahl ) values ( '$aName' , '$kuerzel', 0)";
+        $saisonNumb = getSaisonNumb();
+        $sqlC = "insert into leistung ( aName, sKuerzel, tokenAnzahl, saisonNummer ) values ( '$aName' , '$kuerzel', 0, '$saisonNumb')";
         $result = mysqli_query($db, $sqlC);
         if ( !$result )
         {
             $out = false;
         }
     }
+    return $out;
+}
+
+function getGesamteTokenProSchueler ( $kuerzel, $saisonNummer )
+{
+    global $db;
+    $out = 0;
+    $sqlC = "select tokenAnzahl from leistung where sKuerzel = '$kuerzel'";
+    $token = mysqli_query($db, $sqlC);
+    for ( ;$tokenArray = mysqli_fetch_assoc($token); )
+    {
+        $out += $tokenArray['tokenAnzahl'];
+    }
+    $sqlC = "select datum from auszeichnung where skuerzel = '$kuerzel' and saisonNummer = '$saisonNummer'";
+    $auszeichnungen = mysqli_query($db, $sqlC);
+    for ( ;$auszeichnungenArray = mysqli_fetch_assoc($auszeichnungen); )
+    {
+        $out += 15;
+    }
+
+    return $out;
+
+}
+
+function getGesmateTokenProKat ( $kuerzel, $aName, $saisonNummer )
+{
+    global $db;
+    $out = 0;
+    $sqlC = "select tokenAnzahl from leistung where sKuerzel = '$kuerzel' and aName = '$aName'";
+    $token = mysqli_query($db, $sqlC);
+    for ( ;$tokenArray = mysqli_fetch_assoc($token); )
+    {
+        $out += $tokenArray['tokenAnzahl'];
+    }
+    $sqlC = "select datum from auszeichnung where skuerzel = '$kuerzel' and aName = '$aName' and saisonNummer = '$saisonNummer'";
+    $auszeichnungen = mysqli_query($db, $sqlC);
+    for ( ;$auszeichnungenArray = mysqli_fetch_assoc($auszeichnungen); )
+    {
+        $out += 15;
+    }
+
+    return $out;
+}
+
+function getGesamteAwards ( $kuerzel )
+{
+    global $db;
+    $sqlC = "select name from award";
+    $awards = mysqli_query($sqlC, $db);
+
+    $out = array();
+    for (; $awardsArray = mysqli_fetch_assoc($awards); )
+    {
+        array_push($out ,$awardsArray['name']);
+    }
+
     return $out;
 }
 

@@ -5,7 +5,7 @@
  * Date: 19.11.2018
  * Time: 17:53
  */
-$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank');
+$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
 
 function insertAward( $name, $tokenLimit )
 {
@@ -25,7 +25,8 @@ function makeLeistungProAward($aName)
     for ( ;$userArray = mysqli_fetch_assoc($users); )
     {
         $kuerzel = $userArray['kuerzel'];
-        $sqlC = "insert into leistung ( aName, sKuerzel, tokenAnzahl ) values ( '$aName' , '$kuerzel', 0)";
+        $saisonNumb = getSaisonNumb();
+        $sqlC =  "insert into leistung ( aName, sKuerzel, tokenAnzahl, saisonNummer ) values ( '$aName' , '$kuerzel', 0, '$saisonNumb')";
         $result = mysqli_query($db, $sqlC);
         if ( !$result )
         {
@@ -47,6 +48,12 @@ function deleteAward ($name)
     global  $db;
     $sqlC = "delete from award where name = '$name'";
     return mysqli_query($db, $sqlC);
+}
+
+function getAllAwards()
+{
+    global $db;
+    $sqlC = "";
 }
 
 ?>
