@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -12,32 +13,35 @@
 
     <title>Tokenverwaltung</title>
 </head>
+
 <body>
     <!--HEADER-->
     <header>
         <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
             <div class="container">
-            <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                </ul>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Max Muster</button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Auswahl1</a>
-                        <a class="dropdown-item" href="#">Auswahl2</a>
-                        <a class="dropdown-item" href="#">Auswahl3</a>
-                        <a class="dropdown-item" href="#">Auswahl4</a>
+                <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                    </ul>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Max Muster</button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Auswahl1</a>
+                            <a class="dropdown-item" href="#">Auswahl2</a>
+                            <a class="dropdown-item" href="#">Auswahl3</a>
+                            <a class="dropdown-item" href="#">Auswahl4</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </nav>
     </header>
-    
+
     <!--Inhalt-->
 
     <div class="container">
@@ -48,12 +52,16 @@
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Award-Typ auswählen</button>
+                                    <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        Action
+                                    </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Award1</a>
-                                        <a class="dropdown-item" href="#">Award2</a>
-                                        <a class="dropdown-item" href="#">Award3</a>
-                                        <a class="dropdown-item" href="#">Award4</a>
+                                        <a class="dropdown-item" href="#">Architect</a>
+                                        <a class="dropdown-item" href="#">Editor</a>
+                                        <a class="dropdown-item" href="#">Favorite</a>
+                                        <a class="dropdown-item" href="#">Pulitzer</a>
+                                        <a class="dropdown-item" href="#">Spirit of HIT</a>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +70,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-primary text-light" id="inputGroup-sizing-default">Token</span>
                                     </div>
-                                    <input type="text" class="form-control tokens" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                    <input type="text" class="form-control tokens" aria-label="Sizing example input"
+                                        aria-describedby="inputGroup-sizing-default">
                                 </div>
                             </div>
                         </div>
@@ -72,7 +81,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-primary text-light" id="inputGroup-sizing-default">Betreff</span>
                                     </div>
-                                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                    <input type="text" class="form-control" aria-label="Sizing example input"
+                                        aria-describedby="inputGroup-sizing-default">
                                 </div>
                             </div>
                         </div>
@@ -85,8 +95,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12 text-center">
-                                <button type="button" class="btn btn-primary">Anfordern</button>
+                            <div class="col-sm-12 text-right">
+                                <button type="button" class="btn btn-outline-primary">Anfordern</button>
                             </div>
                         </div>
                     </div>
@@ -95,7 +105,40 @@
             <div class="col-sm-6 abstand">
                 <div class="card">
                     <div class="card-body">
-                        This is some text within a card body.
+                        <div class="col-sm-12">
+                            <p class="font-weight-bold"> Overall Highscore - Token </p>
+                        </div>
+                        <div class="col-sm-12">
+                            <table class="table table-borderd">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Token</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>12</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Lukas</td>
+                                        <td>0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-12 text-center">
+                            <button type="button" class="btn btn-outline-primary">Mehr</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,23 +146,75 @@
             <div class="col-sm-6 abstand">
                 <div class="card">
                     <div class="card-body">
-                        This is some text within a card body.
+                        <div class="row">
+                            <div class="col-sm-9">
+                                Lukas Geburtstag - 02.12.2018 - Noch 1 Tag
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" class="btn btn-outline-primary">Eintragen</button>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="col-sm-12 text-center abstand1">
+                    <button type="button" class="btn btn-outline-primary">Mehr anzeigen</button>
                 </div>
             </div>
             <div class="col-sm-6 abstand">
                 <div class="card">
                     <div class="card-body">
-                        This is some text within a card body.
+                        <div class="col-sm-12">
+                            <p class="font-weight-bold"> Overall Highscore - Awards </p>
+                        </div>
+                        <div class="col-sm-12">
+                            <table class="table table-borderd">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Awards</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>3</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Lukas</td>
+                                        <td>1</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-12 text-center">
+                            <button type="button" class="btn btn-outline-primary">Mehr</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <footer class="blog-footer">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui sit repudiandae deleniti esse facere molestiae,
+        similique possimus hic consectetur iusto, dicta soluta, quasi nulla totam culpa error! Vero, sit voluptatum.
+    </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
 </body>
+
 </html>

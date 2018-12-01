@@ -16,8 +16,16 @@
     background-color: #f8f9fa;
   }
 
+  header {
+    margin-bottom: 4em;
+  }
+
   .abstand {
     margin-top: 4em;
+  }
+
+  .abstand1 {
+    margin-top: 0.5em;
   }
   
 .falsch {
@@ -57,3 +65,18 @@
   .logintext {
       color: #ffffff;
   }
+
+  /*
+ * Footer
+ */
+.blog-footer {
+  margin-top: 4em;
+  padding: 2.5rem 0;
+  color: #999;
+  text-align: center;
+  background-color: #f8f9fa;
+  border-top: .05rem solid #e5e5e5;
+}
+.blog-footer p:last-child {
+  margin-bottom: 0;
+}
