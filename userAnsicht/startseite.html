@@ -15,6 +15,9 @@
 </head>
 
 <body>
+    <?php
+        include("startseite.php");
+    ?>
     <!--HEADER-->
     <header>
         <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
@@ -52,16 +55,15 @@
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
+                                    <button type="button" id="AwardType" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
-                                        Action
+                                        AwardType
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Architect</a>
-                                        <a class="dropdown-item" href="#">Editor</a>
-                                        <a class="dropdown-item" href="#">Favorite</a>
-                                        <a class="dropdown-item" href="#">Pulitzer</a>
-                                        <a class="dropdown-item" href="#">Spirit of HIT</a>
+                                        <?php
+                                            printAwardDropDown();
+                                        ?>
+                                        <a class="dropdown-item" onclick="setAwardButton('Architect')">Architect</a>
                                     </div>
                                 </div>
                             </div>
@@ -207,6 +209,14 @@
         similique possimus hic consectetur iusto, dicta soluta, quasi nulla totam culpa error! Vero, sit voluptatum.
     </footer>
     <!-- Optional JavaScript -->
+    <script type="application/javascript">
+        function setAwardButton(value)
+        {
+            document.getElementById("AwardType").innerText = value;
+        }
+
+
+    </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
