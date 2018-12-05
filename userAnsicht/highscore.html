@@ -42,12 +42,51 @@
 
     <div class="container">
         <h3>Highscore-Liste</h3>
-        <div class="col-"
-        <input type="text" class="form-control" aria-label="Sizing example input"
-                                        aria-describedby="inputGroup-sizing-default">
-        <input type="text" id="searchInput" onkeyup="searchName()" placeholder="Name">
+        <div class="row">
+        <div class="col-sm-3">
+            <input type="text" class="form-control" onkeyup="searchName()" placeholder="Name" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="col-sm-4">
+            <div class="btn-group">
+                <button type="button" id="AwardType" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    AwardType
+                    </button>
+                    <div class="dropdown-menu">
+                        <?php
+                            printAwardDropDown();
+                        ?>
+                        <a class="dropdown-item" onclick="setAwardButton('Architect')">Architect</a>
+                        <a class="dropdown-item" onclick="setAwardButton('Editor')">Editor</a>
+                        <a class="dropdown-item" onclick="setAwardButton('Favorite')">Favorite</a>
+                        <a class="dropdown-item" onclick="setAwardButton('Pulitzer')">Pulitzer</a>
+                        <a class="dropdown-item" onclick="setAwardButton('Spirit of HIT')">Spirit of HIT</a>
+                    </div>
+            </div>
+        </div>
         </div>
     </div>
+
+    <div class="container" style="margin-top:10px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th><b>#</b><svg href="../img/caret-down-solid.svg"><use xlink:href="#caret-bottom"></use></svg></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Token</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <script type="application/javascript">
+        function setAwardButton(value)
+        {
+            document.getElementById("AwardType").innerText = value;
+        }
+
+
+    </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
