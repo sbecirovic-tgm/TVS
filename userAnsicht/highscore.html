@@ -29,7 +29,7 @@
                         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div/* class="collapse navbar-collapse" id="navbarCollapse">
                         <ul class="navbar-nav mr-auto">
                         </ul>
                         <div class="btn-group">
@@ -79,14 +79,25 @@
         <table class="table table-striped" id="myTable">
             <thead>
                 <tr>
-                    <th ># <span class="oi oi-caret-bottom"></span></th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Token</th>
+                    <th class="sorting" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" 
+                        aria-label="#: activate to sort column ascending" style="width: 100px;" aria-sort="ascending">#</th>
+                    <th class="sorting" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" 
+                        aria-label="Name: activate to sort column ascending" style="width: 169px;" aria-sort="ascending">Name</th>
+                    <th class="sorting" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" 
+                        aria-label="Token: activate to sort column ascending" style="width: 169px;" aria-sort="ascending">Token</th>
+                </tr>
+                <tr>
+                    
                 </tr>
             </thead>
         </table>
     </div>
 
+    <script>
+        $(document).ready(function(){
+            $('#myTable').dataTable();
+        });
+    </script>
     <script type="application/javascript">
         changeIcon() 
         {
@@ -99,11 +110,6 @@
         }
 
 
-    </script>
-    <script>
-            $(document).ready(function(){
-                $('#myTable').dataTable();
-            });
     </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
