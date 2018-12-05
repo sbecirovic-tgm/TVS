@@ -1,4 +1,5 @@
 <?php
+/*
 $ldap_dn = "cn=proj_eis, ou=serviceusers,dc=tgm,dc=ac, dc=at";
 $ldap_password = "All4Ice!";
 
@@ -13,7 +14,7 @@ if(ldap_bind($ldap_con, $ldap_dn, $ldap_password)) {
 } else {
     echo "Invalid user/pass or other errors!";
 }
-/*
+*/
 // https://www.youtube.com/watch?v=AEjGhzZpGlg phpinfo();
 
 if ( ($userName == 'swahl@student.tgm.ac.at' && $password == '1') || ($userName == 'fgavric@student.tgm.ac.at' && $password == '2') || ($userName == 'khoeher@tgm.ac.at' && $password == '3'))
@@ -24,5 +25,5 @@ else
 {
     return False;
 }
-*/
+
 ?>
