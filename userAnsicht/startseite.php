@@ -27,14 +27,18 @@ function printAwardDropDown ()
 if(isset($_GET['requestToken']))
 {
     //insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), NULL, NULL, NULL, NULL, NULL, NULL, 'swahl', '1', 'Test ist das', 'Test', NULL, NULL);
-    $awardTyp = $_POST['awardTyp'];
-    $tokenAnzahl = $_POST['tokenanzahl'];
+    $awardTyp = $_POST['awardType'];
+    $tokenAnzahl = $_POST['tokenAnzahl'];
     $betreff = $_POST['betreff'];
     $beschreibung = $_POST['beschreibung'];
-    $userName = $_SESSION['userName'];
     // inserten, alles andere auf NULL setzten --> bei der normalen abfrage nicht notwendig
     $result = requestTokenBasic($awardTyp, $tokenAnzahl, $betreff, $beschreibung, $userName);
+}
 
+if(isset($_GET['logout']))
+{
+    $_SESSION['userName'] = "";
+    header("Refresh:0; url=..\index.html");
 }
 
 ?>
