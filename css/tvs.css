@@ -3,7 +3,7 @@
 }
 
 .abstand {
-    margin-top: 2em;
+    margin-top: 5em;
 }
 
 .login {
@@ -83,4 +83,18 @@
 
 .anfordern {
   width: 50%;
+}
+
+.row-striped:nth-of-type(odd){
+  background-color: #efefef;
+  border-left: 4px #007bff solid;
+}
+
+.row-striped:nth-of-type(even){
+  background-color: #ffffff;
+  border-left: 4px #efefef solid;
+}
+
+.row-striped {
+    padding: 15px 0;
 }
