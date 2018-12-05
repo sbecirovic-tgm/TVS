@@ -7,6 +7,7 @@
  */
 session_start();
 
+
 $db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
 
 $userName = $_SESSION['userName'];
@@ -20,6 +21,32 @@ function printAwardDropDown ()
     for (; $award_array = mysqli_fetch_assoc($award); ) {
         $name = $award_array['name'];
         echo '<a class="dropdown-item" onclick="setAwardButton(' . $name . ')">' . $name . '</a>';
+    }
+}
+
+function printHighscoreTop3Overall()
+{
+    include ("../php/getHighscore.php");
+    $highscore = getTokenHighscoreThisSaisonLimit(3);
+
+    $i = 0;
+    foreach ($highscore as $name => $anzahl )
+    {
+        echo '<tr><th scope="row">'.$i.'</th><td>'.$name.'</td><td>'.$anzahl.'</td></tr>';
+        $i++;
+    }
+}
+
+function printHighscoreTop3Award()
+{
+    include ("../php/getHighscore.php");
+    $highscore = getAwardHighscoreThisSaisonLimit(3);
+
+    $i = 0;
+    foreach ($highscore as $name => $anzahl )
+    {
+        echo '<tr><th scope="row">'.$i.'</th><td>'.$name.'</td><td>'.$anzahl.'</td></tr>';
+        $i++;
     }
 }
 
@@ -37,8 +64,10 @@ if(isset($_GET['requestToken']))
 
 if(isset($_GET['logout']))
 {
-    $_SESSION['userName'] = "";
-    header("Refresh:0; url=..\index.html");
+    header("Refresh:0; url=../Login.html");
+    if(session_status() == PHP_SESSION_ACTIVE) {
+        session_destroy();
+    }
 }
 
 ?>

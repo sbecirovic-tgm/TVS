@@ -12,23 +12,27 @@ $db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql'
 /*
  * Alle funktionen für die Token highscores
  */
-
+include ("userCheck.php");
 function getTokenHighscoreProSasison( $saisonNummer )
 {
     global $db;
     $tokenProSchueler = array();
+
+    $nameToKurzel = getAllSchuelerNamesToKurzel();
+
     $sqlC = "select sKuerzel, tokenAnzahl from leistung where saisonNummer = '$saisonNummer' order by skuerzel ";
     $leistungen = mysqli_query($sqlC, $db);
     for (; $leistungenArray = mysqli_fetch_assoc($leistungen);)
     {
         $sKuerzel = $leistungenArray['skuerzel'];
-        if ( array_key_exists ( $sKuerzel , $tokenProSchueler ) )
+        $name = $nameToKurzel[$sKuerzel];
+        if ( array_key_exists ( $name , $tokenProSchueler ) )
         {
-            $tokenProSchueler[$sKuerzel] = $leistungenArray['tokenAnzahl'];
+            $tokenProSchueler[$name] = $leistungenArray['tokenAnzahl'];
         }
         else
         {
-            $tokenProSchueler[$sKuerzel] += $leistungenArray['tokenAnzahl'];
+            $tokenProSchueler[$name] += $leistungenArray['tokenAnzahl'];
         }
         $sqlSch = "select skuerzel, awardName from auszeichnung where skuerzel = '$sKuerzel' and saisonNummer = '$saisonNummer'";
         $awardTokenSchuler = mysqli_query($sqlSch, $db);
@@ -38,7 +42,7 @@ function getTokenHighscoreProSasison( $saisonNummer )
             $sqlAward = "select tokenLimit from award where name = '$awardName'";
             $awardToken = mysqli_query($sqlAward, $db);
             $awardTokenArray = mysqli_fetch_assoc($awardToken);
-            $tokenProSchueler[$sKuerzel] += $awardTokenArray['tokenLimit'];
+            $tokenProSchueler[$name] += $awardTokenArray['tokenLimit'];
         }
     }
     arsort($tokenProSchueler);
@@ -83,18 +87,22 @@ function getTokenHighscoreAllTime()
 {
     global $db;
     $tokenProSchueler = array();
+
+    $nameToKurzel = getAllSchuelerNamesToKurzel();
+
     $sqlC = "select sKuerzel, tokenAnzahl from leistung order by sKuerzel ";
     $leistungen = mysqli_query($sqlC, $db);
     for (; $leistungenArray = mysqli_fetch_assoc($leistungen);)
     {
         $sKuerzel = $leistungenArray['sKuerzel'];
-        if ( array_key_exists ( $sKuerzel , $tokenProSchueler ) )
+        $name = $nameToKurzel[$sKuerzel];
+        if ( array_key_exists ( $name , $tokenProSchueler ) )
         {
-            $tokenProSchueler[$sKuerzel] = $leistungenArray['tokenAnzahl'];
+            $tokenProSchueler[$name] = $leistungenArray['tokenAnzahl'];
         }
         else
         {
-            $tokenProSchueler[$sKuerzel] += $leistungenArray['tokenAnzahl'];
+            $tokenProSchueler[$name] += $leistungenArray['tokenAnzahl'];
         }
         $sqlSch = "select skuerzel, awardName from auszeichnung where skuerzel = '$sKuerzel'";
         $awardTokenSchuler = mysqli_query($sqlSch, $db);
@@ -104,7 +112,7 @@ function getTokenHighscoreAllTime()
             $sqlAward = "select tokenLimit from award where name = '$awardName'";
             $awardToken = mysqli_query($sqlAward, $db);
             $awardTokenArray = mysqli_fetch_assoc($awardToken);
-            $tokenProSchueler[$sKuerzel] += $awardTokenArray['tokenLimit'];
+            $tokenProSchueler[$name] += $awardTokenArray['tokenLimit'];
         }
     }
     arsort($tokenProSchueler);
@@ -116,18 +124,22 @@ function getTokenHighscoreProAwardPerSaison( $aName, $saisonNummer )
 {
     global $db;
     $tokenProSchueler = array();
+
+    $nameToKurzel = getAllSchuelerNamesToKurzel();
+
     $sqlC = "select sKuerzel, tokenAnzahl from leistung where saisonNummer = '$saisonNummer' and aName = '$aName'order by skuerzel ";
     $leistungen = mysqli_query($sqlC, $db);
     for (; $leistungenArray = mysqli_fetch_assoc($leistungen);)
     {
         $sKuerzel = $leistungenArray['skuerzel'];
-        if ( array_key_exists ( $sKuerzel , $tokenProSchueler ) )
+        $name = $nameToKurzel[$sKuerzel];
+        if ( array_key_exists ( $name , $tokenProSchueler ) )
         {
-            $tokenProSchueler[$sKuerzel] = $leistungenArray['tokenAnzahl'];
+            $tokenProSchueler[$name] = $leistungenArray['tokenAnzahl'];
         }
         else
         {
-            $tokenProSchueler[$sKuerzel] += $leistungenArray['tokenAnzahl'];
+            $tokenProSchueler[$name] += $leistungenArray['tokenAnzahl'];
         }
         $sqlSch = "select skuerzel, awardName from auszeichnung where skuerzel = '$sKuerzel' and saisonNummer = '$saisonNummer'";
         $awardTokenSchuler = mysqli_query($sqlSch, $db);
@@ -137,7 +149,7 @@ function getTokenHighscoreProAwardPerSaison( $aName, $saisonNummer )
             $sqlAward = "select tokenLimit from award where name = '$awardName'";
             $awardToken = mysqli_query($sqlAward, $db);
             $awardTokenArray = mysqli_fetch_assoc($awardToken);
-            $tokenProSchueler[$sKuerzel] += $awardTokenArray['tokenLimit'];
+            $tokenProSchueler[$name] += $awardTokenArray['tokenLimit'];
         }
     }
     arsort($tokenProSchueler);
@@ -149,18 +161,23 @@ function getTokenHighscoreProAwardAllTime( $aName )
 {
     global $db;
     $tokenProSchueler = array();
+
+    $nameToKurzel = getAllSchuelerNamesToKurzel();
+
+
     $sqlC = "select sKuerzel, tokenAnzahl from leistung where aName = '$aName'order by skuerzel ";
     $leistungen = mysqli_query($sqlC, $db);
     for (; $leistungenArray = mysqli_fetch_assoc($leistungen);)
     {
         $sKuerzel = $leistungenArray['skuerzel'];
-        if ( array_key_exists ( $sKuerzel , $tokenProSchueler ) )
+        $name = $nameToKurzel[$sKuerzel];
+        if ( array_key_exists ( $name , $tokenProSchueler ) )
         {
-            $tokenProSchueler[$sKuerzel] = $leistungenArray['tokenAnzahl'];
+            $tokenProSchueler[$name] = $leistungenArray['tokenAnzahl'];
         }
         else
         {
-            $tokenProSchueler[$sKuerzel] += $leistungenArray['tokenAnzahl'];
+            $tokenProSchueler[$name] += $leistungenArray['tokenAnzahl'];
         }
         $sqlSch = "select skuerzel, awardName from auszeichnung where skuerzel = '$sKuerzel'";
         $awardTokenSchuler = mysqli_query($sqlSch, $db);
@@ -170,7 +187,7 @@ function getTokenHighscoreProAwardAllTime( $aName )
             $sqlAward = "select tokenLimit from award where name = '$awardName'";
             $awardToken = mysqli_query($sqlAward, $db);
             $awardTokenArray = mysqli_fetch_assoc($awardToken);
-            $tokenProSchueler[$sKuerzel] += $awardTokenArray['tokenLimit'];
+            $tokenProSchueler[$name] += $awardTokenArray['tokenLimit'];
         }
     }
     arsort($tokenProSchueler);
@@ -186,20 +203,23 @@ function getTokenHighscoreProAwardAllTime( $aName )
 function getAwardHighscoreProSasison( $saisonNummer )
 {
     global $db;
-    $tokenProSchueler = array();
+
+    $nameToKurzel = getAllSchuelerNamesToKurzel();
+
     $sqlC = "select skuerzel from auszeichnung where saisonNummer = '$saisonNummer' order by skuerzel ";
     $awards = mysqli_query($sqlC, $db);
     $out = array();
     for ( ; $awardsArray = mysqli_fetch_assoc($awards); )
     {
         $sKuerzel = $awardsArray['skuerzel'];
-        if ( array_key_exists ( $sKuerzel , $out ) )
+        $name = $nameToKurzel[$sKuerzel];
+        if ( array_key_exists ( $name , $out ) )
         {
-            $out[$sKuerzel] = 1;
+            $out[$name] = 1;
         }
         else
         {
-            $out[$sKuerzel] += 1;
+            $out[$name] += 1;
         }
     }
 
@@ -210,20 +230,23 @@ function getAwardHighscoreProSasison( $saisonNummer )
 function getAwardHighscoreAllTime()
 {
     global $db;
-    $tokenProSchueler = array();
+
+    $nameToKurzel = getAllSchuelerNamesToKurzel();
+
     $sqlC = "select skuerzel from auszeichnung order by skuerzel ";
     $awards = mysqli_query($sqlC, $db);
     $out = array();
     for ( ; $awardsArray = mysqli_fetch_assoc($awards); )
     {
         $sKuerzel = $awardsArray['skuerzel'];
-        if ( array_key_exists ( $sKuerzel , $out ) )
+        $name = $nameToKurzel[$sKuerzel];
+        if ( array_key_exists ( $name , $out ) )
         {
-            $out[$sKuerzel] = 1;
+            $out[$name] = 1;
         }
         else
         {
-            $out[$sKuerzel] += 1;
+            $out[$name] += 1;
         }
     }
 
@@ -234,20 +257,23 @@ function getAwardHighscoreAllTime()
 function getAwardHighscoreProAwardSaision( $saisonNummer, $aName )
 {
     global $db;
-    $tokenProSchueler = array();
+
+    $nameToKurzel = getAllSchuelerNamesToKurzel();
+
     $sqlC = "select skuerzel from auszeichnung where saisonNummer = '$saisonNummer' and awardName = '$aName' order by skuerzel";
     $awards = mysqli_query($sqlC, $db);
     $out = array();
     for ( ; $awardsArray = mysqli_fetch_assoc($awards); )
     {
         $sKuerzel = $awardsArray['skuerzel'];
-        if ( array_key_exists ( $sKuerzel , $out ) )
+        $name = $nameToKurzel[$sKuerzel];
+        if ( array_key_exists ( $name , $out ) )
         {
-            $out[$sKuerzel] = 1;
+            $out[$name] = 1;
         }
         else
         {
-            $out[$sKuerzel] += 1;
+            $out[$name] += 1;
         }
     }
 
@@ -258,24 +284,52 @@ function getAwardHighscoreProAwardSaision( $saisonNummer, $aName )
 function getAwardHighscoreProAwardAllTime( $aName )
 {
     global $db;
-    $tokenProSchueler = array();
+
+    $nameToKurzel = getAllSchuelerNamesToKurzel();
+
     $sqlC = "select skuerzel from auszeichnung where awardName = '$aName' order by skuerzel";
     $awards = mysqli_query($sqlC, $db);
     $out = array();
     for ( ; $awardsArray = mysqli_fetch_assoc($awards); )
     {
         $sKuerzel = $awardsArray['skuerzel'];
-        if ( array_key_exists ( $sKuerzel , $out ) )
+        $name = $nameToKurzel[$sKuerzel];
+        if ( array_key_exists ( $name , $out ) )
         {
-            $out[$sKuerzel] = 1;
+            $out[$name] = 1;
         }
         else
         {
-            $out[$sKuerzel] += 1;
+            $out[$name] += 1;
         }
     }
 
     arsort($out);
+    return $out;
+}
+
+function getAwardHighscoreThisSaisonLimit($limit)
+{
+    include ("saisonVerwalten.php");
+    $saisonNummer = getSaisonNumb();
+    return getAwardHighscoreProSaisionLimit($saisonNummer, $limit);
+}
+
+function getAwardHighscoreProSaisionLimit($saisonNummer, $limit)
+{
+    $tawardProSchueler = getAwardHighscoreProSasison($saisonNummer);
+    $out = array();
+    $i = 0;
+    foreach ($tawardProSchueler as $temp => $temp_value)
+    {
+        $out[$temp] = $temp_value;
+        if ( $i == $limit )
+        {
+            break;
+        }
+        $i++;
+    }
+
     return $out;
 }
 

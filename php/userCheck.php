@@ -100,6 +100,21 @@ function getGesamteTokenProSchueler ( $kuerzel, $saisonNummer )
 
 }
 
+function getAllSchuelerNamesToKurzel()
+{
+    global $db;
+    $out = array();
+    $sqlC = "select sName, skuerzel from schueler";
+    $schueler = mysqli_query($db, $sqlC);
+
+    for ( ;$tokenArray = mysqli_fetch_assoc($schueler); )
+    {
+        $out[$tokenArray['skuerzel']] = $tokenArray['sName'];
+    }
+
+    return $out;
+}
+
 function getGesmateTokenProKat ( $kuerzel, $aName, $saisonNummer )
 {
     global $db;
