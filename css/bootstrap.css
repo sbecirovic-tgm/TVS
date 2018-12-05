@@ -4300,9 +4300,8 @@ input[type="button"].btn-block {
 }
 
 .navbar-light .navbar-toggler {
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  color: rgba(0, 0, 0, 0.5);
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 .navbar-light .navbar-toggler-icon {
