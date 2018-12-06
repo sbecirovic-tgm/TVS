@@ -7,6 +7,20 @@
  */
 $db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
 
+
+/*
+ * LOGOUT!
+ */
+function logout()
+{
+    header("Refresh:0; url=../Login.html");
+    if(session_status() == PHP_SESSION_ACTIVE) {
+        session_destroy();
+    }
+}
+
+
+
 /*
  * $isSchueler: Wenn 0, dann schueler
  *              Wenn 1, dann Leher
@@ -61,7 +75,7 @@ function insertSchueler ( $kuerzel, $sName )
 function makeLeistungProSchueler($kuerzel)
 {
     global $db;
-    include ("saisonVerwalten.php");
+    include_once ("saisonVerwalten.php");
     $sqlAward = "select name from award";
     $awards = mysqli_query($db, $sqlAward);
     $out = true;

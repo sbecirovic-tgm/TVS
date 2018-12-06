@@ -26,7 +26,7 @@ function printAwardDropDown ()
 
 function printHighscoreTop3Overall()
 {
-    include ("../php/getHighscore.php");
+    include_once ("../php/getHighscore.php");
     $highscore = getTokenHighscoreThisSaisonLimit(3);
 
     $i = 0;
@@ -39,7 +39,7 @@ function printHighscoreTop3Overall()
 
 function printHighscoreTop3Award()
 {
-    include ("../php/getHighscore.php");
+    include_once ("../php/getHighscore.php");
     $highscore = getAwardHighscoreThisSaisonLimit(3);
 
     $i = 0;
@@ -47,6 +47,24 @@ function printHighscoreTop3Award()
     {
         echo '<tr><th scope="row">'.$i.'</th><td>'.$name.'</td><td>'.$anzahl.'</td></tr>';
         $i++;
+    }
+}
+
+function printEventLimit4()
+{
+    include_once ("../php/eventsVerwalten.php");
+    $events = listAllEventsLimit(4);
+    foreach ($events as $name => $anzahl )
+    {
+        echo '<div class="card-body"><form action="?eventEintragen=1" method="post"><div class="row"><div class="col-sm-9"><a id="datenEintragung"> Lukas Geburtstag - 02.12.2018 - Noch 1 Tag </a></div><div class="col-sm-3"><input class="btn btn-outline-primary" type="submit" name="eintragenEvent" value="Eintragen"></div></div></form></div>';
+        /*
+        $out['name'] = $event_array['name'];
+        $out['datum'] = $event_array['datum'];
+        $out['superKuerzel'] = $event_array['superKuerzel'];
+        $out['lKuerzel'] = $event_array['lKuerzel'];
+        $out['aName'] = $event_array['aName'];
+        $out['beschreibung'] = $event_array['beschreibung'];
+        */
     }
 }
 
@@ -64,10 +82,8 @@ if(isset($_GET['requestToken']))
 
 if(isset($_GET['logout']))
 {
-    header("Refresh:0; url=../Login.html");
-    if(session_status() == PHP_SESSION_ACTIVE) {
-        session_destroy();
-    }
+    include_once("../php/userCheck.php");
+    logout();
 }
 
 ?>

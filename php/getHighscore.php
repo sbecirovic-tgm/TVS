@@ -12,7 +12,7 @@ $db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql'
 /*
  * Alle funktionen für die Token highscores
  */
-include ("userCheck.php");
+include_once ("userCheck.php");
 function getTokenHighscoreProSasison( $saisonNummer )
 {
     global $db;
@@ -52,7 +52,7 @@ function getTokenHighscoreProSasison( $saisonNummer )
 
 function getTokenHighscoreThisSaison()
 {
-    include ("saisonVerwalten.php");
+    include_once ("saisonVerwalten.php");
     $saisonNummer = getSaisonNumb();
     return getTokenHighscoreProSasison($saisonNummer);
 }
@@ -60,7 +60,7 @@ function getTokenHighscoreThisSaison()
 function getTokenHighscoreThisSaisonLimit($limit)
 {
     global $db;
-    include ("saisonVerwalten.php");
+    include_once ("saisonVerwalten.php");
     $saisonNummer = getSaisonNumb();
     return getTokenHighscoreProSaisionLimit($saisonNummer, $limit);
 }
@@ -73,7 +73,7 @@ function getTokenHighscoreProSaisionLimit($saisonNummer, $limit)
     foreach ($tokenProSchueler as $temp => $temp_value)
     {
         $out[$temp] = $temp_value;
-        if ( $i == $limit )
+        if ( $i == $limit-1 )
         {
             break;
         }
@@ -310,7 +310,7 @@ function getAwardHighscoreProAwardAllTime( $aName )
 
 function getAwardHighscoreThisSaisonLimit($limit)
 {
-    include ("saisonVerwalten.php");
+    include_once ("saisonVerwalten.php");
     $saisonNummer = getSaisonNumb();
     return getAwardHighscoreProSaisionLimit($saisonNummer, $limit);
 }
@@ -323,7 +323,7 @@ function getAwardHighscoreProSaisionLimit($saisonNummer, $limit)
     foreach ($tawardProSchueler as $temp => $temp_value)
     {
         $out[$temp] = $temp_value;
-        if ( $i == $limit )
+        if ( $i == $limit-1 )
         {
             break;
         }
