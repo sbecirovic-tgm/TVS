@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/tvs.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-grid.css">
+    <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="../img/open-iconic-master/font/css/open-iconic-bootstrap.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
     <title>Highscore-Liste</title>
 </head>
 <body>
@@ -21,7 +29,7 @@
                         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div/* class="collapse navbar-collapse" id="navbarCollapse">
                         <ul class="navbar-nav mr-auto">
                         </ul>
                         <div class="btn-group">
@@ -67,19 +75,35 @@
         </div>
     </div>
 
-    <div class="container" style="margin-top:10px;">
-        <table class="table">
+    <div class="container table-responsive" style="margin-top:10px;">
+        <table class="table table-striped" id="myTable">
             <thead>
                 <tr>
-                    <th><b>#</b><svg href="../img/caret-down-solid.svg"><use xlink:href="#caret-bottom"></use></svg></th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Token</th>
+                    <th class="sorting" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" 
+                        aria-label="#: activate to sort column ascending" style="width: 100px;" aria-sort="ascending">#</th>
+                    <th class="sorting" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" 
+                        aria-label="Name: activate to sort column ascending" style="width: 169px;" aria-sort="ascending">Name</th>
+                    <th class="sorting" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" 
+                        aria-label="Token: activate to sort column ascending" style="width: 169px;" aria-sort="ascending">Token</th>
+                </tr>
+                <tr>
+                    
                 </tr>
             </thead>
         </table>
     </div>
 
+    <script>
+        $(document).ready(function(){
+            $('#myTable').dataTable();
+        });
+    </script>
     <script type="application/javascript">
+        changeIcon() 
+        {
+            document.getElementById('filter').toggleClass("oi oi-caret-bottom oi oi-caret-top");
+        }
+        
         function setAwardButton(value)
         {
             document.getElementById("AwardType").innerText = value;
@@ -87,7 +111,6 @@
 
 
     </script>
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
