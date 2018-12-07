@@ -13,8 +13,7 @@ function listAllEvents()
     $sqlC = "select * from event order by data desc";
     $events = mysqli_query($db, $sqlC);
     $out = array();
-    for( $i = 0; $event_array = mysqli_fetch_assoc($events); $i++)
-    {
+    for ($i = 0; $event_array = mysqli_fetch_assoc($events); $i++) {
         $out[$i] = array();
         $out[$i]['name'] = $event_array['name'];
         $out[$i]['datum'] = $event_array['datum'];
@@ -23,6 +22,33 @@ function listAllEvents()
         $out[$i]['aName'] = $event_array['aName'];
         $out[$i]['beschreibung'] = $event_array['beschreibung'];
     }
+    return $out;
+
+}
+
+function listAllEventsLimit($limit)
+{
+    $events = listAllEvents();
+    $out = array();
+
+    $i = 0;
+    foreach ($events as $event)
+    {
+        $out[$i] = array();
+        $out[$i]['name'] = $event['name'];
+        $out[$i]['datum'] = $event['datum'];
+        $out[$i]['superKuerzel'] = $event['superKuerzel'];
+        $out[$i]['lKuerzel'] = $event['lKuerzel'];
+        $out[$i]['aName'] = $event['aName'];
+        $out[$i]['beschreibung'] = $event['beschreibung'];
+
+        if ( $i == $limit-1 )
+        {
+            break;
+        }
+        $i++;
+    }
+
     return $out;
 }
 

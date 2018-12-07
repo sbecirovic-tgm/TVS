@@ -39,7 +39,7 @@
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Mein Profil</a>
-                            <a class="dropdown-item" href="#">Startseite</a>
+                            <a class="dropdown-item" href="startseite.html">Startseite</a>
                             <a class="dropdown-item" href="#">Antrag History</a>
                             <form action="?logout=1" method="post">
                                 <a class="dropdown-item" type="submit" name="logout">Logout</a>
@@ -154,45 +154,12 @@
                         <p class="font-weight-bold abstand1">Events</p>
                         <hr>
                     </div>
-                    <div class="card-body">
-                        <form action="?eventEintragen=1" method="post">
-                        <div class="row">
-                            <div class="col-sm-9">
-                                <a id="datenEintragung"> Lukas Geburtstag - 02.12.2018 - Noch 1 Tag </a>
-                            </div>
-                            <div class="col-sm-3">
-                                <input class="btn btn-outline-primary" type="submit" name="eintragenEvent" value="Eintragen">
-                            </div>
-                        </div>
-                        </form>
-                    </div>
-                    <div class="card-body">
-                        <form action="?eventEintragen=1" method="post">
-                            <div class="row">
-                                <div class="col-sm-9">
-                                    <a id="datenEintragung2"> Lukas Geburtstag - 02.12.2018 - Noch 1 Tag </a>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input class="btn btn-outline-primary" type="submit" name="eintragenEvent" value="Eintragen">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="card-body">
-                        <form action="?eventEintragen=1" method="post">
-                            <div class="row">
-                                <div class="col-sm-9">
-                                    <a id="datenEintragung3"> Lukas Geburtstag - 02.12.2018 - Noch 1 Tag </a>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input class="btn btn-outline-primary" type="submit" name="eintragenEvent" value="Eintragen">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    <?php
+                        printEventLimit4();
+                    ?>
                 </div>  
                 <div class="col-sm-12 text-center">
-                    <button type="button" class="btn btn-outline-primary dashboardButtons" href="events.html">Mehr anzeigen</button>
+                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" href="events.html">Mehr anzeigen</button>
                 </div>
             </div>
             <div class="col-sm-6 abstand">

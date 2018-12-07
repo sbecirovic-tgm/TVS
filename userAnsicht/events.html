@@ -13,6 +13,9 @@
 </head>
 <body>
     <!--HEADER-->
+    <?php
+        include_once("events.php");
+    ?>
     <header class="headerEvents">
         <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
             <div class="container">
@@ -26,21 +29,26 @@
                     </ul>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Max Muster</button>
+                            aria-haspopup="true" aria-expanded="false">
+                            <?php
+                                echo '$userName';
+                            ?>
+                        </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Auswahl1</a>
-                            <a class="dropdown-item" href="#">Auswahl2</a>
-                            <a class="dropdown-item" href="#">Auswahl3</a>
-                            <a class="dropdown-item" href="#">Auswahl4</a>
+                            <a class="dropdown-item" href="#">Mein Profil</a>
+                            <a class="dropdown-item" href="startseite.html">Startseite</a>
+                            <a class="dropdown-item" href="#">Antrag History</a>
+                            <form action="?logout=1" method="post">
+                                <a class="dropdown-item" type="submit" name="logout">Logout</a>
+                            </form>
                         </div>
                     </div>
                 </div>
+
             </div>
         </nav>
     </header>
-
     <!--Inhalt-->
-
     <div class="container">
         <div class="col-sm-12">
             <h1>Events</h1>
@@ -58,6 +66,81 @@
                         <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Monday</li>
                         <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 12:30 PM - 2:00 PM</li>
                         <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Cafe</li>
+                    </ul>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+            <div class="row row-striped">
+                <div class="col-2 text-right">
+                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
+                    <h2>OCT</h2>
+                </div>
+                <div class="col-10">
+                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
+                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
+                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
+                    </ul>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+            <div class="row row-striped">
+                <div class="col-2 text-right">
+                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
+                    <h2>OCT</h2>
+                </div>
+                <div class="col-10">
+                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
+                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
+                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
+                    </ul>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+            <div class="row row-striped">
+                <div class="col-2 text-right">
+                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
+                    <h2>OCT</h2>
+                </div>
+                <div class="col-10">
+                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
+                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
+                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
+                    </ul>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+            <div class="row row-striped">
+                <div class="col-2 text-right">
+                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
+                    <h2>OCT</h2>
+                </div>
+                <div class="col-10">
+                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
+                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
+                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
+                    </ul>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+            <div class="row row-striped">
+                <div class="col-2 text-right">
+                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
+                    <h2>OCT</h2>
+                </div>
+                <div class="col-10">
+                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
+                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
+                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
                     </ul>
                     <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 </div>
