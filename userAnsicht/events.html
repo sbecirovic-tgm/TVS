@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -11,49 +12,62 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <title>Tokenverwaltung</title>
 </head>
+
 <body>
     <!--HEADER-->
     <?php
         include_once("events.php");
     ?>
-    <header class="headerEvents">
-        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav mr-auto">
-                    </ul>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <?php
+
+    <header class="headerEvents"></header>
+    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <?php
                                 echo '$userName';
                             ?>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Mein Profil</a>
-                            <a class="dropdown-item" href="startseite.html">Startseite</a>
-                            <a class="dropdown-item" href="#">Antrag History</a>
-                            <form action="?logout=1" method="post">
-                                <a class="dropdown-item" type="submit" name="logout">Logout</a>
-                            </form>
-                        </div>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Mein Profil</a>
+                        <a class="dropdown-item" href="startseite.html">Startseite</a>
+                        <a class="dropdown-item" href="#">Antrag History</a>
+                        <form action="?logout=1" method="post">
+                            <a class="dropdown-item" type="submit" name="logout">Logout</a>
+                        </form>
                     </div>
                 </div>
-
             </div>
-        </nav>
+
+        </div>
+    </nav>
     </header>
+    <div class="nav-scroller bg-white shadow-md">
+        <div class="container">
+            <nav class="nav nav-underline">
+                <a class="nav-link" href="#" style="padding-left: 0;">Dashboard</a>
+                <a class="nav-link active" href="#">
+                    Events
+                    <span class="badge badge-pill bg-light align-text-bottom">27</span>
+                </a>
+                <a class="nav-link" href="#">Tokenhistory</a>
+                <a class="nav-link" href="#">Highscores</a>
+            </nav>
+        </div>
+    </div>
+
+
     <!--Inhalt-->
     <div class="container">
-        <div class="col-sm-12">
-            <h1>Events</h1>
-            <hr>
-        </div>
         <div class="col-sm-12">
             <div class="row row-striped">
                 <div class="col-2 text-right">
@@ -64,10 +78,12 @@
                     <h3 class="text-uppercase"><strong>We are developers</strong></h3>
                     <ul class="list-inline">
                         <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Monday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 12:30 PM - 2:00 PM</li>
+                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 12:30 PM - 2:00
+                            PM</li>
                         <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Cafe</li>
                     </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
                 </div>
             </div>
             <div class="row row-striped">
@@ -82,7 +98,8 @@
                         <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
                         <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
                     </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
                 </div>
             </div>
             <div class="row row-striped">
@@ -97,7 +114,8 @@
                         <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
                         <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
                     </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
                 </div>
             </div>
             <div class="row row-striped">
@@ -112,7 +130,8 @@
                         <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
                         <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
                     </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
                 </div>
             </div>
             <div class="row row-striped">
@@ -127,7 +146,8 @@
                         <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
                         <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
                     </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
                 </div>
             </div>
             <div class="row row-striped">
@@ -142,7 +162,8 @@
                         <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
                         <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
                     </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
                 </div>
             </div>
             <div class="row row-striped">
@@ -157,12 +178,17 @@
                         <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
                         <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
                     </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
                 </div>
             </div>
         </div>
-	</div>
-    
+    </div>
+    <footer class="blog-footer">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui sit repudiandae deleniti esse facere molestiae,
+        similique possimus hic consectetur iusto, dicta soluta, quasi nulla totam culpa error! Vero, sit voluptatum.
+    </footer>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -172,4 +198,5 @@
         crossorigin="anonymous"></script>
 
 </body>
+    
 </html>

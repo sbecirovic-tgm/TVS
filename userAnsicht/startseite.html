@@ -50,6 +50,19 @@
             </div>
         </nav>
     </header>
+    <div class="nav-scroller bg-white shadow-md">
+        <div class="container">
+            <nav class="nav nav-underline">
+                <a class="nav-link" href="#" style="padding-left: 0;">Dashboard</a>
+                <a class="nav-link active" href="#">
+                    Events
+                    <span class="badge badge-pill bg-light align-text-bottom">27</span>
+                </a>
+                <a class="nav-link" href="#">Tokenhistory</a>
+                <a class="nav-link" href="#">Highscores</a>
+            </nav>
+        </div>
+    </div>
 
     <!--Inhalt-->
 
@@ -61,17 +74,17 @@
             </div>
             <div class="col-sm-6">
                 <div class="card">
-                        <div class="col-sm-12">
-                            <p class="font-weight-bold abstand1">Tokens anfordern</p>
-                            <hr>
-                        </div>
+                    <div class="col-sm-12">
+                        <p class="font-weight-bold abstand1">Tokens anfordern</p>
+                        <hr>
+                    </div>
                     <form action="?requestToken=1" method="post">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="btn-group">
-                                        <button type="button" id="awardType" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
+                                        <button type="button" id="awardType" class="btn btn-primary dropdown-toggle btn-outline-primary"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             AwardType
                                         </button>
                                         <div class="dropdown-menu">
@@ -112,7 +125,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 text-center">
-                                    <input class="btn btn-outline-primary dashboardButtons" type="submit" name="submitAnforderung" value="Anfordern">
+                                    <input class="btn btn-outline-primary dashboardButtons" type="submit" name="submitAnforderung"
+                                        value="Anfordern">
                                 </div>
                             </div>
                         </div>
@@ -135,14 +149,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php
+                                    <?php
                                     printHighscoreTop3Overall();
                                 ?>
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-sm-12 text-center">
-                            <button type="button" class="btn btn-outline-primary dashboardButtons" >Mehr</button>
+                            <button type="button" class="btn btn-outline-primary dashboardButtons">Mehr</button>
                         </div>
                     </div>
                 </div>
@@ -157,9 +171,10 @@
                     <?php
                         printEventLimit4();
                     ?>
-                </div>  
+                </div>
                 <div class="col-sm-12 text-center">
-                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" href="events.html">Mehr anzeigen</button>
+                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" href="events.html">Mehr
+                        anzeigen</button>
                 </div>
             </div>
             <div class="col-sm-6 abstand">
@@ -178,7 +193,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php
+                                    <?php
                                     printHighscoreTop3Award();
                                 ?>
                                 </tbody>
@@ -198,8 +213,7 @@
     </footer>
     <!-- Optional JavaScript -->
     <script type="application/javascript">
-        function setAwardButton(value)
-        {
+        function setAwardButton(value) {
             document.getElementById("AwardType").innerText = value;
         }
 
