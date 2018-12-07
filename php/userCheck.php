@@ -13,7 +13,7 @@ $db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql'
  */
 function logout()
 {
-    header("Refresh:0; url=../Login.html");
+    header("Refresh:0; url=../index.html");
     if(session_status() == PHP_SESSION_ACTIVE) {
         session_destroy();
     }
