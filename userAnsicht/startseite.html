@@ -16,7 +16,7 @@
 
 <body>
     <?php
-        include("startseite.php");
+        include_once("startseite.php");
     ?>
     <!--HEADER-->
     <header class="headerStartseite">
@@ -40,8 +40,15 @@
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Mein Profil</a>
-                            <form action="?logout=1" method="post">
-                                <a class="dropdown-item" type="submit" name="logout">Logout</a>
+                            <script>
+                                function logout()
+                                {
+                                    var form = document.getElementById("logoutForm");
+                                    form.submit();
+                                }
+                            </script>
+                            <form id="logoutForm" action="?logout=1" method="post">
+                                <a class="dropdown-item" onclick="logout()" name="logout">Logout</a>
                             </form>
                         </div>
                     </div>
@@ -94,11 +101,70 @@
                         <p class="font-weight-bold abstand1">Tokens anfordern</p>
                         <hr>
                     </div>
+
+                    <script language="JavaScript" type="text/javascript">
+                        function msg() {
+                            var errorMsg = document.getElementById("antragErrorMsg");
+                            errorMsg.classList.remove("visibleMeldung");
+                            errorMsg.classList.add("hiddenMeldung");
+
+                            var error = false;
+
+                            var aName = document.getElementById("awardType");
+                            if ( aName.innerHTML.trim() === "Award Auswählen")
+                            {
+                                error = true;
+                            }
+
+                            var tokenAnzahl = document.getElementById("tokenAnzahl");
+                            try {
+                                var cache = parseInt(tokenAnzahl.value);
+                                var temp = tokenAnzahl.value.length;
+                                if ( cache < 0 || temp == 0)
+                                {
+                                    error = true;
+                                }
+                            }
+                            catch (err) {
+                                error = true;
+                            }
+
+                            var betreff = document.getElementById("betreff");
+                            if ( betreff.value.length <= 0 )
+                            {
+                                error = true;
+                            }
+
+                            var beschreibung = document.getElementById("beschreibung");
+                            if ( beschreibung.value.length <= 0 )
+                            {
+                                error = true;
+                            }
+
+                            if ( error )
+                            {
+                                errorMsg.classList.remove("hiddenMeldung");
+                                errorMsg.classList.add("visibleMeldung");
+                            }
+                            else
+                            {
+                                var form = document.getElementById("antrag");
+                                form.submit();
+                            }
+                        }
+                    </script>
+
+
                     <form id="antrag" action="?requestToken=1" method="post">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="btn-group">
+                                        <script type="application/javascript">
+                                            function setAwardButton(value) {
+                                                document.getElementById("AwardType").innerText = value;
+                                            }
+                                        </script>
                                         <button type="button" id="awardType" class="btn btn-primary dropdown-toggle btn-outline-primary"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Award Auswählen
@@ -141,7 +207,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 text-center">
-                                    <input class="btn btn-outline-primary dashboardButtons" type="submit" value="Anfordern">
+                                    <input class="btn btn-outline-primary dashboardButtons" onclick="msg()" readonly ed value="Anfordern">
                                 </div>
                             </div>
                             <div id="antragErrorMsg" class='falsch hiddenMeldung'>Ungültige Eingabe! Bitte überprfen Sie ob alle Felder korrekt ausgefüllt sind!</div>
@@ -232,13 +298,6 @@
         similique possimus hic consectetur iusto, dicta soluta, quasi nulla totam culpa error! Vero, sit voluptatum.
     </footer>
     <!-- Optional JavaScript -->
-    <script type="application/javascript">
-        function setAwardButton(value) {
-            document.getElementById("AwardType").innerText = value;
-        }
-
-
-    </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

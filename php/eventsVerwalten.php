@@ -6,7 +6,7 @@
  * Time: 11:08
  */
 $db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
-include("userCheck.php");
+include_once("userCheck.php");
 function listAllEvents()
 {
     global $db;

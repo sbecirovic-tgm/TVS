@@ -24,9 +24,9 @@ function getTokenHighscoreProSasison( $saisonNummer )
     $leistungen = mysqli_query($db, $sqlC);
     for (; $leistungenArray = mysqli_fetch_assoc($leistungen);)
     {
-        $sKuerzel = $leistungenArray['skuerzel'];
+        $sKuerzel = $leistungenArray['sKuerzel'];
         $name = $nameToKurzel[$sKuerzel];
-        if ( array_key_exists ( $name , $tokenProSchueler ) )
+        if ( !array_key_exists ( $name , $tokenProSchueler ) )
         {
             $tokenProSchueler[$name] = $leistungenArray['tokenAnzahl'];
         }
@@ -96,7 +96,7 @@ function getTokenHighscoreAllTime()
     {
         $sKuerzel = $leistungenArray['sKuerzel'];
         $name = $nameToKurzel[$sKuerzel];
-        if ( array_key_exists ( $name , $tokenProSchueler ) )
+        if ( !array_key_exists ( $name , $tokenProSchueler ) )
         {
             $tokenProSchueler[$name] = $leistungenArray['tokenAnzahl'];
         }
@@ -133,7 +133,7 @@ function getTokenHighscoreProAwardPerSaison( $aName, $saisonNummer )
     {
         $sKuerzel = $leistungenArray['skuerzel'];
         $name = $nameToKurzel[$sKuerzel];
-        if ( array_key_exists ( $name , $tokenProSchueler ) )
+        if ( !array_key_exists ( $name , $tokenProSchueler ) )
         {
             $tokenProSchueler[$name] = $leistungenArray['tokenAnzahl'];
         }
@@ -171,7 +171,7 @@ function getTokenHighscoreProAwardAllTime( $aName )
     {
         $sKuerzel = $leistungenArray['skuerzel'];
         $name = $nameToKurzel[$sKuerzel];
-        if ( array_key_exists ( $name , $tokenProSchueler ) )
+        if ( !array_key_exists ( $name , $tokenProSchueler ) )
         {
             $tokenProSchueler[$name] = $leistungenArray['tokenAnzahl'];
         }
@@ -213,7 +213,7 @@ function getAwardHighscoreProSasison( $saisonNummer )
     {
         $sKuerzel = $awardsArray['skuerzel'];
         $name = $nameToKurzel[$sKuerzel];
-        if ( array_key_exists ( $name , $out ) )
+        if ( !array_key_exists ( $name , $out ) )
         {
             $out[$name] = 1;
         }
@@ -240,7 +240,7 @@ function getAwardHighscoreAllTime()
     {
         $sKuerzel = $awardsArray['skuerzel'];
         $name = $nameToKurzel[$sKuerzel];
-        if ( array_key_exists ( $name , $out ) )
+        if ( !array_key_exists ( $name , $out ) )
         {
             $out[$name] = 1;
         }
@@ -267,7 +267,7 @@ function getAwardHighscoreProAwardSaision( $saisonNummer, $aName )
     {
         $sKuerzel = $awardsArray['skuerzel'];
         $name = $nameToKurzel[$sKuerzel];
-        if ( array_key_exists ( $name , $out ) )
+        if ( !array_key_exists ( $name , $out ) )
         {
             $out[$name] = 1;
         }
@@ -294,7 +294,7 @@ function getAwardHighscoreProAwardAllTime( $aName )
     {
         $sKuerzel = $awardsArray['skuerzel'];
         $name = $nameToKurzel[$sKuerzel];
-        if ( array_key_exists ( $name , $out ) )
+        if ( !array_key_exists ( $name , $out ) )
         {
             $out[$name] = 1;
         }

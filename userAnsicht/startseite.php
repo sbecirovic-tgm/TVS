@@ -20,7 +20,7 @@ function printAwardDropDown ()
     $award = mysqli_query($db, $sqlC);
     for (; $award_array = mysqli_fetch_assoc($award); ) {
         $name = $award_array['name'];
-        echo '<a class="dropdown-item" onclick="setAwardButton(' . $name . ')">' . $name . '</a>';
+        echo '<a class="dropdown-item" onclick="setAwardButton(\'' . $name . '\')">' . $name . '</a>';
     }
 }
 
@@ -161,75 +161,15 @@ if (isset($_GET['eventEintragen3']))
 
 
 if(isset($_GET['requestToken'])) {
-    echo '<script language="JavaScript" type="text/javascript">
-            var errorMsg = document.getElementById("antragErrorMsg");
-            errorMsg.classList.remove("visibleMeldung");
-            errorMsg.classList.add("hiddenMeldung");
-    
-            var error = false;
-    
-            var aName = document.getElementById("awardType");
-            if ( aName.innerHTML.trim() === "Award Auswählen")
-            {
-                error = true;
-            }
-    
-            var tokenAnzahl = document.getElementById("tokenAnzahl");
-            try {
-                var cache = parseInt(tokenAnzahl.value);
-                var temp = tokenAnzahl.value.length;
-                if ( cache < 0 || temp == 0)
-                {
-                    error = true;
-                }
-            }
-            catch (err) {
-                error = true;
-            }
-    
-            var betreff = document.getElementById("betreff");
-            if ( betreff.value.length <= 0 )
-            {
-                error = true;
-            }
-    
-            var beschreibung = document.getElementById("beschreibung");
-            if ( beschreibung.value.length <= 0 )
-            {
-                error = true;
-            }
-    
-            if ( error )
-            {
-                errorMsg.classList.remove("hiddenMeldung");
-                errorMsg.classList.add("visibleMeldung");
-            }
-        </script>';
+    include_once ("../php/anfragenVerwalten.php");
     //insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), NULL, NULL, NULL, NULL, NULL, NULL, 'swahl', '1', 'Test ist das', 'Test', NULL, NULL);
-    $error = false;
+
     $awardTyp = $_POST['awardType'];
-    if ($awardTyp == 'Award Auswählen') {
-        $error = true;
-    }
     $tokenAnzahl = $_POST['tokenAnzahl'];
-    if ($tokenAnzahl < 0 || strlen($tokenAnzahl) == 0)
-    {
-        $error = true;
-    }
     $betreff = $_POST['betreff'];
-    if (strlen($betreff) == 0)
-    {
-        $error = true;
-    }
     $beschreibung = $_POST['beschreibung'];
-    if (strlen($beschreibung) == 0)
-    {
-        $error = true;
-    }
     // inserten, alles andere auf NULL setzten --> bei der normalen abfrage nicht notwendig
-    if (!$error) {
-        $result = requestTokenBasic($awardTyp, $tokenAnzahl, $betreff, $beschreibung, $userName);
-    }
+    $result = requestTokenBasic($awardTyp, $tokenAnzahl, $betreff, $beschreibung, $userName);
 
 }
 if(isset($_GET['logout']))

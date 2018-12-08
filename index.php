@@ -1,7 +1,7 @@
 <?php
 session_start();
-include("php\conLdap.php");
-include("php\userCheck.php");
+include_once("php\conLdap.php");
+include_once("php\userCheck.php");
 $db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 
 if(isset($_GET['login']))
