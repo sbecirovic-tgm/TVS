@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/tvs.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+    
     <title>Tokenverwaltung</title>
 </head>
 
@@ -75,12 +76,9 @@
                             <input type="eventname" id="eventname" name="eventname" class="form-control" minlength="1"
                                 aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-primary text-light" id="inputGroup-sizing-default">Beschreibung</span>
-                            </div>
-                            <input type="eventbeschreibung" id="eventbeschreibung" name="eventbeschreibung" class="form-control"
-                                minlength="1" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <div class="form-group">
+                            <label>Beschreibung:</label>
+                            <textarea class="form-control" rows="3" minlength="1" id="beschreibung" name="beschreibung"></textarea>
                         </div>
                         <div class="col-sm-12 text-center">
                             <button type="button" class="btn btn-outline-primary adminEventButton abstand1">Event
@@ -210,7 +208,7 @@
         </div>
     </div>
     <footer class="blog-footer fixed-bottom">
-        © 2018 Wahl, Becirovic, Gavric, Filipovic 
+        © 2018 Wahl, Becirovic, Gavric, Filipovic
     </footer>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
