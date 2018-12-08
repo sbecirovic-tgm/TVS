@@ -41,8 +41,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Mein Profil</a>
                             <script>
-                                function logout()
-                                {
+                                function logout() {
                                     var form = document.getElementById("logoutForm");
                                     form.submit();
                                 }
@@ -71,7 +70,7 @@
                     <a class="nav-link active" href="" onclick="submitForm('eventForm')">
                         Events
                         <span class="badge badge-pill bg-light align-text-bottom">
-                        <?php
+                            <?php
                             include_once("../php/eventsVerwalten.php");
                             echo countNewEvents();
                         ?>
@@ -111,8 +110,7 @@
                             var error = false;
 
                             var aName = document.getElementById("awardType");
-                            if ( aName.innerHTML.trim() === "Award Auswählen")
-                            {
+                            if (aName.innerHTML.trim() === "Award Auswählen") {
                                 error = true;
                             }
 
@@ -120,8 +118,7 @@
                             try {
                                 var cache = parseInt(tokenAnzahl.value);
                                 var temp = tokenAnzahl.value.length;
-                                if ( cache < 0 || temp == 0)
-                                {
+                                if (cache < 0 || temp == 0) {
                                     error = true;
                                 }
                             }
@@ -130,24 +127,20 @@
                             }
 
                             var betreff = document.getElementById("betreff");
-                            if ( betreff.value.length <= 0 )
-                            {
+                            if (betreff.value.length <= 0) {
                                 error = true;
                             }
 
                             var beschreibung = document.getElementById("beschreibung");
-                            if ( beschreibung.value.length <= 0 )
-                            {
+                            if (beschreibung.value.length <= 0) {
                                 error = true;
                             }
 
-                            if ( error )
-                            {
+                            if (error) {
                                 errorMsg.classList.remove("hiddenMeldung");
                                 errorMsg.classList.add("visibleMeldung");
                             }
-                            else
-                            {
+                            else {
                                 var form = document.getElementById("antrag");
                                 form.submit();
                             }
@@ -181,8 +174,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text bg-primary text-light">Token</span>
                                         </div>
-                                        <input type="number" min="0" id="tokenAnzahl" name="tokenAnzahl" class="form-control tokens" aria-label="Sizing example input"
-                                            aria-describedby="inputGroup-sizing-default">
+                                        <input type="number" min="0" id="tokenAnzahl" name="tokenAnzahl" class="form-control tokens"
+                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                     </div>
                                 </div>
                             </div>
@@ -192,8 +185,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text bg-primary text-light" id="inputGroup-sizing-default">Betreff</span>
                                         </div>
-                                        <input type="text" id="betreff" name="betreff" class="form-control" minlength="1" aria-label="Sizing example input"
-                                            aria-describedby="inputGroup-sizing-default">
+                                        <input type="text" id="betreff" name="betreff" class="form-control" minlength="1"
+                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                     </div>
                                 </div>
                             </div>
@@ -207,10 +200,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 text-center">
-                                    <input class="btn btn-outline-primary dashboardButtons" onclick="msg()" readonly ed value="Anfordern">
+                                    <input class="btn btn-outline-primary dashboardButtons" onclick="msg()" readonly ed
+                                        value="Anfordern">
                                 </div>
                             </div>
-                            <div id="antragErrorMsg" class='falsch hiddenMeldung'>Ungültige Eingabe! Bitte überprfen Sie ob alle Felder korrekt ausgefüllt sind!</div>
+                            <div id="antragErrorMsg" class='falsch hiddenMeldung'>Ungültige Eingabe! Bitte überprfen
+                                Sie ob alle Felder korrekt ausgefüllt sind!</div>
                         </div>
                     </form>
                 </div>
@@ -293,9 +288,8 @@
             </div>
         </div>
     </div>
-    <footer class="blog-footer">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui sit repudiandae deleniti esse facere molestiae,
-        similique possimus hic consectetur iusto, dicta soluta, quasi nulla totam culpa error! Vero, sit voluptatum.
+    <footer class="blog-footer fixed-bottom">
+        © 2018 Wahl, Becirovic, Gavric, Filipovic
     </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

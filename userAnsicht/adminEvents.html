@@ -15,9 +15,6 @@
 
 <body>
     <!--HEADER-->
-    <?php
-        include_once("events.php");
-    ?>
 
     <header class="headerEvents"></header>
     <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
@@ -47,7 +44,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </nav>
     </header>
@@ -68,6 +64,33 @@
 
     <!--Inhalt-->
     <div class="container">
+        <div class="col-sm-12 tokenAnfragen">
+            <div class="card">
+                <div class="card-body">
+                    <form>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-primary text-light adminEventText" id="inputGroup-sizing-default">Eventname</span>
+                            </div>
+                            <input type="eventname" id="eventname" name="eventname" class="form-control" minlength="1"
+                                aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-primary text-light" id="inputGroup-sizing-default">Beschreibung</span>
+                            </div>
+                            <input type="eventbeschreibung" id="eventbeschreibung" name="eventbeschreibung" class="form-control"
+                                minlength="1" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        </div>
+                        <div class="col-sm-12 text-center">
+                            <button type="button" class="btn btn-outline-primary adminEventButton abstand1">Event
+                                hinzufügen</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="col-sm-12">
             <div class="row row-striped">
                 <div class="col-2 text-right">
@@ -75,15 +98,17 @@
                     <h2>OCT</h2>
                 </div>
                 <div class="col-10 eventMedia">
-                    <h3 class="text-uppercase"><strong>We are developers</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Monday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 12:30 PM - 2:00
-                            PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Cafe</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
+                    <h4 class="text-uppercase"><strong>We are developers</strong></h3>
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Monday</li>
+                            <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 12:30 PM -
+                                2:00
+                                PM</li>
+                            <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Cafe</li>
+                        </ul>
+                        <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore
+                            et dolore magna aliqua.</p>
                 </div>
             </div>
             <div class="row row-striped">
@@ -185,7 +210,7 @@
         </div>
     </div>
     <footer class="blog-footer fixed-bottom">
-        © 2018 Wahl, Becirovic, Gavric, Filipovic
+        © 2018 Wahl, Becirovic, Gavric, Filipovic 
     </footer>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

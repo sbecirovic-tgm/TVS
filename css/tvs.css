@@ -10,6 +10,10 @@ header {
   margin-top: 3em;
 }
 
+.tokenAnfragen {
+  margin: 0 0 2em 0;
+}
+
 .abstand1 {
   margin-top: 1em;
 }
@@ -84,7 +88,15 @@ footer p:last-child {
 }
 
 .dashboardButtons {
-  width: 50%;
+  width: 15rem;
+}
+
+.adminEventButton {
+  width: 15rem;
+}
+
+.adminEventText {
+  width: 7.6rem;
 }
 
 .row-striped:nth-of-type(odd){
@@ -101,7 +113,11 @@ footer p:last-child {
     padding: 15px 0;
 }
 
-
+@media (max-width: 575.98px) {
+  .eventMedia {
+    margin: 0 0 0 0.1rem;
+  }
+}
 
 @media (max-width: 991.98px) {
   .offcanvas-collapse {
