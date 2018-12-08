@@ -3,7 +3,7 @@ header {
 }
 
 .nav-scroller {
-  margin: 0 0 4em 0;
+  margin: 0 0 2em 0;
 }
 
 .abstand {
@@ -71,15 +71,15 @@ header {
   /*
  * Footer
  */
-.blog-footer {
+footer {
   margin-top: 4em;
-  padding: 2.5rem 0;
+  padding: 1.5rem 0;
   color: #999;
   text-align: center;
   background-color: #f8f9fa;
   border-top: .05rem solid #e5e5e5;
 }
-.blog-footer p:last-child {
+footer p:last-child {
   margin-bottom: 0;
 }
 
@@ -177,3 +177,4 @@ header {
 .hiddenMeldung {
   display: none;
 }
+
