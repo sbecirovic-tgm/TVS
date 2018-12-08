@@ -5,16 +5,19 @@
  * Date: 21.11.2018
  * Time: 10:08
  */
-$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
+$db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 
 function getSaisonNumbFromDate($date)
 {
     global $db;
-    $sqlC = "select startJahr, DATEPART(month, startDatumWSem) as startWSemMon , DATEPART(day, startDatumWSem) as startWSemDay, DATEPART(month, endDatumWSem) as endWSemMon , DATEPART(day, endDatumWSem) as endWSemDay, DATEPART(month, startDatumsSem) as startSSemMon , DATEPART(day, startDatumSSem) as startSSemDay, DATEPART(month, endDatumSSem) as endSSemMon , DATEPART(day, endDatumSSem) as endSSemDay  from saisonEinstellung";
+    $sqlC = "select startJahr, MONTH(startDatumWSem) as startWSemMon , DAY(startDatumWSem) as startWSemDay, MONTH(endDatumWSem) as endWSemMon , DAY(endDatumWSem) as endWSemDay, MONTH(startDatumsSem) as startSSemMon , DAY(startDatumSSem) as startSSemDay, MONTH(endDatumSSem) as endSSemMon , DAY(endDatumSSem) as endSSemDay  from saisonEinstellung";
     $result = mysqli_query($db, $sqlC);
     $resArray = mysqli_fetch_assoc($result);
 
     $dateNow = $date;
+    $time = strtotime($dateNow);
+    $dateNow = date('Y-m-d', $time);
+    $dateNow = date_create($dateNow);
     $tempMon = date_format($dateNow, "M");
 
     if ( ($tempMon > 8 && $tempMon < 13) || ($tempMon < 3 && $tempMon > 0))

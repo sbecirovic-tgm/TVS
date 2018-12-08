@@ -8,7 +8,7 @@
 
 //session_start();
 
-$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
+$db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 
 function requestTokenBasic ( $awardTyp, $tokenAnzahl, $betreff, $beschreibung, $userKuerzel )
 {
@@ -24,7 +24,7 @@ function requestTokenExt ( $awardTyp, $eventName, $eventDate, $unterKatName, $us
 {
     global $db;
     // inserten, alles andere auf NULL setzten --> bei der normalen abfrage nicht notwendig
-    $sqlC = "insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, tokenAnzahlNeu, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), '$awardTyp', NULL, NULL, '$eventName', '$eventDate', $unterKatName, '$userKuerzel', '$tokenAnzahl', NULL, '$beschreibung', '$betreff', NULL, NULL)";
+    $sqlC = "insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, tokenAnzahlNeu, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), '$awardTyp', NULL, NULL, '$eventName', '$eventDate', '$unterKatName', '$userKuerzel', '$tokenAnzahl', NULL, '$beschreibung', '$betreff', NULL, NULL)";
 
     $result = mysqli_query($db, $sqlC);
     return $result;
@@ -39,7 +39,7 @@ function changeTokenRequestToken ( $id, $userKeurzel, $datum, $zeit, $awardTypNe
     $requestArray = mysqli_fetch_assoc($request);
     if ( $requestArray['wirdBewilligt'] == NULL )
     {
-        $sqlC = "update anfrage set datum = CURDATE(), zeit = CURTIME(), aName = '$awardTypNeu', eName =  '$eventNameNeu', eDate = '$eventDateNeu', untName = '$unterKatNameNeu', tokenAnzahl = '$tokenAnzahlBenutzerNeu', beschreibung = '$beschreibungNeu', betreff = '$betreffNeu' where id = '$id' and datum = '$datum' and zeit = '$zeit' and skuerzel = $userKeurzel";
+        $sqlC = "update anfrage set datum = CURDATE(), zeit = CURTIME(), aName = '$awardTypNeu', eName =  '$eventNameNeu', eDate = '$eventDateNeu', untName = '$unterKatNameNeu', tokenAnzahl = '$tokenAnzahlBenutzerNeu', beschreibung = '$beschreibungNeu', betreff = '$betreffNeu' where id = '$id' and datum = '$datum' and zeit = '$zeit' and skuerzel = '$userKeurzel'";
         return mysqli_query($db, $sqlC);
     }
     else
@@ -123,6 +123,34 @@ function listAllReqests()
     $out = array();
 
     $sqlC = "select * from anfrage order by datum desc, zeit desc";
+    $anfragen = mysqli_query($db, $sqlC);
+
+    for( $i = 0; $anfragen_array = mysqli_fetch_assoc($anfragen); $i++)
+    {
+        $out[$i] = array();
+        $out[$i]['datum'] = $anfragen_array['datum'];
+        $out[$i]['zeit'] = $anfragen_array['zeit'];
+        $out[$i]['aName'] = $anfragen_array['aName'];
+        $out[$i]['eName'] = $anfragen_array['eName'];
+        $out[$i]['eDatum'] = $anfragen_array['eDatum'];
+        $out[$i]['untName'] = $anfragen_array['untName'];
+        $out[$i]['tokenAnzahl'] = $anfragen_array['tokenAnzahl'];
+        $out[$i]['beschreibung'] = $anfragen_array['beschreibung'];
+        $out[$i]['betreff'] = $anfragen_array['betreff'];
+        $out[$i]['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
+        $out[$i]['kommentar'] = $anfragen_array['kommentar'];
+    }
+
+    return $out;
+}
+
+
+function listAllRequestsProAward( $aName )
+{
+    global $db;
+    $out = array();
+
+    $sqlC = "select * from anfrage where aName = '$aName' order by datum desc, zeit desc";
     $anfragen = mysqli_query($db, $sqlC);
 
     for( $i = 0; $anfragen_array = mysqli_fetch_assoc($anfragen); $i++)

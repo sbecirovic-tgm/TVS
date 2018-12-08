@@ -214,8 +214,7 @@ CREATE TABLE anfrage (
 CREATE TABLE saisonEinstellung (
        startJahr INTEGER,
        startDatumWSem DATE,
-       endDatumWSem DATE
-
+       endDatumWSem DATE,
 	   startDatumSSem DATE,
 	   endDatumSSem DATE,
 

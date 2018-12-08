@@ -5,7 +5,7 @@
  * Date: 19.11.2018
  * Time: 17:53
  */
-$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
+$db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 
 function insertAward( $name, $tokenLimit )
 {
@@ -39,7 +39,7 @@ function makeLeistungProAward($aName)
 function updateAward( $name, $nameNeu, $tokenLimit )
 {
     global $db;
-    $sqlC = "update award set name = '$nameNeu', tokenLimit = '$tokenLimit' where name = $name";
+    $sqlC = "update award set name = '$nameNeu', tokenLimit = '$tokenLimit' where name = '$name'";
     return mysqli_query($db, $sqlC);
 }
 

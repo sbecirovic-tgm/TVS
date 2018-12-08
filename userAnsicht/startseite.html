@@ -34,13 +34,12 @@
                         <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <?php
-                                echo '$userName';
+                                include_once("../php/userCheck.php");
+                                echo getNameFromKuerzel($userName);
                             ?>
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Mein Profil</a>
-                            <a class="dropdown-item" href="startseite.html">Startseite</a>
-                            <a class="dropdown-item" href="#">Antrag History</a>
                             <form action="?logout=1" method="post">
                                 <a class="dropdown-item" type="submit" name="logout">Logout</a>
                             </form>
@@ -50,16 +49,33 @@
             </div>
         </nav>
     </header>
+
+    <script language="JavaScript" type="text/javascript">
+        function submitForm(form) {
+            var myForm = document.getElementById(form);
+            myForm.submit();
+        }
+    </script>
     <div class="nav-scroller bg-white shadow-md">
         <div class="container">
             <nav class="nav nav-underline">
-                <a class="nav-link" href="#" style="padding-left: 0;">Dashboard</a>
-                <a class="nav-link active" href="#">
-                    Events
-                    <span class="badge badge-pill bg-light align-text-bottom">27</span>
-                </a>
-                <a class="nav-link" href="#">Tokenhistory</a>
-                <a class="nav-link" href="#">Highscores</a>
+                <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
+                <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
+                    <a class="nav-link active" href="" onclick="submitForm('eventForm')">
+                        Events
+                        <span class="badge badge-pill bg-light align-text-bottom">
+                        <?php
+                            include_once("../php/eventsVerwalten.php");
+                            echo countNewEvents();
+                        ?>
+                        </span>
+                    </a>
+                </form>
+
+                <a class="nav-link active" href="antragHistroy.html">Antraghistory</a>
+                <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
+                    <a class="nav-link active" href="" onclick="submitForm('highscoreForm')">Highscores</a>
+                </form>
             </nav>
         </div>
     </div>
@@ -78,14 +94,14 @@
                         <p class="font-weight-bold abstand1">Tokens anfordern</p>
                         <hr>
                     </div>
-                    <form action="?requestToken=1" method="post">
+                    <form id="antrag" action="?requestToken=1" method="post">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="btn-group">
                                         <button type="button" id="awardType" class="btn btn-primary dropdown-toggle btn-outline-primary"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            AwardType
+                                            Award Auswählen
                                         </button>
                                         <div class="dropdown-menu">
                                             <?php
@@ -99,7 +115,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text bg-primary text-light">Token</span>
                                         </div>
-                                        <input type="text" id="tokenAnzahl" class="form-control tokens" aria-label="Sizing example input"
+                                        <input type="number" min="0" id="tokenAnzahl" name="tokenAnzahl" class="form-control tokens" aria-label="Sizing example input"
                                             aria-describedby="inputGroup-sizing-default">
                                     </div>
                                 </div>
@@ -110,7 +126,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text bg-primary text-light" id="inputGroup-sizing-default">Betreff</span>
                                         </div>
-                                        <input type="text" id="betreff" class="form-control" aria-label="Sizing example input"
+                                        <input type="text" id="betreff" name="betreff" class="form-control" minlength="1" aria-label="Sizing example input"
                                             aria-describedby="inputGroup-sizing-default">
                                     </div>
                                 </div>
@@ -119,16 +135,16 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label>Beschreibung:</label>
-                                        <textarea class="form-control" rows="3" id="beschreibung"></textarea>
+                                        <textarea class="form-control" rows="3" minlength="1" id="beschreibung" name="beschreibung"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 text-center">
-                                    <input class="btn btn-outline-primary dashboardButtons" type="submit" name="submitAnforderung"
-                                        value="Anfordern">
+                                    <input class="btn btn-outline-primary dashboardButtons" type="submit" value="Anfordern">
                                 </div>
                             </div>
+                            <div id="antragErrorMsg" class='falsch hiddenMeldung'>Ungültige Eingabe! Bitte überprfen Sie ob alle Felder korrekt ausgefüllt sind!</div>
                         </div>
                     </form>
                 </div>
@@ -156,7 +172,9 @@
                             </table>
                         </div>
                         <div class="col-sm-12 text-center">
-                            <button type="button" class="btn btn-outline-primary dashboardButtons">Mehr</button>
+                            <form action="?overallHighscoreAnzeigen=1" method="post">
+                                <input type="submit" class="btn btn-outline-primary dashboardButtons" value="Mehr">
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -200,7 +218,9 @@
                             </table>
                         </div>
                         <div class="col-sm-12 text-center">
-                            <button type="button" class="btn btn-outline-primary dashboardButtons">Mehr</button>
+                            <form action="?awardHighscoreAnzeigen=1" method="post">
+                                <input type="submit" class="btn btn-outline-primary dashboardButtons" value="Mehr">
+                            </form>
                         </div>
                     </div>
                 </div>

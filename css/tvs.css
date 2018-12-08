@@ -26,6 +26,8 @@ header {
   
   .falsch {
     color: #FF0000;
+    text-align: center;
+    margin-top: 1em;
   }
 
   .textInhalt {
@@ -158,4 +160,20 @@ header {
 .nav-underline .active {
   font-weight: 500;
   color: #343a40;
+}
+
+.loginButtonSize {
+  height: 75%;
+}
+
+.menueColor {
+  color: #343a40;
+  font-weight: 500;
+}
+
+.visibleMeldung {
+  display: block;
+}
+.hiddenMeldung {
+  display: none;
 }

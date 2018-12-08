@@ -8,7 +8,7 @@
 session_start();
 
 
-$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
+$db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 
 $userName = $_SESSION['userName'];
 
@@ -72,6 +72,27 @@ function printEventLimit4()
         */
         $i++;
     }
+}
+
+if (isset($_GET['overallHighscoreAnzeigen']))
+{
+    $_SESSION['highscore'] = "overall";
+}
+
+if (isset($_GET['awardHighscoreAnzeigen']))
+{
+    $_SESSION['highscore'] = "award";
+}
+
+if (isset($_GET['highscoreAnzeigen']))
+{
+    $_SESSION['highscore'] = NULL;
+}
+
+if (isset($_GET['eventAnzeigen']))
+{
+    $_SESSION['eventEintragung'] = NULL;
+    header("Refresh:0; url=events.html");
 }
 
 if (isset($_GET['eventEintragen0']))
@@ -139,17 +160,78 @@ if (isset($_GET['eventEintragen3']))
 }
 
 
-if(isset($_GET['requestToken']))
-{
+if(isset($_GET['requestToken'])) {
+    echo '<script language="JavaScript" type="text/javascript">
+            var errorMsg = document.getElementById("antragErrorMsg");
+            errorMsg.classList.remove("visibleMeldung");
+            errorMsg.classList.add("hiddenMeldung");
+    
+            var error = false;
+    
+            var aName = document.getElementById("awardType");
+            if ( aName.innerHTML.trim() === "Award Auswählen")
+            {
+                error = true;
+            }
+    
+            var tokenAnzahl = document.getElementById("tokenAnzahl");
+            try {
+                var cache = parseInt(tokenAnzahl.value);
+                var temp = tokenAnzahl.value.length;
+                if ( cache < 0 || temp == 0)
+                {
+                    error = true;
+                }
+            }
+            catch (err) {
+                error = true;
+            }
+    
+            var betreff = document.getElementById("betreff");
+            if ( betreff.value.length <= 0 )
+            {
+                error = true;
+            }
+    
+            var beschreibung = document.getElementById("beschreibung");
+            if ( beschreibung.value.length <= 0 )
+            {
+                error = true;
+            }
+    
+            if ( error )
+            {
+                errorMsg.classList.remove("hiddenMeldung");
+                errorMsg.classList.add("visibleMeldung");
+            }
+        </script>';
     //insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), NULL, NULL, NULL, NULL, NULL, NULL, 'swahl', '1', 'Test ist das', 'Test', NULL, NULL);
+    $error = false;
     $awardTyp = $_POST['awardType'];
+    if ($awardTyp == 'Award Auswählen') {
+        $error = true;
+    }
     $tokenAnzahl = $_POST['tokenAnzahl'];
+    if ($tokenAnzahl < 0 || strlen($tokenAnzahl) == 0)
+    {
+        $error = true;
+    }
     $betreff = $_POST['betreff'];
+    if (strlen($betreff) == 0)
+    {
+        $error = true;
+    }
     $beschreibung = $_POST['beschreibung'];
+    if (strlen($beschreibung) == 0)
+    {
+        $error = true;
+    }
     // inserten, alles andere auf NULL setzten --> bei der normalen abfrage nicht notwendig
-    $result = requestTokenBasic($awardTyp, $tokenAnzahl, $betreff, $beschreibung, $userName);
-}
+    if (!$error) {
+        $result = requestTokenBasic($awardTyp, $tokenAnzahl, $betreff, $beschreibung, $userName);
+    }
 
+}
 if(isset($_GET['logout']))
 {
     include_once("../php/userCheck.php");

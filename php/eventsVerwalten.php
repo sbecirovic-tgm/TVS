@@ -5,12 +5,12 @@
  * Date: 19.11.2018
  * Time: 11:08
  */
-$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
+$db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 include("userCheck.php");
 function listAllEvents()
 {
     global $db;
-    $sqlC = "select * from event order by data desc";
+    $sqlC = "select * from event order by datum desc";
     $events = mysqli_query($db, $sqlC);
     $out = array();
     for ($i = 0; $event_array = mysqli_fetch_assoc($events); $i++) {
@@ -107,6 +107,16 @@ function deleteEvent ( $name, $datum, $aName )
 
     $sqlC = "delete from event where name = '$name' and datum = '$datum' and aName = '$aName'";
     return mysqli_query($db,$sqlC);
+}
+
+function countNewEvents()
+{
+    global $db;
+
+    $sqlC = "select count(name) as result from event where datum >= CURDATE()";
+    $temp = mysqli_query($db,$sqlC);
+    $out = mysqli_fetch_assoc($temp);
+    return $out['result'];
 }
 
 ?>

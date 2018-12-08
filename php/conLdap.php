@@ -17,13 +17,18 @@ if(ldap_bind($ldap_con, $ldap_dn, $ldap_password)) {
 */
 // https://www.youtube.com/watch?v=AEjGhzZpGlg phpinfo();
 
-if ( ($userName == 'swahl@student.tgm.ac.at' && $password == '1') || ($userName == 'fgavric@student.tgm.ac.at' && $password == '2') || ($userName == 'khoeher@tgm.ac.at' && $password == '3'))
+
+function checkUserPass( $userName, $password)
 {
-    return True;
+    if ( ($userName == 'swahl@student.tgm.ac.at' && $password == '1') || ($userName == 'fgavric@student.tgm.ac.at' && $password == '2') || ($userName == 'khoeher@tgm.ac.at' && $password == '3'))
+    {
+        return True;
+    }
+    else
+    {
+        return False;
+    }
 }
-else
-{
-    return False;
-}
+
 
 ?>

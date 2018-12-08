@@ -5,8 +5,7 @@
  * Date: 19.11.2018
  * Time: 16:40
  */
-$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
-
+$db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 
 /*
  * LOGOUT!
@@ -31,15 +30,15 @@ function checkIfUserInDatabase( $kuerzel, $isSchueler )
     global $db;
     if ( $isSchueler == 0 )
     {
-        $sqlC = 'select count(kuerzel) as anzahl from schueler where kuerzel = "' . $kuerzel . '"';
+        $sqlC = "select count(kuerzel) as anzahl from schueler where kuerzel = '$kuerzel'";
     }
     elseif ( $isSchueler == 1 )
     {
-        $sqlC = 'select count(kuerzel) as anzahl from lehrer where kuerzel = "' . $kuerzel . '"';
+        $sqlC = "select count(kuerzel) as anzahl from lehrer where kuerzel = '$kuerzel'";
     }
     elseif ( $isSchueler == 2 )
     {
-        $sqlC = 'select count(kuerzel) as anzahl from superuser where kuerzel = "' . $kuerzel . '"';
+        $sqlC = "select count(kuerzel) as anzahl from superuser where kuerzel = '$kuerzel'";
     }
     $users = mysqli_query($db, $sqlC);
     $userArray = mysqli_fetch_assoc($users);
@@ -118,12 +117,12 @@ function getAllSchuelerNamesToKurzel()
 {
     global $db;
     $out = array();
-    $sqlC = "select sName, skuerzel from schueler";
+    $sqlC = "select sName, kuerzel from schueler";
     $schueler = mysqli_query($db, $sqlC);
 
     for ( ;$tokenArray = mysqli_fetch_assoc($schueler); )
     {
-        $out[$tokenArray['skuerzel']] = $tokenArray['sName'];
+        $out[$tokenArray['kuerzel']] = $tokenArray['sName'];
     }
 
     return $out;
@@ -178,6 +177,14 @@ function deleteSchueler ( $kuerzel )
     return mysqli_query($db, $sqlC);
 }
 
+function getNameFromKuerzel ( $kuerzel )
+{
+    global $db;
+    $sqlC = "select sName from schueler where kuerzel = '$kuerzel'";
+    $out = mysqli_fetch_assoc(mysqli_query($db, $sqlC));
+    return $out['sName'];
+}
+
 // Lehrer
 function insertLehrer ( $kuerzel, $skuerzel )
 {
@@ -211,7 +218,7 @@ function insertSuper ( $kuerzel )
 function updateSuper ( $kuerzel, $kuerzelNeu )
 {
     global $db;
-    $sqlC = "update superuser set kuerzel = '$kuerzelNeu' where kuerzel = $kuerzel";
+    $sqlC = "update superuser set kuerzel = '$kuerzelNeu' where kuerzel = '$kuerzel'";
     return mysqli_query($db, $sqlC);
 }
 

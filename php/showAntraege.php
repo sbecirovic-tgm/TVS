@@ -7,14 +7,14 @@
  */
 session_start();
 
-$db = mysqli_connect('localhost', 'root', '2017lewiS661451', 'tvs_datenbank.sql');
+$db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 $_SESSION['userName'] = 'swahl'; // muss dann nacher noch angepasst werden, nach dem Login
 $userName =$_SESSION['userName'];
 function printEvents ()
 {
 	global $db, $userName;
 
-	$sqlC = 'select * from anfrage where skuerzel = "' . $userName . '" order by datum desc';
+	$sqlC = "select * from anfrage where skuerzel = '$userName' order by datum desc";
 	$antraege = mysqli_query($db, $sqlC);
 
 	// Daten holen und in variablen speicher
