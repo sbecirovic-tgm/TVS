@@ -67,8 +67,6 @@
         function addToListItems(id)
         {
             listitems.push(document.getElementById(id));
-            //listitems.push("<li id=\"" + id + "\" class=\"list-group-item\" onclick=\"onclickTeacher(\'" + id + "\')>"
-            // + document.getElementById(id).innerHTML + "</li>");
         }
 
         function deleteFromListItems(id)
@@ -77,25 +75,23 @@
         }
 
         function rechteGeben() {
+            var removedElements = [];
             for (var i = 0; i < listitems.length;i++)
             {   
                 var element = document.getElementById('ohneRecht');
-                element.removeChild(listitems[i]);
+                removedElements.push(element.removeChild(listitems[i]));
+            }
+            
+            for (var i = 0; i < listitems.length;i++)
+            {
+                var element = document.getElementById('mitRecht');
+                removedElements[i].style.backgroundColor = "white";
+                removedElements[i].style.color = "black"
+                element.appendChild(removedElements[i]);
             }
             options = {};
             listitems = [];
             printField();
-            
-            /**for (var key in listitems) 
-            {
-               
-            }
-            var out;
-            for (var key in listitems) 
-            {
-                out += listitems[key];
-            }
-            document.getElementById('mitRecht').innerHTML += out;*/
         }
     </script>
 
@@ -178,7 +174,7 @@
                 <hr>
             </div>
             <div class="row">
-                <div name="test" class="card-body col-sm-4">
+                <div class="card-body col-sm-4">
                     <ol id="ohneRecht" class="list-group">
                         <li id="RAFM" class="list-group-item" onclick="onclickTeacher('RAFM')"><strong>Raffeiner Magor</strong></li>
                         <li id="KRAH0" class="list-group-item" onclick="onclickTeacher('KRAH0')"><strong>Kraus Helmut</strong></li>
