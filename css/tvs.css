@@ -81,9 +81,12 @@ header {
   /*
  * Footer
  */
-footer {
-  margin-top: 5rem;
-  padding: 1.5rem 0;
+.footerSticky {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  line-height: 50px;
   color: #999;
   text-align: center;
   background-color: #f8f9fa;
@@ -205,16 +208,5 @@ footer p:last-child {
   margin-bottom: 10px;
   overflow-y:scroll; 
   -webkit-overflow-scrolling: touch;
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  color: #999;
-  text-align: center;
-  background-color: #f8f9fa;
-  border-top: .05rem solid #e5e5e5;
 }
 
