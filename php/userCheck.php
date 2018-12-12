@@ -186,17 +186,17 @@ function getNameFromKuerzel ( $kuerzel )
 }
 
 // Lehrer
-function insertLehrer ( $kuerzel, $skuerzel )
+function insertLehrer ( $kuerzel, $skuerzel, $lName )
 {
     global $db;
-    $sqlC = "insert into lehrer ( kuerzel, skuerzel ) values ( '$kuerzel', '$skuerzel')";
+    $sqlC = "insert into lehrer ( kuerzel, skuerzel, lName ) values ( '$kuerzel', '$skuerzel', '$lName')";
     return mysqli_query($db, $sqlC);
 }
 
-function updateLehrer ( $kuerzel, $skuerzel )
+function updateLehrer ( $kuerzel, $kuerzelNeu, $skuerzel, $lName )
 {
     global $db;
-    $sqlC = "update lehrer set kuerzel = '$kuerzel', skuerzel = '$skuerzel' where kuerzel = $kuerzel";
+    $sqlC = "update lehrer set kuerzel = '$kuerzelNeu', skuerzel = '$skuerzel', lName = '$lName' where kuerzel = $kuerzel";
     return mysqli_query($db, $sqlC);
 }
 
@@ -208,17 +208,17 @@ function deleteLehrer ( $kuerzel )
 }
 
 // Superuser
-function insertSuper ( $kuerzel )
+function insertSuper ( $kuerzel, $lName )
 {
     global $db;
-    $sqlC = "insert into superuser ( kuerzel ) values ( '$kuerzel')";
+    $sqlC = "insert into superuser ( kuerzel, lName ) values ( '$kuerzel', '$lName')";
     return mysqli_query($db, $sqlC);
 }
 
-function updateSuper ( $kuerzel, $kuerzelNeu )
+function updateSuper ( $kuerzel, $kuerzelNeu, $lName )
 {
     global $db;
-    $sqlC = "update superuser set kuerzel = '$kuerzelNeu' where kuerzel = '$kuerzel'";
+    $sqlC = "update superuser set kuerzel = '$kuerzelNeu', lName = '$lName' where kuerzel = '$kuerzel'";
     return mysqli_query($db, $sqlC);
 }
 

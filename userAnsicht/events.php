@@ -24,6 +24,7 @@ function printEvents()
 
         $name = $event['name'];
         $aName = $event['aName'];
+        $bescheibung = $event['beschreibung'];
 
         if ( $date > time() )
         {
@@ -36,12 +37,12 @@ function printEvents()
         echo '<div class="row row-striped"><div class="col-2 text-right"><h1 class="display-4">'.$badge.'</h1>
                     <h2>'.$mon.'</h2>
                 </div>
-                <div class="col-10">
-                    <h3 class="text-uppercase"><strong>'.$name.'</strong></h3>
+                <div class="col-10 eventMedia">
+                    <h4 class="text-uppercase"><strong>'.$name.'</strong></h4>
                     <ul class="list-inline">
                         <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> Awardtyp: '.$aName.'</li>
                     </ul>
-                    <p>'.$aName.'</p>
+                    <p>'.$bescheibung.'</p>
                 </div>
             </div>';
     }
