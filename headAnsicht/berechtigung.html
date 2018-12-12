@@ -20,19 +20,45 @@
     <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
     <script>
-        var lehrer = [];
+        var lehrer;
+        var options = {};
 
-        function addTeacher(id) 
+
+        function onclickTeacher(id)
         {
-            lehrer.push(document.getElementById(id).innerHTML);
-            addToTextField();
-        }
-        function addToTextField() {
-            for(var i = 0; i < lehrer.length; i++)
+            lehrer = document.getElementById(id);
+            if ( lehrer.style.backgroundColor == "rgb(66, 139, 202)" )
             {
-                document.getElementById('selectedLehrer').innerHTML += "<option>" + lehrer[i] + "</option>";
-                
+                lehrer.style.backgroundColor = "white";
+                lehrer.style.color = "black"; 
+                removeFromField(id);
             }
+            else
+            {
+                lehrer.style.backgroundColor = "rgb(66, 139, 202)";
+                lehrer.style.color = "white"; 
+                addToTextField(id);
+            }
+            printField();
+        }
+
+        function addToTextField(id) 
+        {
+            options[id] = "<option id=\"" + id + "\">" + lehrer.innerHTML + "</option>";
+        }
+
+        function printField()
+        {
+            var out;
+            for (var key in options) {
+                out += options[key];
+            }
+            document.getElementById('selectedLehrer').innerHTML = out;
+        }
+
+        function removeFromField(id) 
+        {
+            delete options[id];
         }
     </script>
 
@@ -117,13 +143,13 @@
             <div class="row">
             <div class="card-body col-sm-4">
                 <ol class="list-group">
-                    <li id="RAFM" class="list-group-item" onclick="addTeacher('RAFM')"><strong>Raffeiner Magor</strong></li>
-                    <li id="KRAH0" class="list-group-item" onclick="addTeacher('KRAH0')"><strong>Kraus Helmut</strong></li>
-                    <li class="list-group-item"><strong>Schöll Barbara</strong></li>
-                    <li class="list-group-item"><strong>Enzenebner Daniel</strong></li>
-                    <li class="list-group-item"><strong>Zakall Stefan</strong></li>
-                    <li class="list-group-item"><strong>Pamperl Thomas</strong></li>
-                    <li class="list-group-item"><strong>Vittori Lisa</strong></li>
+                    <li id="RAFM" class="list-group-item" onclick="onclickTeacher('RAFM')"><strong>Raffeiner Magor</strong></li>
+                    <li id="KRAH0" class="list-group-item" onclick="onclickTeacher('KRAH0')"><strong>Kraus Helmut</strong></li>
+                    <li id="SOEB" class="list-group-item" onclick="onclickTeacher('SOEB')"><strong>Schöll Barbara</strong></li>
+                    <li id="ENZD" class="list-group-item" onclick="onclickTeacher('ENZD')"><strong>Enzenebner Daniel</strong></li>
+                    <li id="ZAKS" class="list-group-item" onclick="onclickTeacher('ZAKS')"><strong>Zakall Stefan</strong></li>
+                    <li id="PAMT" class="list-group-item" onclick="onclickTeacher('PAMT')"><strong>Pamperl Thomas</strong></li>
+                    <li id="VITL" class="list-group-item" onclick="onclickTeacher('VITL')"><strong>Vittori Lisa</strong></li>
                 </ol>
             </div>
                 <div class="col-sm-4">
