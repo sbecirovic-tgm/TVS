@@ -6,6 +6,7 @@
  * Time: 19:30
  */
 $db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
+session_start();
 $userName = $_SESSION['userName'];
 
 function printAwardDropDown ()
