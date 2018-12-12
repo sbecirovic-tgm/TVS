@@ -200,3 +200,9 @@ footer p:last-child {
   display: none;
 }
 
+.list-group{
+  max-height: 300px;
+  margin-bottom: 10px;
+  overflow:scroll;
+  -webkit-overflow-scrolling: touch;
+}
