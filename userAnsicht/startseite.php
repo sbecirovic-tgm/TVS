@@ -11,8 +11,7 @@ session_start();
 $db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 
 $userName = $_SESSION['userName'];
-
-
+$_SESSION['requestResult'] = Null;
 function printAwardDropDown ()
 {
     global $db;
@@ -29,7 +28,7 @@ function printHighscoreTop3Overall()
     include_once ("../php/getHighscore.php");
     $highscore = getTokenHighscoreThisSaisonLimit(3);
 
-    $i = 0;
+    $i = 1;
     foreach ($highscore as $name => $anzahl )
     {
         echo '<tr><th scope="row">'.$i.'</th><td>'.$name.'</td><td>'.$anzahl.'</td></tr>';
@@ -42,7 +41,7 @@ function printHighscoreTop3Award()
     include_once ("../php/getHighscore.php");
     $highscore = getAwardHighscoreThisSaisonLimit(3);
 
-    $i = 0;
+    $i = 1;
     foreach ($highscore as $name => $anzahl )
     {
         echo '<tr><th scope="row">'.$i.'</th><td>'.$name.'</td><td>'.$anzahl.'</td></tr>';
@@ -163,15 +162,38 @@ if (isset($_GET['eventEintragen3']))
 if(isset($_GET['requestToken'])) {
     include_once ("../php/anfragenVerwalten.php");
     //insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), NULL, NULL, NULL, NULL, NULL, NULL, 'swahl', '1', 'Test ist das', 'Test', NULL, NULL);
-
     $awardTyp = $_POST['awardType'];
     $tokenAnzahl = $_POST['tokenAnzahl'];
     $betreff = $_POST['betreff'];
     $beschreibung = $_POST['beschreibung'];
     // inserten, alles andere auf NULL setzten --> bei der normalen abfrage nicht notwendig
     $result = requestTokenBasic($awardTyp, $tokenAnzahl, $betreff, $beschreibung, $userName);
-
+    $_SESSION['requestResult'] = $result;
 }
+
+function printMeldung()
+{
+    $result = $_SESSION['requestResult'];
+    if ( $result != Null)
+    {
+        if ($result) {
+            echo '<div class="alert alert-success alert-dismissible fade show abstand1" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                   Ihr Antrag wurde erfolgreich gestellt!
+                </div>';
+        } else {
+            echo '<div class="alert alert-danger alert-dismissible fade show abstand1" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                   Ein Fehler ist aufgetreten! Bitte versuchen Sie es erneut.
+                </div>';
+        }
+    }
+}
+//setTimeout(makeDiss, 5000);
 if(isset($_GET['logout']))
 {
     include_once("../php/userCheck.php");

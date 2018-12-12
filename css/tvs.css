@@ -203,7 +203,6 @@ footer p:last-child {
 .list-group{
   max-height: 300px;
   margin-bottom: 10px;
-  overflow:scroll;
-  overflow-x: hidden; 
+  overflow-y:scroll; 
   -webkit-overflow-scrolling: touch;
 }
