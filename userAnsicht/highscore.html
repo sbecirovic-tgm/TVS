@@ -72,7 +72,7 @@
                 <input type="text" class="form-control" onkeyup="searchName()" placeholder="Name" aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default">
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-7">
                 <div class="btn-group">
                     <button type="button" id="AwardType" class="btn btn-primary dropdown-toggle btn-outline-primary"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -82,11 +82,23 @@
                         <?php
                             printAwardDropDown();
                         ?>
-                        <a class="dropdown-item" onclick="setAwardButton('Architect')">Architect</a>
-                        <a class="dropdown-item" onclick="setAwardButton('Editor')">Editor</a>
-                        <a class="dropdown-item" onclick="setAwardButton('Favorite')">Favorite</a>
-                        <a class="dropdown-item" onclick="setAwardButton('Pulitzer')">Pulitzer</a>
-                        <a class="dropdown-item" onclick="setAwardButton('Spirit of HIT')">Spirit of HIT</a>
+                        <a class="dropdown-item" onclick="setAwardButton('Architect')" href="#">Architect</a>
+                        <a class="dropdown-item" onclick="setAwardButton('Editor')" href="#">Editor</a>
+                        <a class="dropdown-item" onclick="setAwardButton('Favorite')" href="#">Favorite</a>
+                        <a class="dropdown-item" onclick="setAwardButton('Pulitzer')" href="#">Pulitzer</a>
+                        <a class="dropdown-item" onclick="setAwardButton('Spirit of HIT')" href="#">Spirit of HIT</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <div class="btn-group">
+                    <button type="button" id="SortType" class="btn btn-primary dropdown-toggle btn-outline-primary"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sortieren
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" onclick="setSortButton('Aufsteigend')">Aufsteigend</a>
+                        <a class="dropdown-item" onclick="setSortButton('Absteigend')">Absteigend</a>
                     </div>
                 </div>
             </div>
@@ -97,12 +109,9 @@
         <table class="table table-striped" id="myTable">
             <thead>
                 <tr>
-                    <th class="sorting" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" aria-label="#: activate to sort column ascending"
-                        style="width: 100px;" aria-sort="ascending">#</th>
-                    <th class="sorting" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending"
-                        style="width: 169px;" aria-sort="ascending">Name</th>
-                    <th class="sorting" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" aria-label="Token: activate to sort column ascending"
-                        style="width: 169px;" aria-sort="ascending">Token</th>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Token</th>   
                 </tr>
                 <tr>
 
@@ -114,14 +123,14 @@
         © 2018 Wahl, Becirovic, Gavric, Filipovic
     </footer>
     <script>
-        $(document).ready(function () {
-            $('#myTable').dataTable();
-        });
+        function changeIcon() {
+            document.getElementById("rang").classList.add("oi oi-chevron-bottom");
+        }
     </script>
     <script type="application/javascript">
-        changeIcon()
-        {
-            document.getElementById('filter').toggleClass("oi oi-caret-bottom oi oi-caret-top");
+
+        function setSortButton(value) {
+            document.getElementById("SortType").innerHTML = value;
         }
 
         function setAwardButton(value) {
