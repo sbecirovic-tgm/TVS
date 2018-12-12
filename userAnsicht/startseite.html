@@ -104,13 +104,14 @@
                     <script language="JavaScript" type="text/javascript">
                         function msg() {
                             var errorMsg = document.getElementById("antragErrorMsg");
+                            errorMsg.innerHTML = "Ungültige Eingabe! Bitte überprfen Sie ob alle Felder korrekt ausgefüllt sind!";
                             errorMsg.classList.remove("visibleMeldung");
                             errorMsg.classList.add("hiddenMeldung");
 
                             var error = false;
 
                             var aName = document.getElementById("awardType");
-                            if (aName.innerHTML.trim() === "Award Auswählen") {
+                            if (aName.value.trim() === "Award Auswählen") {
                                 error = true;
                             }
 
@@ -155,13 +156,11 @@
                                     <div class="btn-group">
                                         <script type="application/javascript">
                                             function setAwardButton(value) {
-                                                document.getElementById("AwardType").innerText = value;
+                                                document.getElementById("awardType").value = value;
                                             }
                                         </script>
-                                        <button type="button" id="awardType" class="btn btn-primary dropdown-toggle btn-outline-primary"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Award Auswählen
-                                        </button>
+                                        <input name="awardType" id="awardType" class="btn btn-primary dropdown-toggle btn-outline-primary"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="Award Auswählen">
                                         <div class="dropdown-menu">
                                             <?php
                                                 printAwardDropDown();
@@ -206,10 +205,14 @@
                             </div>
                             <div id="antragErrorMsg" class='falsch hiddenMeldung'>Ungültige Eingabe! Bitte überprfen
                                 Sie ob alle Felder korrekt ausgefüllt sind!</div>
+                            <?php
+                                printMeldung();
+                            ?>
                         </div>
                     </form>
                 </div>
             </div>
+
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
