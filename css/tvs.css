@@ -83,7 +83,7 @@ header {
  */
 footer {
   margin-top: 5rem;
-  padding: 5rem 0;
+  padding: 1.5rem 0;
   color: #999;
   text-align: center;
   background-color: #f8f9fa;
@@ -206,3 +206,4 @@ footer p:last-child {
   overflow-y:scroll; 
   -webkit-overflow-scrolling: touch;
 }
+
