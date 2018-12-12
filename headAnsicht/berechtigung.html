@@ -22,9 +22,17 @@
     <script>
         var lehrer = [];
 
-        function addTeacher() 
+        function addTeacher(id) 
         {
-            lehrer.push
+            lehrer.push(document.getElementById(id).innerHTML);
+            addToTextField();
+        }
+        function addToTextField() {
+            for(var i = 0; i < lehrer.length; i++)
+            {
+                document.getElementById('selectedLehrer').innerHTML += "<option>" + lehrer[i] + "</option>";
+                
+            }
         }
     </script>
 
@@ -109,8 +117,8 @@
             <div class="row">
             <div class="card-body col-sm-4">
                 <ol class="list-group">
-                    <li id="RAFM" class="list-group-item" onclick="addTeacher()"><strong>Raffeiner Magor</strong></li>
-                    <li id="KRAH0" class="list-group-item" onclick="addTeacher()"><strong>Kraus Helmut</strong></li>
+                    <li id="RAFM" class="list-group-item" onclick="addTeacher('RAFM')"><strong>Raffeiner Magor</strong></li>
+                    <li id="KRAH0" class="list-group-item" onclick="addTeacher('KRAH0')"><strong>Kraus Helmut</strong></li>
                     <li class="list-group-item"><strong>Schöll Barbara</strong></li>
                     <li class="list-group-item"><strong>Enzenebner Daniel</strong></li>
                     <li class="list-group-item"><strong>Zakall Stefan</strong></li>
