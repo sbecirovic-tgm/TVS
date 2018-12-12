@@ -20,66 +20,66 @@
     ?>
     <!--HEADER-->
     <header class="headerEvents">
-            <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
-                <div class="container">
-                    <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <ul class="navbar-nav mr-auto">
-                        </ul>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <?php
-                                    include_once("../php/userCheck.php");
-                                    echo getNameFromKuerzel($userName);
-                                ?>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Mein Profil</a>
-                                <form action="?logout=1" method="post">
-                                    <a class="dropdown-item" href="#" type="submit" name="logout">Logout</a>
-                                </form>
-                            </div>
+        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                    </ul>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <?php
+                                include_once("../php/userCheck.php");
+                                echo getNameFromKuerzel($userName);
+                            ?>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Mein Profil</a>
+                            <form action="?logout=1" method="post">
+                                <a class="dropdown-item" href="#" type="submit" name="logout">Logout</a>
+                            </form>
                         </div>
                     </div>
-        
                 </div>
-            </nav>
-            </header>
-        
-            <script language="JavaScript" type="text/javascript">
-                function submitForm(form) {
-                    var myForm = document.getElementById(form);
-                    myForm.submit();
-                }
-            </script>
-            <div class="nav-scroller bg-white shadow-md">
-                <div class="container">
-                    <nav class="nav nav-underline">
-                        <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
-                        <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
-                            <a class="nav-link active" href="#" onclick="submitForm('eventForm')">
-                                Events
-                                <span class="badge badge-pill bg-light align-text-bottom">
-                                    <?php
-                                    include_once("../php/eventsVerwalten.php");
-                                    echo countNewEvents();
-                                ?>
-                                </span>
-                            </a>
-                        </form>
-        
-                        <a class="nav-link active" href="antragHistroy.html">Antraghistory</a>
-                        <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
-                            <a class="nav-link active" href="#" onclick="submitForm('highscoreForm')">Highscores</a>
-                        </form>
-                    </nav>
-                </div>
+
             </div>
+        </nav>
+    </header>
+        
+    <script language="JavaScript" type="text/javascript">
+        function submitForm(form) {
+            var myForm = document.getElementById(form);
+            myForm.submit();
+        }
+    </script>
+    <div class="nav-scroller bg-white shadow-md">
+        <div class="container">
+            <nav class="nav nav-underline">
+                <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
+                <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
+                    <a class="nav-link active" href="#" onclick="submitForm('eventForm')">
+                        Events
+                        <span class="badge badge-pill bg-light align-text-bottom">
+                            <?php
+                            include_once("../php/eventsVerwalten.php");
+                            echo countNewEvents();
+                        ?>
+                        </span>
+                    </a>
+                </form>
+
+                <a class="nav-link active" href="antragHistroy.html">Antraghistory</a>
+                <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
+                    <a class="nav-link active" href="#" onclick="submitForm('highscoreForm')">Highscores</a>
+                </form>
+            </nav>
+        </div>
+    </div>
 
     <!--Inhalt-->
 
@@ -286,7 +286,7 @@
             </div>
         </div>
     </div>
-    <footer class="fixed-bottom">
+    <footer class="sticky-bottom">
             © 2018 Wahl, Becirovic, Gavric, Filipovic 
     </footer>
     <!-- Optional JavaScript -->
