@@ -20,7 +20,7 @@ function getTokenHighscoreProSaison ( $saisonNummer )
     $tokenProSchueler = array();
 
 
-    $sqlC = "select kuerzel, sName from schueler order by order by kuerzel";
+    $sqlC = "select kuerzel, sName from schueler order by kuerzel";
     $schueler = mysqli_query($db, $sqlC);
     for (; $schuelerArray = mysqli_fetch_assoc($schueler); )
     {
@@ -92,7 +92,7 @@ function getTokenHighscoreAllTime()
     $tokenProSchueler = array();
 
 
-    $sqlC = "select kuerzel, sName from schueler order by order by kuerzel";
+    $sqlC = "select kuerzel, sName from schueler order by kuerzel";
     $schueler = mysqli_query($db, $sqlC);
     for (; $schuelerArray = mysqli_fetch_assoc($schueler); )
     {
@@ -129,7 +129,7 @@ function getTokenHighscoreProAwardPerSaison ( $aName, $saisonNummer )
     global $db;
     $tokenProSchueler = array();
 
-    $sqlC = "select kuerzel, sName from schueler order by order by kuerzel";
+    $sqlC = "select kuerzel, sName from schueler order by kuerzel";
     $schueler = mysqli_query($db, $sqlC);
     for (; $schuelerArray = mysqli_fetch_assoc($schueler); )
     {
@@ -167,7 +167,7 @@ function getTokenHighscoreProAwardAllTime ( $aName )
     global $db;
     $tokenProSchueler = array();
 
-    $sqlC = "select kuerzel, sName from schueler order by order by kuerzel";
+    $sqlC = "select kuerzel, sName from schueler order by kuerzel";
     $schueler = mysqli_query($db, $sqlC);
     for (; $schuelerArray = mysqli_fetch_assoc($schueler); )
     {
@@ -211,7 +211,7 @@ function getAwardHighscoreProSaison( $saisonNummer )
 
     $out = array();
 
-    $sqlC = "select kuerzel, sName from schueler order by order by kuerzel";
+    $sqlC = "select kuerzel, sName from schueler order by kuerzel";
     $schueler = mysqli_query($db, $sqlC);
     for (; $schuelerArray = mysqli_fetch_assoc($schueler); )
     {
@@ -236,7 +236,7 @@ function getAwardHighscoreAllTime()
 
     $out = array();
 
-    $sqlC = "select kuerzel, sName from schueler order by order by kuerzel";
+    $sqlC = "select kuerzel, sName from schueler order by kuerzel";
     $schueler = mysqli_query($db, $sqlC);
     for (; $schuelerArray = mysqli_fetch_assoc($schueler); )
     {
@@ -261,7 +261,7 @@ function getAwardHighscoreProAwardSaision( $saisonNummer, $aName )
 
     $out = array();
 
-    $sqlC = "select kuerzel, sName from schueler order by order by kuerzel";
+    $sqlC = "select kuerzel, sName from schueler order by kuerzel";
     $schueler = mysqli_query($db, $sqlC);
     for (; $schuelerArray = mysqli_fetch_assoc($schueler); )
     {
@@ -286,7 +286,7 @@ function getAwardHighscoreProAwardAllTime( $aName )
 
     $out = array();
 
-    $sqlC = "select kuerzel, sName from schueler order by order by kuerzel";
+    $sqlC = "select kuerzel, sName from schueler order by kuerzel";
     $schueler = mysqli_query($db, $sqlC);
     for (; $schuelerArray = mysqli_fetch_assoc($schueler); )
     {
