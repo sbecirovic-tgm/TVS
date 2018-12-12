@@ -78,6 +78,16 @@ header {
     }
   }
 
+html
+{
+  min-height: 100%;
+  position: relative !important;
+}
+body
+{
+  margin-bottom: 6em !important;
+}
+
   /*
  * Footer
  */
@@ -85,8 +95,8 @@ header {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 60px;
-  line-height: 50px;
+  height: 4.5em;
+  line-height: 4em;
   color: #999;
   text-align: center;
   background-color: #f8f9fa;
