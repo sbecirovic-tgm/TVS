@@ -72,12 +72,18 @@ header {
     color: #ffffff;
   }
 
+  @media (max-width: 575.98px){
+    .loginButtonText {
+      font-size: 1.2rem;
+    }
+  }
+
   /*
  * Footer
  */
 footer {
-  margin-top: 4em;
-  padding: 1.5rem 0;
+  margin-top: 5rem;
+  padding: 5rem 0;
   color: #999;
   text-align: center;
   background-color: #f8f9fa;
@@ -194,3 +200,10 @@ footer p:last-child {
   display: none;
 }
 
+.list-group{
+  max-height: 300px;
+  margin-bottom: 10px;
+  overflow:scroll;
+  overflow-x: hidden; 
+  -webkit-overflow-scrolling: touch;
+}
