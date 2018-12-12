@@ -15,6 +15,7 @@ CREATE TABLE wildcard (
 
 CREATE TABLE superuser (
 		kuerzel VARCHAR(255),
+		lName VARCHAR(255),
 		PRIMARY KEY ( kuerzel )
 ) ENGINE = INNODB;
 
@@ -28,6 +29,7 @@ CREATE TABLE award (
 
 CREATE TABLE lehrer (
 		kuerzel VARCHAR(255),
+		lName VARCHAR(255),
 		skuerzel VARCHAR(255),
 
 		PRIMARY KEY ( kuerzel ),
@@ -222,8 +224,8 @@ CREATE TABLE saisonEinstellung (
 ) ENGINE = INNODB;
 
 -- Koppensteiner als Superuser:
-insert into superuser( kuerzel)
-values ('gkoppensteiner');
+insert into superuser( kuerzel, lName)
+values ('gkoppensteiner', "G. Koppensteiner");
 
 -- Saison Länge default YYYY-MM-DD
 insert into saisonEinstellung ( startJahr, startDatumWSem, endDatumWSem, startDatumSSem, endDatumSSem)

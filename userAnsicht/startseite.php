@@ -12,6 +12,7 @@ $db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 
 $userName = $_SESSION['userName'];
 $_SESSION['requestResult'] = Null;
+
 function printAwardDropDown ()
 {
     global $db;

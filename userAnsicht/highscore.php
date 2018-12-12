@@ -8,6 +8,17 @@
 $db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 $userName = $_SESSION['userName'];
 
+function printAwardDropDown ()
+{
+    global $db;
+    $sqlC = 'select name from award';
+    $award = mysqli_query($db, $sqlC);
+    for (; $award_array = mysqli_fetch_assoc($award); ) {
+        $name = $award_array['name'];
+        echo '<a class="dropdown-item" onclick="setAwardButton(\'' . $name . '\')">' . $name . '</a>';
+    }
+}
+
 
 if (isset($_GET['eventAnzeigen']))
 {
