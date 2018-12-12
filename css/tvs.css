@@ -204,5 +204,6 @@ footer p:last-child {
   max-height: 300px;
   margin-bottom: 10px;
   overflow:scroll;
+  overflow-x: hidden; 
   -webkit-overflow-scrolling: touch;
 }
