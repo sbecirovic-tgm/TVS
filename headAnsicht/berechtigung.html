@@ -10,6 +10,23 @@
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/tvs.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-grid.css">
+    <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="../img/open-iconic-master/font/css/open-iconic-bootstrap.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+    </link>
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script>
+        var lehrer = [];
+
+        function addTeacher() 
+        {
+            lehrer.push
+        }
+    </script>
 
     <title>Tokenverwaltung</title>
 </head>
@@ -92,8 +109,8 @@
             <div class="row">
             <div class="card-body col-sm-4">
                 <ol class="list-group">
-                    <li class="list-group-item"><strong>Raffeiner Magor</strong></li>
-                    <li class="list-group-item"><strong>Kraus Helmut</strong></li>
+                    <li id="RAFM" class="list-group-item" onclick="addTeacher()"><strong>Raffeiner Magor</strong></li>
+                    <li id="KRAH0" class="list-group-item" onclick="addTeacher()"><strong>Kraus Helmut</strong></li>
                     <li class="list-group-item"><strong>Schöll Barbara</strong></li>
                     <li class="list-group-item"><strong>Enzenebner Daniel</strong></li>
                     <li class="list-group-item"><strong>Zakall Stefan</strong></li>
@@ -101,10 +118,20 @@
                     <li class="list-group-item"><strong>Vittori Lisa</strong></li>
                 </ol>
             </div>
+                <div class="col-sm-4">
+                    <button style="width: 30%;height: 10%;margin: 20% 35% 0% 35%" type="button" class="btn btn-primary"><span class="oi oi-arrow-thick-right"></span></button>
+                    <button style="width: 30%;height: 10%;margin: 10% 35% 0% 35%" type="button" class="btn btn-primary"><span class="oi oi-arrow-thick-left"></span></button>
+                    <div class="form-group">
+                        <label style="margin: 10% 10% 0% 10%">Hinzugefügte/Entfernte Lehrer</label>
+                        <select id="selectedLehrer" style="width:80%;height:30%; margin: 0% 10% 10% 10%" multiple class="form-conrtol">
+                            
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <footer class="fixed-bottom">
+    <footer class="sticky-bottom">
             © 2018 Wahl, Becirovic, Gavric, Filipovic 
     </footer>
     <!-- Optional JavaScript -->
