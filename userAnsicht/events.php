@@ -1,12 +1,7 @@
 <?php
 
 session_start();
-
-if(isset($_GET['logout']))
-{
-    include_once("../php/userCheck.php");
-    logout();
-}
+$userName = $_SESSION['userName'];
 
 function printEvents()
 {
@@ -50,5 +45,23 @@ function printEvents()
                 </div>
             </div>';
     }
+}
+
+
+if (isset($_GET['eventAnzeigen']))
+{
+    $_SESSION['eventEintragung'] = NULL;
+    header("Refresh:0; url=events.html");
+}
+if (isset($_GET['highscoreAnzeigen']))
+{
+    $_SESSION['highscore'] = NULL;
+    header("Refresh:0; url=highscore.html");
+}
+
+if(isset($_GET['logout']))
+{
+    include_once("../php/userCheck.php");
+    logout();
 }
 ?>
