@@ -16,7 +16,17 @@ function printAwardDropDown ()
     $award = mysqli_query($db, $sqlC);
     for (; $award_array = mysqli_fetch_assoc($award); ) {
         $name = $award_array['name'];
-        echo '<a class="dropdown-item" onclick="setAwardButton(\'' . $name . '\')">' . $name . '</a>';
+        echo '<a class="dropdown-item" onclick="setAwardButton(\'' . $name . '\')" href="#">' . $name . '</a>';
+    }
+}
+
+function printHighscore( $highscore )
+{
+    $i = 1;
+    foreach ($highscore as $name => $anzahl)
+    {
+        echo '<tr><th scope="row">'.$i.'</th><td>'.$name.'</td><td>'.$anzahl.'</td></tr>';
+        $i++;
     }
 }
 
@@ -30,4 +40,17 @@ if (isset($_GET['highscoreAnzeigen']))
 {
     $_SESSION['highscore'] = NULL;
     header("Refresh:0; url=highscore.html");
+}
+
+if (isset($_GET['highscoreForm']))
+{
+    $type = $_POST['highscoreTypeTemp'];
+    if ($type == "Award Highscore")
+    {
+
+    }
+    elseif( $type == "Token Highscore")
+    {
+
+    }
 }
