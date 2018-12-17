@@ -147,15 +147,8 @@
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Mein Profil</a>
-                            <script>
-                                function logout()
-                                {
-                                    var form = document.getElementById("logoutForm");
-                                    form.submit();
-                                }
-                            </script>
                             <form id="logoutForm" action="?logout=1" method="post">
-                                <a class="dropdown-item" onclick="logout()" name="logout">Logout</a>
+                                <a class="dropdown-item" href="#" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
                             </form>
                         </div>
                     </div>
