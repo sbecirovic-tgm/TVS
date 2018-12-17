@@ -105,11 +105,6 @@
                         <?php
                             setHighscoreType();
                         ?>
-                        <button type="button" id="highscoreType" class="btn btn-primary dropdown-toggle btn-outline-primary"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Highscore Type
-                        </button>
-                        <input id="highscoreTypeTemp" name="highscoreTypeTemp" class="hiddenMeldung" value="">
                         <form id="highscoreFrom" action="?highscoreForm=1" method="post">
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" onclick="setHighscoreButton('Award Highscore')" href="#">Award Highscore</a>
@@ -121,6 +116,7 @@
                 <div class="col-sm-2">
                     <div class="btn-group">
                         <?php
+
                         ?>
                         <button type="button" id="AwardType" class="btn btn-primary dropdown-toggle btn-outline-primary"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -172,7 +168,7 @@
                     <th>Token</th>   
                 </tr>
                 <?php
-                    printTokenHighscore();
+                    printHighscoreThisSaision();
                 ?>
             </thead>
         </table>

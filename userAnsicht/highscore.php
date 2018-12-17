@@ -17,8 +17,8 @@ function setHighscoreType()
     {
         // 0: Award
         // 1: Token
-        echo '<button type="button" id="highscoreType" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Highscore Type auswählen</button><input id="highscoreTypeTemp" name="highscoreTypeTemp" class="hiddenMeldung" value="">';
         $_SESSION['highscoreTypeTemp'] = 1;
+        echo '<button type="button" id="highscoreType" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Award Highscore</button><input id="highscoreTypeTemp" name="highscoreTypeTemp" class="hiddenMeldung" value="Award Highscore">';
     }
     else {
         $temp = $_SESSION['highscoreTypeTemp'];
@@ -104,4 +104,10 @@ if (isset($_GET['highscoreForm']))
 if (isset($_GET['awardForm']))
 {
 
+}
+
+if(isset($_GET['logout']))
+{
+    include_once("../php/userCheck.php");
+    logout();
 }
