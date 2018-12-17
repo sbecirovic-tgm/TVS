@@ -166,7 +166,7 @@ if (isset($_GET['eventEintragen3']))
 if(isset($_GET['requestToken'])) {
     include_once ("../php/anfragenVerwalten.php");
     //insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), NULL, NULL, NULL, NULL, NULL, NULL, 'swahl', '1', 'Test ist das', 'Test', NULL, NULL);
-    $awardTyp = $_POST['awardType'];
+    $awardTyp = $_POST['awardTypeBackend'];
     $tokenAnzahl = $_POST['tokenAnzahl'];
     $betreff = $_POST['betreff'];
     $beschreibung = $_POST['beschreibung'];
@@ -178,23 +178,13 @@ if(isset($_GET['requestToken'])) {
 function printMeldung()
 {
     $result = $_SESSION['requestResult'];
-    if ( $result != Null)
+    if ($result)
     {
-        if ($result) {
-            echo '<div class="alert alert-success alert-dismissible fade show abstand1" role="alert">
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                   Ihr Antrag wurde erfolgreich gestellt!
-                </div>';
-        } else {
-            echo '<div class="alert alert-danger alert-dismissible fade show abstand1" role="alert">
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                   Ein Fehler ist aufgetreten! Bitte versuchen Sie es erneut.
-                </div>';
-        }
+        echo '<script language="JavaScript" type="text/javascript">errorMsg = document.getElementById("antragErrorMsg");errorMsg.innerHTML = \'<div class="alert alert-success alert-dismissible fade show abstand1" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Ihr Antrag wurde erfolgreich gestellt!</div>\';</script>';
+    }
+    else
+    {
+        //echo '<script language="JavaScript" type="text/javascript">errorMsg = document.getElementById("antragErrorMsg");errorMsg.innerHTML = \'<div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Ein Fehler ist aufgetreten! Bitte versuchen Sie es erneut.</div>\';</script>';
     }
 }
 //setTimeout(makeDiss, 5000);

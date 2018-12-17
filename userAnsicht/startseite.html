@@ -99,9 +99,8 @@
                     <script language="JavaScript" type="text/javascript">
                         function msg() {
                             var errorMsg = document.getElementById("antragErrorMsg");
-                            errorMsg.innerHTML = "Ungültige Eingabe! Bitte überprfen Sie ob alle Felder korrekt ausgefüllt sind!";
-                            errorMsg.classList.remove("visibleMeldung");
-                            errorMsg.classList.add("hiddenMeldung");
+                            //errorMsg.classList.remove("visibleMeldung");
+                            //errorMsg.classList.add("hiddenMeldung");
 
                             var error = false;
 
@@ -133,12 +132,15 @@
                             }
 
                             if (error) {
-                                errorMsg.classList.remove("hiddenMeldung");
-                                errorMsg.classList.add("visibleMeldung");
+                                //errorMsg.classList.remove("hiddenMeldung");
+                                //errorMsg.classList.add("visibleMeldung");
+                                errorMsg = document.getElementById("antragErrorMsg")
+                                errorMsg.innerHTML = '<div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Ein Fehler ist aufgetreten! Bitte versuchen Sie es erneut.</div>'
                             }
                             else {
                                 var form = document.getElementById("antrag");
                                 form.submit();
+                                errorMsg.innerHTML = '<div class="alert alert-success alert-dismissible fade show abstand1" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Ihr Antrag wurde erfolgreich gestellt!</div>'
                             }
                         }
                     </script>
@@ -151,11 +153,14 @@
                                     <div class="btn-group">
                                         <script type="application/javascript">
                                             function setAwardButton(value) {
-                                                document.getElementById("awardType").value = value;
+                                                document.getElementById("awardType").innerHTML = value;
+                                                document.getElementById("awardTypeBackend").value = value;
                                             }
                                         </script>
-                                        <input type="button" name="awardType" id="awardType" class="btn btn-primary dropdown-toggle btn-outline-primary"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="Award Auswählen">
+                                        <button type="button" name="awardType" id="awardType" class="btn btn-primary dropdown-toggle btn-outline-primary"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Award Auswählen</button>
+                                        <input type="text" min="0" id="awardTypeBackend" name="awardTypeBackend" class="hiddenMeldung" value="">
+
                                         <div class="dropdown-menu">
                                             <?php
                                                 printAwardDropDown();
@@ -194,10 +199,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 text-center">
-                                    <input type="button" class="btn btn-outline-primary dashboardButtons" onclick="msg()" readonly value="Anfordern">
+                                        <input type="button" class="btn btn-outline-primary dashboardButtons" onclick="msg()" readonly value="Anfordern">
                                 </div>
                             </div>
-                            <div id="antragErrorMsg" class='falsch hiddenMeldung'>Ungültige Eingabe! Bitte überprfen Sie ob alle Felder korrekt ausgefüllt sind!</div>
+                            <div id="antragErrorMsg"></div>
                             <?php
                                 printMeldung();
                             ?>
