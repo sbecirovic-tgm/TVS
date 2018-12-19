@@ -228,3 +228,12 @@ footer p:last-child {
   -webkit-overflow-scrolling: touch;
 }
 
+.blau {
+  background-color: rgb(66, 139, 202);
+  color: "white";
+}
+
+.weiß {
+  background-color: "white";
+  color: "black";
+}
