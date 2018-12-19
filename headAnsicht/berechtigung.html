@@ -28,7 +28,8 @@
         function onclickTeacher(id)
         {
             lehrer = document.getElementById(id);
-            if ( lehrer.className == "blau" )
+            var element = document.querySelector("li");
+            if ( element.classList.contains("blau") )
             {   
                 lehrer.classList.remove("blau");
                 lehrer.classList.add("weiß"); 
@@ -45,11 +46,11 @@
             }
             else
             {
-                if (lehrer.className == "weiß")
+                if (element.classList.contains("weiß"))
                 {
                     lehrer.classList.remove("weiß");
                 }
-                lehrer.classList.add("blau");
+                element.classList.add("blau");
                 if (document.getElementById(id).parentNode == document.getElementById('ohneRecht')) 
                 {
                     addToOhneRechtListItems(id);
