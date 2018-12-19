@@ -14,7 +14,7 @@ function requestTokenBasic ( $awardTyp, $tokenAnzahl, $betreff, $beschreibung, $
 {
     global $db;
     // inserten, alles andere auf NULL setzten --> bei der normalen abfrage nicht notwendig
-    $sqlC = "insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, tokenAnzahlNeu, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), '$awardTyp', NULL, NULL, NULL, NULL, NULL, '$userKuerzel', '$tokenAnzahl', NULL, '$beschreibung', '$betreff', NULL, NULL)";
+    $sqlC = "insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, tokenAnzahlNeu, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), '$awardTyp', NULL, NULL, NULL, NULL, NULL, '$userKuerzel', $tokenAnzahl, NULL, '$beschreibung', '$betreff', NULL, NULL)";
 
     $result = mysqli_query($db, $sqlC);
     return $result;
@@ -24,7 +24,7 @@ function requestTokenExt ( $awardTyp, $eventName, $eventDate, $unterKatName, $us
 {
     global $db;
     // inserten, alles andere auf NULL setzten --> bei der normalen abfrage nicht notwendig
-    $sqlC = "insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, tokenAnzahlNeu, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), '$awardTyp', NULL, NULL, '$eventName', '$eventDate', '$unterKatName', '$userKuerzel', '$tokenAnzahl', NULL, '$beschreibung', '$betreff', NULL, NULL)";
+    $sqlC = "insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, tokenAnzahlNeu, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), '$awardTyp', NULL, NULL, '$eventName', '$eventDate', '$unterKatName', '$userKuerzel', $tokenAnzahl, NULL, '$beschreibung', '$betreff', NULL, NULL)";
 
     $result = mysqli_query($db, $sqlC);
     return $result;

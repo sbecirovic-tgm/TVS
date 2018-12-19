@@ -43,8 +43,8 @@
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Mein Profil</a>
-                            <form action="?logout=1" method="post">
-                                <a class="dropdown-item" href="#" type="submit" name="logout">Logout</a>
+                            <form id="logoutForm" action="?logout=1" method="post">
+                                <a class="dropdown-item" href="#" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
                             </form>
                         </div>
                     </div>
@@ -69,9 +69,9 @@
                         Events
                         <span class="badge badge-pill bg-light align-text-bottom">
                             <?php
-                            include_once("../php/eventsVerwalten.php");
-                            echo countNewEvents();
-                        ?>
+                                include_once("../php/eventsVerwalten.php");
+                                echo countNewEvents();
+                            ?>
                         </span>
                     </a>
                 </form>
@@ -85,51 +85,78 @@
     </div>
 
     <div class="container">
+
+    </div>
+    <div class="container">
         <h3>Highscore-Liste</h3>
         <div class="row">
-            <div class="col-sm-3">
-                <input type="text" class="form-control" onkeyup="searchName()" placeholder="Name" aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default">
-            </div>
-            <div class="col-sm-1">
-                <div class="btn-group">
-                    <button type="button" id="AwardType" class="btn btn-primary dropdown-toggle btn-outline-primary"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        AwardType
-                    </button>
-                    <div class="dropdown-menu">
-                        <?php
-                            printAwardDropDown();
-                        ?>
-                        <a class="dropdown-item" onclick="setAwardButton('Architect')" href="#">Architect</a>
-                        <a class="dropdown-item" onclick="setAwardButton('Editor')" href="#">Editor</a>
-                        <a class="dropdown-item" onclick="setAwardButton('Favorite')" href="#">Favorite</a>
-                        <a class="dropdown-item" onclick="setAwardButton('Pulitzer')" href="#">Pulitzer</a>
-                        <a class="dropdown-item" onclick="setAwardButton('Spirit of HIT')" href="#">Spirit of HIT</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="btn-group">
-                    <button type="button" id="SaisonNummer" class="btn btn-primary dropdown-toggle btn-outline-primary"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Saisonnummer
-                    </button>
-                </div>
-            </div>
-            <div class="col-sm-1">
-                <div class="btn-group">
-                    <button type="button" id="SortType" class="btn btn-primary dropdown-toggle btn-outline-primary"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Sortieren
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" onclick="setSortButton('Aufsteigend')">Aufsteigend</a>
-                        <a class="dropdown-item" onclick="setSortButton('Absteigend')">Absteigend</a>
-                    </div>
-                </div>
+            <div class="col-sm-3" data-toggle="tooltip"  data-placement="bottom" title="Einfach und schnell nach einem Schülernamen suchen">
+                <input type="text" class="form-control" onkeyup="searchName()" placeholder="Nach Namen Filtern" aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-default" >
             </div>
         </div>
+        <br>
+        <h4>Spezial Filter</h4>
+        <form id="filterForm" action="?filterForm=1" method="post">
+            <div class="row">
+
+                <div class="col-sm-2">
+                    <div class="btn-group">
+                        <?php
+                            setHighscoreType();
+                        ?>
+                        <form id="highscoreFrom" action="?highscoreForm=1" method="post">
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" onclick="setHighscoreButton('Award Highscore')" href="#">Award Highscore</a>
+                                <a class="dropdown-item" onclick="setHighscoreButton('Token Highscore')" href="#">Token Highscore</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="btn-group">
+                        <?php
+
+                        ?>
+                        <button type="button" id="AwardType" class="btn btn-primary dropdown-toggle btn-outline-primary"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Award Type
+                        </button>
+                        <div class="dropdown-menu">
+                            <form id="awardForm" action="?awardForm=1" method="post">
+                            <?php
+                                printAwardDropDown();
+                            ?>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group" data-toggle="tooltip" data-placement="top"  data-html="true" title="Mit der Eingabe 0 wird die jetztige Saison genommen.<br>Mit der Eingabe -1 wird der Highscore aus allen Saisions genommen.<br><br><em>Eine Saison beginnt immer mit Anfang des Semesters und ist mit ende des Semesters ebenfalls abgeschlossen</em>">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text btn btn-primary btn-outline-primary" >Saison Nr.</span>
+                        </div>
+                        <input type="number" min="-1" id="saisonNum" name="saisonNum" class="form-control tokens"
+                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onchange="">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="btn-group">
+                        <button type="button" id="SortType" class="btn btn-primary dropdown-toggle btn-outline-primary"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sortieren
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" onclick="setSortButton('Aufsteigend')">Aufsteigend</a>
+                            <a class="dropdown-item" onclick="setSortButton('Absteigend')">Absteigend</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <input type="submit" id="apply" name="apply" class="btn btn-primary dropdown-toggle btn-outline-primary" value="Anwenden">
+                </div>
+            </div>
+        </form>
     </div>
 
     <div class="container table-responsive" style="margin-top:10px;">
@@ -140,12 +167,13 @@
                     <th>Name</th>
                     <th>Token</th>   
                 </tr>
-                <tr>
-
-                </tr>
+                <?php
+                    printHighscoreThisSaision();
+                ?>
             </thead>
         </table>
     </div>
+
     <footer class="footerSticky">
             © 2018 Wahl, Becirovic, Gavric, Filipovic 
     </footer>
@@ -161,7 +189,14 @@
         }
 
         function setAwardButton(value) {
-            document.getElementById("AwardType").innerText = value;
+            document.getElementById("AwardType").innerHTML = value;
+        }
+
+        function setHighscoreButton(value) {
+            document.getElementById("highscoreType").innerHTML = value;
+            document.getElementById("highscoreTypeTemp").value = value;
+            var form = document.getElementById("highscoreFrom");
+            form.submit();
         }
 
 
@@ -174,6 +209,9 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $("[data-toggle=\"tooltip\"]").tooltip();
+    </script>
 </body>
 
 </html>

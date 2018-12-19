@@ -22,7 +22,8 @@
     <script>
         var lehrer;
         var options = {};
-        var listitems = [];
+        var mitRechtListe = [];
+        var ohneRechtListe = [];
 
         function onclickTeacher(id)
         {
@@ -31,15 +32,30 @@
             {
                 lehrer.style.backgroundColor = "white";
                 lehrer.style.color = "black"; 
+                if (document.getElementById(id).parentNode == document.getElementById('ohneRecht')) 
+                {
+                    deleteFromOhneRechtListItems(id);
+                }
+                else
+                {
+                    deleteFromRechtListItems(id);
+                }
                 removeFromField(id);
-                deleteFromListItems(id);
+
             }
             else
             {
                 lehrer.style.backgroundColor = "rgb(66, 139, 202)";
                 lehrer.style.color = "white"; 
-                addToTextField(id);
-                addToListItems(id);
+                if (document.getElementById(id).parentNode == document.getElementById('ohneRecht')) 
+                {
+                    addToOhneRechtListItems(id);
+                }
+                else
+                {
+                    addToRechtListItems(id);
+                }
+                addToTextField(id);  
             }
             printField();
         }
@@ -64,25 +80,35 @@
             delete options[id];
         }
 
-        function addToListItems(id)
+        function addToRechtListItems(id)
         {
-            listitems.push(document.getElementById(id));
+            mitRechtListe.push(document.getElementById(id));
         }
 
-        function deleteFromListItems(id)
+        function deleteFromRechtListItems(id)
         {
-            delete listitems[id];
+            delete mitRechtListe[id];
+        }
+
+        function addToOhneRechtListItems(id)
+        {
+            ohneRechtListe.push(document.getElementById(id));
+        }
+
+        function removeFromOhneRechtLsitItems(id)
+        {
+            delete ohneRechtListe[id];
         }
 
         function rechteGeben() {
             var removedElements = [];
-            for (var i = 0; i < listitems.length;i++)
+            for (var i = 0; i < ohneRechtListe.length;i++)
             {   
                 var element = document.getElementById('ohneRecht');
-                removedElements.push(element.removeChild(listitems[i]));
+                removedElements.push(element.removeChild(ohneRechtListe[i]));
             }
             
-            for (var i = 0; i < listitems.length;i++)
+            for (var i = 0; i < ohneRechtListe.length;i++)
             {
                 var element = document.getElementById('mitRecht');
                 removedElements[i].style.backgroundColor = "white";
@@ -90,7 +116,7 @@
                 element.appendChild(removedElements[i]);
             }
             options = {};
-            listitems = [];
+            ohneRechtListe = [];
             printField();
         }
     </script>
@@ -121,15 +147,8 @@
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Mein Profil</a>
-                            <script>
-                                function logout()
-                                {
-                                    var form = document.getElementById("logoutForm");
-                                    form.submit();
-                                }
-                            </script>
                             <form id="logoutForm" action="?logout=1" method="post">
-                                <a class="dropdown-item" onclick="logout()" name="logout">Logout</a>
+                                <a class="dropdown-item" href="#" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
                             </form>
                         </div>
                     </div>

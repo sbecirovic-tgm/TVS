@@ -62,7 +62,6 @@ function getTokenHighscoreThisSaison()
 
 function getTokenHighscoreThisSaisonLimit($limit)
 {
-    global $db;
     include_once ("saisonVerwalten.php");
     $saisonNummer = getSaisonNumb();
     return getTokenHighscoreProSaisionLimit($saisonNummer, $limit);
@@ -162,6 +161,7 @@ function getTokenHighscoreProAwardPerSaison ( $aName, $saisonNummer )
 }
 
 
+
 function getTokenHighscoreProAwardAllTime ( $aName )
 {
     global $db;
@@ -229,6 +229,14 @@ function getAwardHighscoreProSaison( $saisonNummer )
     arsort($out);
     return $out;
 }
+
+function getAwardHighscoreThisSaision()
+{
+    include_once ("saisonVerwalten.php");
+    $saisonNummer = getSaisonNumb();
+    return getAwardHighscoreProSaison($saisonNummer);
+}
+
 
 function getAwardHighscoreAllTime()
 {
