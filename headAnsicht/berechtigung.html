@@ -28,10 +28,11 @@
         function onclickTeacher(id)
         {
             lehrer = document.getElementById(id);
-            if ( lehrer.style.backgroundColor == "rgb(66, 139, 202)" || lehrer.style.color == "white" )
-            {
-                lehrer.style.backgroundColor = "white";
-                lehrer.style.color = "black"; 
+            var element = document.querySelector("li");
+            if ( element.classList.contains("blau") )
+            {   
+                lehrer.classList.remove("blau");
+                lehrer.classList.add("weiß"); 
                 if (document.getElementById(id).parentNode == document.getElementById('ohneRecht')) 
                 {
                     deleteFromOhneRechtLsitItems(id);
@@ -45,8 +46,11 @@
             }
             else
             {
-                lehrer.style.backgroundColor = "rgb(66, 139, 202)";
-                lehrer.style.color = "white"; 
+                if (element.classList.contains("weiß"))
+                {
+                    lehrer.classList.remove("weiß");
+                }
+                element.classList.add("blau");
                 if (document.getElementById(id).parentNode == document.getElementById('ohneRecht')) 
                 {
                     addToOhneRechtListItems(id);
