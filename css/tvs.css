@@ -229,11 +229,11 @@ footer p:last-child {
 }
 
 .blau {
-  background-color: #fff;
-  color: "white";
+  background-color: rgb(66, 139, 202) !important;
+  color: "white" !important;
 }
 
 .weiß {
-  background-color: "white";
-  color: "black";
+  background-color: "white" !important;
+  color: "black" !important;
 }
