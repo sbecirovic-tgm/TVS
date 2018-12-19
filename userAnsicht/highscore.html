@@ -85,9 +85,6 @@
     </div>
 
     <div class="container">
-
-    </div>
-    <div class="container">
         <h3>Highscore-Liste</h3>
         <div class="row">
             <div class="col-sm-3" data-toggle="tooltip"  data-placement="bottom" title="Einfach und schnell nach einem Schülernamen suchen">
@@ -97,66 +94,58 @@
         </div>
         <br>
         <h4>Spezial Filter</h4>
-        <form id="filterForm" action="?filterForm=1" method="post">
-            <div class="row">
-
-                <div class="col-sm-2">
-                    <div class="btn-group">
-                        <?php
-                            setHighscoreType();
-                        ?>
-                        <form id="highscoreFrom" action="?highscoreForm=1" method="post">
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" onclick="setHighscoreButton('Award Highscore')" href="#">Award Highscore</a>
-                                <a class="dropdown-item" onclick="setHighscoreButton('Token Highscore')" href="#">Token Highscore</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="btn-group">
-                        <?php
-
-                        ?>
-                        <button type="button" id="AwardType" class="btn btn-primary dropdown-toggle btn-outline-primary"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Award Type
-                        </button>
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="btn-group">
+                    <?php
+                        setHighscoreType();
+                    ?>
+                    <form id="highscoreFrom" action="?highscoreForm=1" method="post">
                         <div class="dropdown-menu">
-                            <form id="awardForm" action="?awardForm=1" method="post">
-                            <?php
-                                printAwardDropDown();
-                            ?>
-                            </form>
+                            <a class="dropdown-item" onclick="setHighscoreButton('Award Highscore')" href="#">Award Highscore</a>
+                            <a class="dropdown-item" onclick="setHighscoreButton('Token Highscore')" href="#">Token Highscore</a>
                         </div>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="input-group" data-toggle="tooltip" data-placement="top"  data-html="true" title="Mit der Eingabe 0 wird die jetztige Saison genommen.<br>Mit der Eingabe -1 wird der Highscore aus allen Saisions genommen.<br><br><em>Eine Saison beginnt immer mit Anfang des Semesters und ist mit ende des Semesters ebenfalls abgeschlossen</em>">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text btn btn-primary btn-outline-primary" >Saison Nr.</span>
-                        </div>
-                        <input type="number" min="-1" id="saisonNum" name="saisonNum" class="form-control tokens"
-                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onchange="">
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="btn-group">
-                        <button type="button" id="SortType" class="btn btn-primary dropdown-toggle btn-outline-primary"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Sortieren
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" onclick="setSortButton('Aufsteigend')">Aufsteigend</a>
-                            <a class="dropdown-item" onclick="setSortButton('Absteigend')">Absteigend</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-1">
-                    <input type="submit" id="apply" name="apply" class="btn btn-primary dropdown-toggle btn-outline-primary" value="Anwenden">
+                    </form>
                 </div>
             </div>
-        </form>
+            <div class="col-sm-2">
+                <div class="btn-group">
+                    <form id="awardForm" action="?awardForm=1" method="post">
+                        <?php
+                            setAwardType();
+                        ?>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" onclick="setAwardButton('All Awards')" href="#">All Awards</a>
+                                <?php
+                                    printAwardDropDown();
+                                ?>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="input-group" data-toggle="tooltip" data-placement="top"  data-html="true" title="Mit der Eingabe 0 wird die jetztige Saison genommen.<br>Mit der Eingabe -1 wird der Highscore aus allen Saisions genommen.<br><br><em>Eine Saison beginnt immer mit Anfang des Semesters und ist mit ende des Semesters ebenfalls abgeschlossen</em>">
+                    <?php
+                        setSaisonNum();
+                    ?>
+
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="btn-group">
+                    <?php
+                        setSortieren();
+                    ?>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" onclick="setSortButton('Aufsteigend')">Aufsteigend</a>
+                        <a class="dropdown-item" onclick="setSortButton('Absteigend')">Absteigend</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <button id="apply" name="apply" class="btn btn-primary btn-outline-primary" onClick="window.location.reload()">Anwenden</button>
+            </div>
+        </div>
     </div>
 
     <div class="container table-responsive" style="margin-top:10px;">
@@ -168,7 +157,7 @@
                     <th>Token</th>   
                 </tr>
                 <?php
-                    printHighscoreThisSaision();
+                    printHighscore();
                 ?>
             </thead>
         </table>
@@ -177,11 +166,6 @@
     <footer class="footerSticky">
             © 2018 Wahl, Becirovic, Gavric, Filipovic 
     </footer>
-    <script>
-        function changeIcon() {
-            document.getElementById("rang").classList.add("oi oi-chevron-bottom");
-        }
-    </script>
     <script type="application/javascript">
 
         function setSortButton(value) {
@@ -190,6 +174,8 @@
 
         function setAwardButton(value) {
             document.getElementById("AwardType").innerHTML = value;
+            var form = document.getElementById("awardForm");
+            form.submit();
         }
 
         function setHighscoreButton(value) {
@@ -198,8 +184,6 @@
             var form = document.getElementById("highscoreFrom");
             form.submit();
         }
-
-
     </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

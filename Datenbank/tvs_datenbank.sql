@@ -112,7 +112,7 @@ CREATE TABLE auszeichnung (
 ) ENGINE = INNODB;
 
 
-    CREATE TABLE event (
+CREATE TABLE event (
 		name VARCHAR(255),
 		datum DATE,
 		superKuerzel VARCHAR(255),

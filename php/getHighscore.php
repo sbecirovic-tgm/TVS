@@ -230,7 +230,7 @@ function getAwardHighscoreProSaison( $saisonNummer )
     return $out;
 }
 
-function getAwardHighscoreThisSaision()
+function getAwardHighscoreThisSaison()
 {
     include_once ("saisonVerwalten.php");
     $saisonNummer = getSaisonNumb();
@@ -263,7 +263,7 @@ function getAwardHighscoreAllTime()
     return $out;
 }
 
-function getAwardHighscoreProAwardSaision( $saisonNummer, $aName )
+function getAwardHighscoreProAwardPerSaison( $saisonNummer, $aName )
 {
     global $db;
 
