@@ -18,11 +18,11 @@ function setHighscoreType()
         // 0: Award
         // 1: Token
         $_SESSION['highscoreTypeTemp'] = 1;
-        echo '<button type="button" id="highscoreType" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Award Highscore</button><input id="highscoreTypeTemp" name="highscoreTypeTemp" class="hiddenMeldung" value="Award Highscore">';
+        echo '<button type="button" id="highscoreType" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Token Highscore</button><input id="highscoreTypeTemp" name="highscoreTypeTemp" class="hiddenMeldung" value="Token Highscore">';
     }
     else {
         $temp = $_SESSION['highscoreTypeTemp'];
-        if ($temp == 0) {
+        if ($temp == 1) {
             echo '<button type="button" id="highscoreType" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Token Highscore</button><input id="highscoreTypeTemp" name="highscoreTypeTemp" class="hiddenMeldung" value="Token Highscore">';
         } else {
             echo '<button type="button" id="highscoreType" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Award Highscore</button><input id="highscoreTypeTemp" name="highscoreTypeTemp" class="hiddenMeldung" value="Award Highscore">';
@@ -32,6 +32,7 @@ function setHighscoreType()
 
 function setAwardType()
 {
+    include_once ("../php/awardsVerwalten.php");
     if ( !array_key_exists('highscoreAwardType', $_SESSION))
     {
         // -1: alle Awards
@@ -57,12 +58,12 @@ function setSaisonNum()
     {
         // 0: jetztige Saison
         $_SESSION['highscoreSaisonNum'] = 0;
-        echo '<form id="saisonNumForm" action="?saisonNumForm=1" method="post"><div class="input-group-prepend"><span class="input-group-text btn btn-primary btn-outline-primary">Saison Nr.</span></div><input type="number" min="-1" id="saisonNum" name="saisonNum" class="form-control tokens" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="0"></form>';
+        echo '<form id="saisonNumForm" action="?saisonNumForm=1" method="post"><div class="input-group-prepend"><span class="input-group-text btn btn-primary btn-outline-primary">Saison Nr.</span><input type="number" min="-1" id="saisonNum" name="saisonNum" class="form-control tokens" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="0"></div></form>';
     }
     else
     {
         $num = $_SESSION['highscoreSaisonNum'];
-        echo '<form id="saisonNumForm" action="?saisonNumForm=1" method="post"><div class="input-group-prepend"><span class="input-group-text btn btn-primary btn-outline-primary">Saison Nr.</span></div><input type="number" min="-1" id="saisonNum" name="saisonNum" class="form-control tokens" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="'.$num.'"></form>';
+        echo '<form id="saisonNumForm" action="?saisonNumForm=1" method="post"><div class="input-group-prepend"><span class="input-group-text btn btn-primary btn-outline-primary">Saison Nr.</span><input type="number" min="-1" id="saisonNum" name="saisonNum" class="form-control tokens" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="'.$num.'"></div></form>';
     }
 }
 
@@ -72,19 +73,31 @@ function setSortieren()
     {
         // 0: Aufsteigend
         // 1: Absteigend
-        $_SESSION['highscoreSaisonNum'] = 0;
-        echo '<form id="highscoreSortiert" action="?highscoreSortiert=1" method="post"><button type="button" id="SortType" class="btn btn-primary dropdown-toggle btn-outline-primary"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aufsteigend</button><input type="number" min="-1" id="saisonNum" name="saisonNum" class="form-control tokens" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="Aufsteigend"></form>';
+        $_SESSION['highscoreSortiert'] = 0;
+        echo '<form id="highscoreSortiert" action="?highscoreSortiert=1" method="post"><button type="button" id="SortType" class="btn btn-primary dropdown-toggle btn-outline-primary"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aufsteigend</button><input id="saisonNum" name="saisonNum" class="hiddenMeldung" value="Aufsteigend"></form>';
     }
     else
     {
         if ( $_SESSION['highscoreSortiert'] = 0)
         {
-            echo '<form id="highscoreSortiert" action="?highscoreSortiert=1" method="post"><button type="button" id="SortType" class="btn btn-primary dropdown-toggle btn-outline-primary"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aufsteigend</button><input type="number" min="-1" id="saisonNum" name="saisonNum" class="form-control tokens" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="Aufsteigend"></form>';
+            echo '<form id="highscoreSortiert" action="?highscoreSortiert=1" method="post"><button type="button" id="SortType" class="btn btn-primary dropdown-toggle btn-outline-primary"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aufsteigend</button><input id="saisonNum" name="saisonNum" class="hiddenMeldung" value="Aufsteigend"></form>';
         }
         else
         {
-            echo '<form id="highscoreSortiert" action="?highscoreSortiert=1" method="post"><button type="button" id="SortType" class="btn btn-primary dropdown-toggle btn-outline-primary"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Absteigend</button><input type="number" min="-1" id="saisonNum" name="saisonNum" class="form-control tokens" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="Absteigend"></form>';
+            echo '<form id="highscoreSortiert" action="?highscoreSortiert=1" method="post"><button type="button" id="SortType" class="btn btn-primary dropdown-toggle btn-outline-primary"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Absteigend</button><input id="saisonNum" name="saisonNum" class="hiddenMeldung" value="Absteigend"></form>';
         }
+    }
+}
+
+function setHighscoreList()
+{
+    if ( $_SESSION['highscoreTypeTemp'] == 1 )
+    {
+        echo '<th>Token</th>';
+    }
+    else
+    {
+        echo '<th>Awards</th>';
     }
 }
 
@@ -93,6 +106,7 @@ function printAwardDropDown ()
     global $db;
     $sqlC = 'select name from award';
     $award = mysqli_query($db, $sqlC);
+
     for (; $award_array = mysqli_fetch_assoc($award); ) {
         $name = $award_array['name'];
         echo '<a class="dropdown-item" onclick="setAwardButton(\'' . $name . '\')" href="#">' . $name . '</a>';
@@ -111,10 +125,11 @@ function printHighscoreEnd( $highscore )
 
 function printHighscore()
 {
-    $typ = $_GET['highscoreTypeTemp'];
-    $award = $_GET['highscoreAwardType'];
-    $saison = $_GET['highscoreSaisonNum'];
-    $sortiert = $_GET['highscoreSortiert'];
+    include_once ("../php/getHighscore.php");
+    $typ = $_SESSION['highscoreTypeTemp'];
+    $award = $_SESSION['highscoreAwardType'];
+    $saison = $_SESSION['highscoreSaisonNum'];
+    $sortiert = $_SESSION['highscoreSortiert'];
 
     if ($typ == "Token Highscore") {
         printTokenHighscore($award, $saison, $sortiert);
@@ -164,6 +179,8 @@ function printTokenHighscore($award, $saison, $sortiert)
             asort($out);
         }
     }
+
+    printHighscoreEnd($out);
 }
 
 function printAwardHighscore($award, $saison, $sortiert)
@@ -207,31 +224,8 @@ function printAwardHighscore($award, $saison, $sortiert)
             asort($out);
         }
     }
+printHighscoreEnd($out);
 }
-
-
-function printHighscoreThisSaision()
-{
-    // 0: Award
-    // 1: Token
-    include_once ("../php/getHighscore.php");
-    if ($_SESSION['highscoreTypeTemp'] == 0)
-    {
-        $highscore = getAwardHighscoreThisSaison();
-    }
-    else {
-        $highscore = getTokenHighscoreThisSaison();
-    }
-
-    //printHighscore($highscore);
-
-}
-
-function printAwardHighscoreThisSaision()
-{
-
-}
-
 
 if (isset($_GET['eventAnzeigen']))
 {
@@ -261,16 +255,29 @@ if (isset($_GET['highscoreForm']))
 
 if (isset($_GET['awardForm']))
 {
-    $award = $_GET['AwardTypeTemp'];
+    include_once ("../php/awardsVerwalten.php");
+    $award = $_POST['AwardTypeTemp'];
     $awards = getAllAwardsOrderedByName();
-
+    $i = 0;
+    foreach ($awards as $a)
+    {
+        $val = $a['name'];
+        if ($val == $award)
+        {
+            break;
+        }
+        else {
+            $i++;
+        }
+    }
+    print($i);
     if ( $award == 'All Awards' )
     {
         $_SESSION['highscoreAwardType'] = -1;
     }
     else
     {
-        $_SESSION['highscoreAwardType'] = array_search($_GET['AwardTypeTemp'], $awards);
+        $_SESSION['highscoreAwardType'] = $i;
     }
 }
 
