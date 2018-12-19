@@ -34,7 +34,7 @@
                 lehrer.style.color = "black"; 
                 if (document.getElementById(id).parentNode == document.getElementById('ohneRecht')) 
                 {
-                    deleteFromOhneRechtListItems(id);
+                    deleteFromOhneRechtLsitItems(id);
                 }
                 else
                 {
@@ -95,12 +95,13 @@
             ohneRechtListe.push(document.getElementById(id));
         }
 
-        function removeFromOhneRechtLsitItems(id)
+        function deleteFromOhneRechtLsitItems(id)
         {
             delete ohneRechtListe[id];
         }
 
-        function rechteGeben() {
+        function rechteGeben() 
+        {
             var removedElements = [];
             for (var i = 0; i < ohneRechtListe.length;i++)
             {   
@@ -119,6 +120,28 @@
             ohneRechtListe = [];
             printField();
         }
+
+        function rechteNehmen() 
+        {
+            var addedElements = [];
+            for (var i = 0; i < mitRechtListe.length; i++)
+            {
+                var element = document.getElementById('mitRecht');
+                addedElements.push(element.removeChild(mitRechtListe[i]));
+            }
+
+            for (var i = 0; i < mitRechtListe.length; i++)
+            {
+                var element = document.getElementById('ohneRecht');
+                addedElements[i].style.backgroundColor = "white";
+                addedElements[i].style.color = "black";
+                element.appendChild(addedElements[i]);
+            }
+            options = {};
+            mitRechtListe = [];
+            printField();
+        }
+
     </script>
 
     <title>Tokenverwaltung</title>
