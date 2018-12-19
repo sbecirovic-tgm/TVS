@@ -71,20 +71,50 @@
 
     <!--Inhalt-->
     <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Events</h1>
+                <hr>
+            </div>
+            <div class="col-sm-12 tokenAnfragen">
+                <div class="card">
+                    <div class="card-body">
 
-        <div class="col-sm-12 tokenAnfragen">
-            <div class="card">
-                <div class="card-body">
-                        <div class="col-sm-12">
-                                <p class="font-weight-bold abstand1">Event eintragen</p>
-                                <hr>
-                            </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-primary text-light" id="inputGroup-sizing-default">Betreff</span>
+                        <div class="row">
+                        <div class="col-sm-6">
+                                <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-primary text-light adminEventText" id="inputGroup-sizing-default">Eventname</span>
+                                        </div>
+                                        <input type="text" id="betreff" name="betreff" class="form-control" minlength="1"
+                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                    </div>
                         </div>
-                        <input type="text" id="betreff" name="betreff" class="form-control" minlength="1" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default">
+                        <div class="col-sm-6">
+                                <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text bg-primary text-light adminEventText">Datum</span>
+                                            </div>
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar">
+                                            </i>
+                                        </div>
+                                        <input class="form-control" id="date" name="date" placeholder="DD-MM-YYYY"
+                                            type="text"/>
+                                    </div>
+                        </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-primary text-light adminEventText">Beschreibung</span>
+                            </div>
+                            <textarea class="form-control" aria-label="With textarea"></textarea>
+                        </div>
+                        
+                        <div class="col-sm-12 text-center">
+                                <input type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="" readonly value="Anfordern">
+                        </div>
                     </div>
                 </div>
             </div>
