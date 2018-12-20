@@ -20,12 +20,6 @@ function getSaisonNumbFromDate($date)
     $dateNow = date_create($dateNow);
     $tempMon = date_format($dateNow, "m");
 
-    echo $dateNow->format('Y-m-d');
-    echo '<br>';
-    echo $time;
-    echo '<br>';
-    echo $tempMon;
-    echo '<br>';
     if ( ($tempMon > 8 && $tempMon < 13) || ($tempMon < 3 && $tempMon > 0))
     {
         $year = date_format($dateNow, "Y");
@@ -39,8 +33,6 @@ function getSaisonNumbFromDate($date)
         return -1;
     }
 
-    echo $year;
-    echo '<br>';
 
     $monTemp = $resArray['startWSemMon'];
     $dayTemp = $resArray['startWSemDay'];
@@ -63,8 +55,6 @@ function getSaisonNumbFromDate($date)
     $startYear = $resArray['startJahr'];
 
     $res = date_format($dateNow, "Y") - $startYear;
-    echo $res;
-    echo '<br>';
     if ( $startWSem < $dateNow || $dateNow < $endWSem )
     {
         $out = 1 * $res;
