@@ -129,15 +129,24 @@ function printHighscoreEnd( $highscore )
     $sortiert = $_SESSION['highscoreSortiert'];
     if ( $sortiert == 1 )
     {
+        $erh = false;
         $i = count($highscore);
     }
     else {
+        $erh = true;
         $i = 1;
     }
     foreach ($highscore as $name => $anzahl)
     {
         echo '<tr><td scope="row">'.$i.'</td><td>'.$name.'</td><td>'.$anzahl.'</td></tr>';
-        $i++;
+        if ( $erh )
+        {
+            $i++;
+        }
+        else
+        {
+            $i--;
+        }
     }
 }
 
