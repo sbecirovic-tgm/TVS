@@ -76,19 +76,18 @@ function printEventLimit4()
 
 if (isset($_GET['overallHighscoreAnzeigen']))
 {
-    $_SESSION['highscore'] = "overall";
+    $_SESSION['highscore'] = "overallToken";
     header("Refresh:0; url=highscore.html");
 }
 
 if (isset($_GET['awardHighscoreAnzeigen']))
 {
-    $_SESSION['highscore'] = "award";
+    $_SESSION['highscore'] = "overallAward";
     header("Refresh:0; url=highscore.html");
 }
 
 if (isset($_GET['highscoreAnzeigen']))
 {
-    $_SESSION['highscore'] = NULL;
     header("Refresh:0; url=highscore.html");
 }
 
