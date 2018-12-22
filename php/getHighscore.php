@@ -96,7 +96,7 @@ function getTokenHighscoreAllTime()
     for (; $schuelerArray = mysqli_fetch_assoc($schueler); )
     {
         $sKuerzel = $schuelerArray['kuerzel'];
-        $sqlC2 = "select tokenAnzahl from leistung sKuerzel = '$sKuerzel'";
+        $sqlC2 = "select tokenAnzahl from leistung where sKuerzel = '$sKuerzel'";
         $leistungen = mysqli_query($db, $sqlC2);
         for (; $leistungenArray = mysqli_fetch_assoc($leistungen); )
         {
@@ -263,7 +263,7 @@ function getAwardHighscoreAllTime()
     return $out;
 }
 
-function getAwardHighscoreProAwardPerSaison( $saisonNummer, $aName )
+function getAwardHighscoreProAwardProSaision( $saisonNummer, $aName )
 {
     global $db;
 

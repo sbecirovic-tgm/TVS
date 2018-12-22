@@ -241,9 +241,10 @@ values ('Test-Award2', '15');
 insert into award( name, tokenLimit )
 values ('Test-Award3', '15');
 
--- insert into schueler( kuerzel, sName, gesToken )
--- values ('swahl', 'Sebastian Wahl', '1');
+insert into schueler( kuerzel, sName )
+values ('swahl', 'Sebastian Wahl');
 
 
-
+insert into schueler( kuerzel, sName )
+values ('fgavric', 'Filip Gavric');
 

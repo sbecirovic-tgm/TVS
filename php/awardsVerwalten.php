@@ -53,9 +53,10 @@ function deleteAward ($name)
 function getAllAwardsOrderedByName()
 {
     global $db;
-    $sqlC = "select * from award order by name";
+    $sqlC = "select name from award order by name";
     $result = mysqli_query($db, $sqlC);
-    return mysqli_fetch_assoc($result);
+    $out = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $out;
 }
 
 ?>
