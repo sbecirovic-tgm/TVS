@@ -63,12 +63,14 @@
                 <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
                     <a class="nav-link active" href="" onclick="submitForm('eventForm')">
                         Events
+                        <!--
                         <span class="badge badge-pill bg-light align-text-bottom">
                             <?php
                             include_once("../php/eventsVerwalten.php");
                             echo countNewEvents();
                         ?>
                         </span>
+                        -->
                     </a>
                 </form>
 
@@ -133,8 +135,8 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    printHighscoreTop3Overall();
-                                ?>
+                                        printHighscoreTop3Overall();
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -179,8 +181,8 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    printHighscoreTop3Award();
-                                ?>
+                                        printHighscoreTop3Award();
+                                    ?>
                                 </tbody>
                             </table>
                         </div>

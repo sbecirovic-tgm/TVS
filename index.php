@@ -8,6 +8,10 @@ if(isset($_GET['login']))
 {
 	$userName = $_POST['inputBenutzername'];
 	$password = $_POST['inputPassword'];
+	if ( strpos($userName, '@') == false )
+    {
+        $userName = $userName . "@tgm.ac.at";
+    }
 	$regularLehrer = "/^[a-zA-Z0-9_.+-]+@[tgm]+.[ac]+.[at]+$/";
 	$regularSchueler = "/^[a-zA-Z0-9_.+-]+@[student]+.[tgm]+.[ac]+.[at]+$/";
 	$ergSchueler = preg_match($regularSchueler , $userName);
@@ -35,20 +39,27 @@ if(isset($_GET['login']))
 
 			
 			$_SESSION['userName'] = $kuerzel;
-			// weiterleiten auf die unterseite 
+            //$_SESSION['schueler']
+            // 0: Normaler Lehrer
+            // 1: Schüler
+            // -1: Headadmin
+            // weiterleiten auf die unterseite
 			if ( $ergSchueler == 1  && $ergLehrer != 1 )
 			{
 				header("Refresh:0; url=userAnsicht\startseite.html");
-			}
+                $_SESSION['schueler'] = 1;
+            }
 			else
 			{
 			    if ( checkIfUserIsSuperUser($kuerzel))
                 {
                     header("Refresh:0; url=headAnsicht\startseite.html");
+                    $_SESSION['schueler'] = -1;
                 }
                 else
                 {
                     header("Refresh:0; url=adminAnsicht\startseite.html");
+                    $_SESSION['schueler'] = 0;
                 }
 			}
 			
