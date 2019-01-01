@@ -248,3 +248,10 @@ values ('swahl', 'Sebastian Wahl');
 insert into schueler( kuerzel, sName )
 values ('fgavric', 'Filip Gavric');
 
+
+
+insert into event(name, datum, superKuerzel, lKuerzel, aName)
+values ('Test event', CURDATE(), Null, Null, 'Test-Award2');
+
+insert into unterkategorie(name, eName, aName, eDatum, wID)
+values ('Bericht', 'Test event', 'Test-Award2', CURDATE(), NULL);

@@ -69,6 +69,21 @@ function getEvent( $name, $datum, $aName )
     return $out;
 }
 
+function getUnterKatProEvent( $name, $datum, $aName )
+{
+    global $db;
+    $sqlC = "select name, beschreibung, tokenAnzahl from unterkategorie where eName = '$name' and eDatum = '$datum' and aName = '$aName'";
+    $unter = mysqli_query($db, $sqlC);
+    $i = 0;
+    for(; $event_array = mysqli_fetch_assoc($unter);)
+    {
+        $out[$i]['name'] = $event_array['name'];
+        $out[$i]['beschreibung'] = $event_array['beschreibung'];
+        $out[$i]['tokenAnzahl'] = $event_array['tokenAnzahl'];
+        $i++;
+    }
+    return $out;
+}
 function addEvent ( $name, $datum, $kuerzel, $aName, $beschreibung)
 {
     global $db;
