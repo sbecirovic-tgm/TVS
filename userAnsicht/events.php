@@ -18,7 +18,8 @@ function printEvents()
     foreach ($events as $event)
     {
         // als datum YYYY-MM-DD
-        $date = strtotime($event['datum']);
+        $dateString = $event['datum'];
+        $date = strtotime($dateString);
         $day = date("d", $date);
         $mon = date("M", $date);
 
@@ -50,10 +51,10 @@ function printEvents()
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <form id="eventAntrag" action="?requestTokenEvent=1" method="post">
-                        <!-- inputs für die values -->
-                        <input type="text" id="awardTypeBackend" name="awardTypeBackend" class="hiddenMeldung" value="'.$aName.'">
-                        <input type="text" id="eventNameBackend" name="eventNameBackend" class="hiddenMeldung" value="'.$name.'">
-                        <input type="text" id="eventDateBackend" name="eventDateBackend" class="hiddenMeldung" value="'.$date.'">
+                            <!-- inputs für die values -->
+                            <input type="text" id="awardTypeBackend" name="awardTypeBackend" class="hiddenMeldung" value="'.$aName.'">
+                            <input type="text" id="eventNameBackend" name="eventNameBackend" class="hiddenMeldung" value="'.$name.'">
+                            <input type="text" id="eventDateBackend" name="eventDateBackend" class="hiddenMeldung" value="'.$dateString.'">
                             <div class="modal-content">
                                 <script type="application/javascript">
                                     function changeValues(name, beschreibung, tokenAnzahl) {
@@ -77,6 +78,7 @@ function printEvents()
                                         if ( flag == false)
                                         {
                                             document.getElementById("tokenAnzahlUnterKat").value = tokenAnzahl;
+                                            document.getElementById("tokenAnzahlUnterKatBackend").value = tokenAnzahl;
                                         }
                                         else 
                                         {
@@ -87,6 +89,7 @@ function printEvents()
                                     }
                                     function submitEventForm() {
                                         var form = document.getElementById("eventAntrag");
+                                        document.getElementById("tokenAnzahlUnterKatBackend").value = document.getElementById("tokenAnzahlUnterKat").value;
                                         form.submit();
                                     }
                                 </script>
@@ -121,6 +124,8 @@ function printEvents()
                                                 </div>
                                                 <input type="number" min="1" id="tokenAnzahlUnterKat" name="tokenAnzahlUnterKat" class="form-control tokens"
                                                     aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled readonly value="">
+                                                <input type="number" id="tokenAnzahlUnterKatBackend" name="tokenAnzahlUnterKatBackend" class="hiddenMeldung" value="">
+
                                             </div>
                                         </div>
                                     </div>
@@ -154,16 +159,8 @@ function printEvents()
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <div class="row">
-                                        <div id="antragErrorMsg"></div>
-                                        ' . printMeldung() . '
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schlie&szlig;en</button>
-                                            <button type="button" class="btn btn-outline-primary" onclick="submitEventForm()">Antrag stellen</button>
-                                        </div>
-                                    </div>
+                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schlie&szlig;en</button>
+                                    <button type="button" class="btn btn-outline-primary" onclick="submitEventForm()">Antrag stellen</button>
                                 </div>
                             </div>
                         </form>
@@ -190,14 +187,16 @@ function printUnter( $event )
 
 function printMeldung()
 {
-    $result = $_SESSION['eventRequestResult'];
-    if ($result)
-    {
-        return '<script language="JavaScript" type="text/javascript">errorMsg = document.getElementById("antragErrorMsg");errorMsg.innerHTML = \'<div class="alert alert-success alert-dismissible fade show abstand1" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Ihr Antrag wurde erfolgreich gestellt!</div>\';</script>';
-    }
-    else
-    {
-        return '<script language="JavaScript" type="text/javascript">errorMsg = document.getElementById("antragErrorMsg");errorMsg.innerHTML = \'<div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Ein Fehler ist aufgetreten! Bitte versuchen Sie es erneut.</div>\';</script>';
+    if ( key_exists('eventRequestResult', $_SESSION)) {
+        $result = $_SESSION['eventRequestResult'];
+        echo '<div id="antragErrorMsg" class="bottomAlert">';
+        if ($result) {
+            //echo '<script language="JavaScript" type="text/javascript">errorMsg = document.getElementById("antragErrorMsg");errorMsg.innerHTML = \'<div class="alert alert-success alert-dismissible fade show abstand1" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Ihr Antrag wurde erfolgreich gestellt!</div>\';</script>';
+            echo '<div class="alert alert-success alert-dismissible fade show abstand1" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Ihr Antrag wurde erfolgreich gestellt!</div>';
+        } else {
+            echo '<div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Ein Fehler ist aufgetreten! Bitte versuchen Sie es erneut.</div>';
+        }
+        echo '</div>';
     }
 }
 
@@ -207,15 +206,12 @@ if (isset($_GET['requestTokenEvent']))
     $awardTyp = $_POST['awardTypeBackend'];
     $eventName = $_POST['eventNameBackend'];
     $eventDate = $_POST['eventDateBackend'];
-
-    $tokenAnzahl = $_POST['tokenAnzahlUnterKat'];
+    $tokenAnzahl = $_POST['tokenAnzahlUnterKatBackend'];
     $betreff = $_POST['betreff'];
     $beschreibung = $_POST['beschreibung'];
     $unterKatName = $_POST['katTypBackend'];
-
     $result = requestTokenExt($awardTyp, $eventName, $eventDate, $unterKatName, $userName, $tokenAnzahl, $beschreibung, $betreff);
     $_SESSION['eventRequestResult'] = $result;
-    echo $result;
 }
 
 

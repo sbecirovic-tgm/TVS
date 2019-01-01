@@ -214,6 +214,14 @@ footer p:last-child {
   font-weight: 500;
 }
 
+.bottomAlert{
+  position: fixed;
+  bottom: 5px;
+  left:2%;
+  width: 96%;
+  z-index: 100;
+}
+
 .visibleMeldung {
   display: block;
 }
