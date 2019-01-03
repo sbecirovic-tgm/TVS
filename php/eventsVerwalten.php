@@ -7,6 +7,7 @@
  */
 $db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 include_once("userCheck.php");
+
 function listAllEvents()
 {
     global $db;
@@ -132,6 +133,32 @@ function countNewEvents()
     $temp = mysqli_query($db,$sqlC);
     $out = mysqli_fetch_assoc($temp);
     return $out['result'];
+}
+
+function isSchuelerInWildcard( $name, $datum, $aName, $userName )
+{
+    global $db;
+    $sqlC = "select wID from event where name = '$name' and datum = '$datum' and aName = '$aName'";
+    $temp = mysqli_query($db, $sqlC);
+    $result = mysqli_fetch_assoc($temp);
+    if ( $result['wID'] == NULL )
+    {
+        return true;
+    }
+    else
+    {
+        $res = $result['wID'];
+        $sqlC2 = "select skuerzel from zuordnung where wID = '$res' order by skuerzel";
+        $temp = mysqli_query($db, $sqlC2);
+        for ( ; $zuordnung = mysqli_fetch_assoc($temp) ; )
+        {
+            if ( $zuordnung['skuerzel'] == $userName )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 ?>

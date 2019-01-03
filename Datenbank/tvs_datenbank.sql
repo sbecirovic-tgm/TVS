@@ -118,6 +118,7 @@ CREATE TABLE event (
 		superKuerzel VARCHAR(255),
 		lKuerzel VARCHAR(255),
 		aName VARCHAR(255),
+		wID INTEGER,
 
 		beschreibung TEXT,
 		PRIMARY KEY ( name, datum, aName),
@@ -135,7 +136,12 @@ CREATE TABLE event (
 		FOREIGN KEY ( lKuerzel )
 		REFERENCES lehrer(kuerzel)
 		ON UPDATE CASCADE
-		On DELETE CASCADE
+		On DELETE CASCADE,
+
+		FOREIGN KEY ( wID )
+		REFERENCES wildcard( id )
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
 ) ENGINE = INNODB;
 
 CREATE TABLE unterkategorie (
@@ -144,7 +150,6 @@ CREATE TABLE unterkategorie (
 		eName VARCHAR(255),
 		aName VARCHAR(255),
 		eDatum DATE,
-		wID INTEGER,
 
 		tokenAnzahl INTEGER,
 		beschreibung TEXT,
@@ -153,11 +158,6 @@ CREATE TABLE unterkategorie (
 
 		FOREIGN KEY (eName, eDatum, aName)
 		REFERENCES event(name, datum, aName)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE,
-
-		FOREIGN KEY ( wID )
-		REFERENCES wildcard(id)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
 ) ENGINE = INNODB;
@@ -249,9 +249,28 @@ insert into schueler( kuerzel, sName )
 values ('fgavric', 'Filip Gavric');
 
 
+-- test event mit unterketegorien und wildcard
+insert into event(name, datum, superKuerzel, lKuerzel, aName, wID, beschreibung)
+values ('Test event', '2019-1-2', Null, Null, 'Test-Award2', NULL, 'Dieses Event testet alle Funktionen!');
 
-insert into event(name, datum, superKuerzel, lKuerzel, aName)
-values ('Test event', CURDATE(), Null, Null, 'Test-Award2');
+insert into unterkategorie(name, eName, aName, eDatum, tokenAnzahl, beschreibung)
+values ('Bericht', 'Test event', 'Test-Award2', '2019-1-2', 2, 'Du hast einen Bericht geschrieben');
 
-insert into unterkategorie(name, eName, aName, eDatum, wID)
-values ('Bericht', 'Test event', 'Test-Award2', CURDATE(), NULL);
+insert into unterkategorie(name, eName, aName, eDatum, tokenAnzahl, beschreibung)
+values ('Bilder aufgenommen', 'Test event', 'Test-Award2', '2019-1-2', 1, 'Du hast Bilder aufgenommen' );
+
+-- Wildcard
+insert into wildcard (beschreibung)
+values ('Hier können sich nur Leute aus der 4. Klasse anmelden');
+-- hinzufügen zum event
+update event set wID = (select id from wildcard order by id desc limit 1);
+-- zuordnung zu den schülern
+insert into zuordnung ( wID, skuerzel )
+values ( 1, 'swahl');
+
+-- test event2 mit unterketegorien und wildcard
+insert into event(name, datum, superKuerzel, lKuerzel, aName, wID, beschreibung)
+values ('Test event 2', '2019-1-15', Null, Null, 'Test-Award1', NULL, 'Dieses Event testet alle Funktionen!');
+
+insert into unterkategorie(name, eName, aName, eDatum, tokenAnzahl, beschreibung)
+values ('Bericht', 'Test event 2', 'Test-Award1', '2019-1-15', 2, 'Du hast einen Bericht geschrieben');
