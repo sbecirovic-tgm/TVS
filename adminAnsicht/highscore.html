@@ -67,16 +67,19 @@
             <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
                 <a class="nav-link active" href="#" onclick="submitForm('eventForm')">
                     Events
+                    <!--
                     <span class="badge badge-pill bg-light align-text-bottom">
-                            <?php
-                            include_once("../php/eventsVerwalten.php");
-                            echo countNewEvents();
-                        ?>
-                        </span>
+                        <?php
+                        include_once("../php/eventsVerwalten.php");
+                        echo countNewEvents();
+                    ?>
+                    </span>
+                    -->
                 </a>
             </form>
-
-            <a class="nav-link active" href="antragHistroy.html">Antraghistory</a>
+            <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
+                <a class="nav-link active" href="#"onclick="submitForm('anfragenForm')">Anfragen</a>
+            </form>
             <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
                 <a class="nav-link active" href="#" onclick="submitForm('highscoreForm')">Highscores</a>
             </form>

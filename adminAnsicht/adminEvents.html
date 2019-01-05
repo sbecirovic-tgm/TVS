@@ -14,15 +14,18 @@
     <title>Tokenverwaltung</title>
 </head>
 
-<body>
+<body onload="pressButton()">
+    <?php
+        include_once("adminEvents.php");
+    ?>
     <!--HEADER-->
 
-    <header class="headerEvents">
+    <header class="headerStartseite">
         <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
             <div class="container">
                 <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -30,15 +33,14 @@
                     </ul>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
+                                aria-haspopup="true" aria-expanded="false">
                             <?php
-                                    echo '$userName';
-                                ?>
+                                include_once("../php/userCheck.php");
+                                echo getNameFromKuerzel($userName);
+                            ?>
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Mein Profil</a>
-                            <a class="dropdown-item" href="startseite.html">Startseite</a>
-                            <a class="dropdown-item" href="#">Antrag History</a>
                             <form id="logoutForm" action="?logout=1" method="post">
                                 <a class="dropdown-item" href="#" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
                             </form>
@@ -48,6 +50,7 @@
             </div>
         </nav>
     </header>
+
     <script language="JavaScript" type="text/javascript">
         function submitForm(form) {
             var myForm = document.getElementById(form);
@@ -57,13 +60,26 @@
     <div class="nav-scroller bg-white shadow-md">
         <div class="container">
             <nav class="nav nav-underline">
-                <a class="nav-link" href="#" style="padding-left: 0;">Dashboard</a>
-                <a class="nav-link active" href="#">
-                    Events
-                    <span class="badge badge-pill bg-light align-text-bottom">27</span>
-                </a>
-                <a class="nav-link" href="#">Tokenhistory</a>
-                <a class="nav-link" href="#">Highscores</a>
+                <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
+                <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
+                    <a class="nav-link active" href="#" onclick="submitForm('eventForm')">
+                        Events
+                        <!--
+                        <span class="badge badge-pill bg-light align-text-bottom">
+                            <?php
+                            include_once("../php/eventsVerwalten.php");
+                            echo countNewEvents();
+                        ?>
+                        </span>
+                        -->
+                    </a>
+                </form>
+                <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
+                    <a class="nav-link active" href="#"onclick="submitForm('anfragenForm')">Anfragen</a>
+                </form>
+                <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
+                    <a class="nav-link active" href="#" onclick="submitForm('highscoreForm')">Highscores</a>
+                </form>
             </nav>
         </div>
     </div>
@@ -108,137 +124,186 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-primary text-light adminEventText">Beschreibung</span>
                             </div>
-                            <textarea class="form-control" aria-label="With textarea"></textarea>
+                            <textarea class="form-control" name="beschreibung" id="beschreibung" aria-label="With textarea"></textarea>
                         </div>
+                        <hr>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-primary text-light adminEventText">Kategorien:</span>
+                            </div>
+                            <div class="container input-group-prepend" id="addKat">
 
+                            </div>
+                            <div class="col-sm-12 input-group-prepend">
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#popUpKategorie">
+                                        <span class="iconic iconic-plus iconic-md" title="plus" aria-hidden="true"></span> Neue Kateogrie hinzufügen
+                                    </button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#popUpWildcard">
+                                        <span class="iconic iconic-md" data-glyph="wrench" title="wrench" aria-hidden="true"></span> Zugänglichkeit bearbeiten
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="input-group">
+                            <div class="row">
+
+                            </div>
+                        </div>
                         <div class="col-sm-12 text-center">
                             <input type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick=""
-                                readonly value="Anfordern">
+                                readonly value="Event hinzufügen">
                         </div>
+
+                        <!-- Jetzt kommen die popovers -->
+                        <div class="modal fade" id="popUpKategorie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <form id="eventAntrag'.$i.'" action="?requestTokenEvent=1" method="post">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <div class="col-sm-6">
+                                                <h5 class="modal-title">Antrag zu dem Event stellen: '.$name.'</h5>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <hr class="col-xs-12">
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <div class="btn-group">
+                                                        <button type="button" id="katTyp'.$i.'" class="btn btn-primary dropdown-toggle btn-outline-primary"
+                                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategorie ausw&auml;hlen</button>
+                                                        <input type="text" id="katTypBackend'.$i.'" name="katTypBackend" class="hiddenMeldung" value="">
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" href="#" onclick="">Andere Kategorie</a>
+                                                            '.printUnter($event, $i).'
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-primary text-light">Token</span>
+                                                        </div>
+                                                        <input type="number" min="1" id="tokenAnzahlUnterKat'.$i.'" name="tokenAnzahlUnterKat" class="form-control tokens"
+                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled readonly value="">
+                                                        <input type="number" id="tokenAnzahlUnterKatBackend'.$i.'" name="tokenAnzahlUnterKatBackend" class="hiddenMeldung" value="">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Kategroiebeschreibung:</label>
+                                                        <textarea class="form-control" rows="3" minlength="1" id="katBeschreibung'.$i.'" disabled readonly></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-primary text-light">Betreff</span>
+                                                        </div>
+                                                        <input type="text" id="betreff'.$i.'" name="betreff" class="form-control" minlength="1"
+                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Beschreibung:</label>
+                                                        <textarea class="form-control" rows="3" minlength="1" id="beschreibung'.$i.'" name="beschreibung" required></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schlie&szlig;en</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="submitEventForm('.$i.')">Antrag stellen</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Wildcard -->
+                        <script>
+                            function submitForm( name )
+                            {
+
+                            }
+                        </script>
+                        <div class="modal fade" id="popUpWildcard" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <form id="addWildcard" action="?addWildcard=1" method="post">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <div class="col-sm-6">
+                                                <h5 class="modal-title">Wildcard zu dem Event hinzufügen</h5>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-primary text-light">Kürzel des Schülers</span>
+                                                        </div>
+                                                        <input type="text" id="schuelerKuerzel" name="schuelerKuerzel" class="form-control" minlength="1"
+                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-outline-primary" onclick="">Hinzufügen</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Berechtigte Schüler:</label>
+                                                        <select id="selectedSchueler" style="width:90%;height:30%; margin: 0% 10% 2% 10%" multiple class="form-control">
+
+                                                        </select>
+                                                        <button type="button" class="btn btn-outline-primary" onclick="">Ausgewählten Schüler entfernen</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schlie&szlig;en</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="submitEventForm('.$i.')">Wildcard hinzufügen</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- ende der popups -->
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-sm-12">
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">23</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h4 class="text-uppercase"><strong>We are developers</strong></h4>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Monday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 12:30 PM -
-                            2:00
-                            PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Cafe</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore
-                        et dolore magna aliqua.</p>
-                </div>
-                <div class="col-12 text-center">
-                    <button type="button" class="btn btn-outline-primary adminEventButton abstand1 center-block">Event verwalten</button>
-                </div>
-            </div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
+            <?php
+                printEvents();
+            ?>
         </div>
     </div>
     <footer class="footerSticky">
