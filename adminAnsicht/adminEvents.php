@@ -274,10 +274,10 @@ function printWildcard()
                     <h4>Zug&auml;nglichkeit</h4>
                 </div>
                 <div class="col-sm-4">
-                    <from id="changeWildcard" action="?changeWildcard=1" method="post">
+                    <form id="changeWildcard" action="?changeWildcard=1" method="post">
                         <input type="number" id="wildcardActBackend" name="wildcardActBackend" class="hiddenMeldung" value="1">
-                    </from>
-                    <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="submitForm()">Deaktivieren</button>
+                    </form>
+                    <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="submitForm(\'changeWildcard\')">Deaktivieren</button>
                 </div>
             </div>
             <hr>
@@ -304,10 +304,10 @@ function printWildcard()
                     <h4>Zug&auml;nglichkeit</h4>
                 </div>
                 <div class="col-sm-4">
-                    <from id="changeWildcard" action="?changeWildcard=1" method="post">
+                    <form id="changeWildcard" action="?changeWildcard=1" method="post">
                         <input type="number" id="wildcardActBackend" name="wildcardActBackend" class="hiddenMeldung" value="0">
-                    </from>
-                    <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="changeDiv()">Aktivieren</button>
+                    </form>
+                    <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="submitForm(\'changeWildcard\')">Aktivieren</button>
                 </div>
             </div>
             <hr>
@@ -336,10 +336,10 @@ function printWildcard()
                     <h4>Zug&auml;nglichkeit</h4>
                 </div>
                 <div class="col-sm-4">
-                    <from id="changeWildcard" action="?changeWildcard=1" method="post">
+                    <form id="changeWildcard" action="?changeWildcard=1" method="post">
                         <input type="number" id="wildcardActBackend" name="wildcardActBackend" class="hiddenMeldung" value="0">
-                    </from>
-                    <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="changeDiv()">Aktivieren</button>
+                    </form>
+                    <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="submitForm(\'changeWildcard\')">Aktivieren</button>
                 </div>
             </div>
             <hr>
@@ -403,9 +403,11 @@ if (isset($_GET['addKat']))
     if ( key_exists('kategorienListe', $_SESSION))
     {
         $list = $_SESSION['kategorienListe'];
-        $list[count($list)]['name'] = $name;
-        $list[count($list)]['tokenAnzahl'] = $tokenAnzahl;
-        $list[count($list)]['beschreibung'] = $beschreibung;
+        $num = count($list);
+        $list[$num]['name'] = $name;
+        $list[$num]['tokenAnzahl'] = $tokenAnzahl;
+        $list[$num]['beschreibung'] = $beschreibung;
+        $_SESSION['kategorienListe'] = $list;
     }
     else
     {
@@ -430,6 +432,10 @@ if ( isset($_GET['deleteKat']))
 
             $pos = array_search($search, $_SESSION['kategorienListe']);
             unset($_SESSION['kategorienListe'][$pos]);
+        }
+        if ( count($_SESSION['kategorienListe']) == 0 )
+        {
+            unset($_SESSION['kategorienListe']);
         }
     }
 }

@@ -214,7 +214,7 @@
                                                             <span class="input-group-text bg-primary text-light">Name</span>
                                                         </div>
                                                         <input type="text" id="name" name="name" class="form-control" minlength="1"
-                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -225,7 +225,7 @@
                                                             <span class="input-group-text bg-primary text-light">Vorgegebene Tokenanzahl</span>
                                                         </div>
                                                         <input type="number" min="1" id="tokenAnzahlUnterKat" name="tokenAnzahlUnterKat" class="form-control tokens"
-                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="">
+                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -233,7 +233,7 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label>Kategroiebeschreibung:</label>
-                                                        <textarea class="form-control" rows="3" minlength="1" id="katBeschreibung" name="katBeschreibung"></textarea>
+                                                        <textarea class="form-control" rows="3" minlength="1" id="katBeschreibung" name="katBeschreibung" required></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -315,7 +315,6 @@
             var div = document.getElementById("katListBackend");
             if ( elm.classList.contains("blau") )
             {
-                alert("Okkkk");
                 elm.classList.remove("blau");
                 selected.value = selected.value - 1;
 
@@ -359,7 +358,6 @@
             }
             else
             {
-                alert("naja");
                 elm.classList.add("blau");
                 var val = selected.value;
                 var out = '<input type="text" id="toDeleteName'+val+'" name="toDeleteName'+val+'" class="hiddenMeldung" value="'+name+'"><input type="text" id="toDeleteToken'+val+'" name="toDeleteToken'+val+'" class="hiddenMeldung" value="'+tokenAnzahl+'"><input type="text" id="toDeleteBesch'+val+'" name="toDeleteBesch'+val+'" class="hiddenMeldung" value="'+beschreibung+'">';
