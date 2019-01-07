@@ -6,8 +6,20 @@
  * Time: 14:26
  */
 session_start();
+$db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 
 $userName = $_SESSION['userName'];
+
+function printAwardDropDown ()
+{
+    global $db;
+    $sqlC = 'select name from award';
+    $award = mysqli_query($db, $sqlC);
+    for (; $award_array = mysqli_fetch_assoc($award); ) {
+        $name = $award_array['name'];
+        echo '<a class="dropdown-item" href="#" onclick="setAwardButton(\'' . $name . '\')">' . $name . '</a>';
+    }
+}
 
 function printEvents()
 {
@@ -121,6 +133,7 @@ function printEvents()
                 <div class="col-12 text-center">
                     <button id="tokenButton'.$i.'" type="button" class="btn btn-outline-primary adminEventButton abstand1 center-block" '.$popover.' '.$lock.'>Token beantragen</button>
                 </div>';
+        /*
         if ( $lock != 'disabled')
         {
             echo '<div class="modal fade" id="popUp'.$i.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -204,34 +217,14 @@ function printEvents()
                         </form>
                     </div>
                 </div>';
-        }
+        }*/
         echo '</div>';
         $i++;
     }
-    printFoundScript($found);
+    //printFoundScript($found);
 }
 
-function printFoundScript($found)
-{
-    if ( $found != -1 )
-    {
-        echo '<script type="application/javascript">
-                function pressButton()
-                {
-                    document.getElementById("tokenButton'.$found.'").click();   
-                }
-            </script>';
-    }
-    else
-    {
-        echo '<script type="application/javascript">
-                function pressButton()
-                {
-                    // nichts
-                }
-            </script>';
-    }
-}
+
 
 function printUnter( $event, $i )
 {
@@ -248,7 +241,222 @@ function printUnter( $event, $i )
     return $out;
 }
 
+function printKatList()
+{
+    if ( key_exists('kategorienListe', $_SESSION))
+    {
+        $list = $_SESSION['kategorienListe'];
+        foreach ( $list as $elm )
+        {
+            $name = $elm['name'];
+            $tokenAnzahl = $elm['tokenAnzahl'];
+            $beschreibung = $elm['beschreibung'];
+            echo '<li id="'.$name.'" class="list-group-item" style="cursor: pointer;" onclick="markElm(\''.$name.'\', '.$tokenAnzahl.', \''.$beschreibung.'\')">'.$name.' ('.$tokenAnzahl.' Token)<strong></strong></li>';
+        }
+    }
+    else
+    {
+        echo '<li id="startValueKat" class="list-group-item"><strong>Noch keine Eintr&auml;ge</strong></li>';
+    }
+}
 
+function printWildcard()
+{
+    // false: deaktiviert
+    // true: aktiviert
+    if ( key_exists('wildcardStatus', $_SESSION))
+    {
+        $status = $_SESSION['wildcardStatus'];
+        if ( $status )
+        {
+            echo '<div class="row">
+                <div class="col-sm-8">
+                    <h4>Zug&auml;nglichkeit</h4>
+                </div>
+                <div class="col-sm-4">
+                    <from id="changeWildcard" action="?changeWildcard=1" method="post">
+                        <input type="number" id="wildcardActBackend" name="wildcardActBackend" class="hiddenMeldung" value="1">
+                    </from>
+                    <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="submitForm()">Deaktivieren</button>
+                </div>
+            </div>
+            <hr>
+            <div id="wildcardDiv" class="col-sm-12">
+                <form id="addKuerzel" class="input-group mb-3" action="?addKuerzel=1" method="post">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-primary text-light">K&uuml;rzel des Sch&uuml;lers</span>
+                    </div>
+
+                    <input type="text" id="schuelerKuerzel" name="schuelerKuerzel" class="form-control" minlength="1"
+                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-primary" onclick="submitForm(\'addKuerzel\')">Hinzuf&uuml;gen</button>
+                    </div>
+                </form>
+                <ol id="schuelerList" class="list-group">' . printSchuelerList() . '
+                </ol>
+            </div>';
+        }
+        else
+        {
+            echo '<div class="row">
+                <div class="col-sm-8">
+                    <h4>Zug&auml;nglichkeit</h4>
+                </div>
+                <div class="col-sm-4">
+                    <from id="changeWildcard" action="?changeWildcard=1" method="post">
+                        <input type="number" id="wildcardActBackend" name="wildcardActBackend" class="hiddenMeldung" value="0">
+                    </from>
+                    <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="changeDiv()">Aktivieren</button>
+                </div>
+            </div>
+            <hr>
+            <div id="wildcardDiv" class="col-sm-12 disabledDiv">
+                <form id="addKuerzel" class="input-group mb-3" action="?addKuerzel=1" method="post">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-primary text-light">K&uuml;rzel des Sch&uuml;lers</span>
+                    </div>
+
+                    <input type="text" id="schuelerKuerzel" name="schuelerKuerzel" class="form-control" minlength="1"
+                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-primary" onclick="submitForm(\'addKuerzel\')">Hinzuf&uuml;gen</button>
+                    </div>
+                </form>
+                <ol id="schuelerList" class="list-group">' . printSchuelerList() . '
+                </ol>
+            </div>';
+        }
+    }
+    else
+    {
+        $_SESSION['wildcardStatus'] = false;
+        echo '<div class="row">
+                <div class="col-sm-8">
+                    <h4>Zug&auml;nglichkeit</h4>
+                </div>
+                <div class="col-sm-4">
+                    <from id="changeWildcard" action="?changeWildcard=1" method="post">
+                        <input type="number" id="wildcardActBackend" name="wildcardActBackend" class="hiddenMeldung" value="0">
+                    </from>
+                    <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="changeDiv()">Aktivieren</button>
+                </div>
+            </div>
+            <hr>
+            <div id="wildcardDiv" class="col-sm-12 disabledDiv">
+                <form id="addKuerzel" class="input-group mb-3" action="?addKuerzel=1" method="post">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-primary text-light">K&uuml;rzel des Sch&uuml;lers</span>
+                    </div>
+
+                    <input type="text" id="schuelerKuerzel" name="schuelerKuerzel" class="form-control" minlength="1"
+                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-primary" onclick="submitForm(\'addKuerzel\')">Hinzuf&uuml;gen</button>
+                    </div>
+                </form>
+                <ol id="schuelerList" class="list-group">' . printSchuelerList() . '
+                </ol>
+            </div>';
+    }
+}
+
+function printSchuelerList()
+{
+    include_once ("../php/userCheck.php");
+    if ( key_exists('schuelerListe', $_SESSION))
+    {
+        $list = $_SESSION['schuelerListe'];
+        $out = '';
+        foreach ( $list as $elm )
+        {
+            $name = getAllSchuelerNamesToKurzel()[$elm['name']];
+            $out = $out . '<li id="'.$name.'" class="list-group-item" style="cursor: pointer;" onclick="">'.$name.'<strong></strong></li>';
+        }
+        return $out;
+    }
+    else
+    {
+        return '<li id="startValueSch" class="list-group-item"><strong>Noch keine Eintr&auml;ge</strong></li>';
+    }
+}
+
+if (isset($_GET['changeWildcard']))
+{
+    $status = $_POST['wildcardActBackend'];
+    if ( $status == 0 )
+    {
+        // auf das gegenteil setzten
+        $_SESSION['wildcardStatus'] = true;
+    }
+    else
+    {
+        $_SESSION['wildcardStatus'] = false;
+    }
+}
+
+if (isset($_GET['addKat']))
+{
+    $name = $_POST['name'];
+    $tokenAnzahl = $_POST['tokenAnzahlUnterKat'];
+    $beschreibung = $_POST['katBeschreibung'];
+    if ( key_exists('kategorienListe', $_SESSION))
+    {
+        $list = $_SESSION['kategorienListe'];
+        $list[count($list)]['name'] = $name;
+        $list[count($list)]['tokenAnzahl'] = $tokenAnzahl;
+        $list[count($list)]['beschreibung'] = $beschreibung;
+    }
+    else
+    {
+        $list[0]['name'] = $name;
+        $list[0]['tokenAnzahl'] = $tokenAnzahl;
+        $list[0]['beschreibung'] = $beschreibung;
+        $_SESSION['kategorienListe'] = $list;
+    }
+}
+
+if ( isset($_GET['deleteKat']))
+{
+    if ( key_exists('kategorienListe', $_SESSION))
+    {
+        $selected = $_POST['anzahlSelected'];
+
+        for ( $i = 0; $i < $selected; $i++ )
+        {
+            $search['name'] = $_POST['toDeleteName'.$i];
+            $search['tokenAnzahl'] = $_POST['toDeleteToken'.$i];
+            $search['beschreibung'] = $_POST['toDeleteBesch'.$i];
+
+            $pos = array_search($search, $_SESSION['kategorienListe']);
+            unset($_SESSION['kategorienListe'][$pos]);
+        }
+    }
+}
+
+// error popup
+function printError()
+{
+    if ( key_exists('wildCardError', $_SESSION))
+    {
+        $error = $_SESSION['wildCardError'];
+        if ( $error )
+        {
+            echo '<script>function f() {var form = document.getElementById("alertForm"); form.submit();}</script><div class="alert alert-success alert-dismissible fade show abstand1" role="alert"><form id="alertForm" action="?alertDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Dieser Sch&uuml;ler konnte nicht hinzugefügt werden, da er noch nicht in der Datenbank eingetragen ist.</form></div>';
+        }
+    }
+}
+// popup dismiss
+if (isset($_GET['alertDismiss']))
+{
+    unset($_SESSION['wildCardError']);
+}
+
+if (isset($_GET['anfrageVerwalten']))
+{
+    $_SESSION['anfrageVerwaltung'] = NULL;
+    header("Refresh:0; url=anfragen.html");
+}
 
 if (isset($_GET['highscoreAnzeigen']))
 {
@@ -265,4 +473,45 @@ if(isset($_GET['logout']))
 {
     include_once("../php/userCheck.php");
     logout();
+}
+
+if (isset($_GET['addKuerzel']))
+{
+    include_once ("../php/userCheck.php");
+
+    if ( key_exists('eventWildTemp', $_SESSION))
+    {
+        $kuerzel = $_POST['schuelerKuerzel'];
+        if ( checkIfUserInDatabase($kuerzel, 0) )
+        {
+            $temp = $_SESSION['eventWildTemp'];
+            $next = count($temp);
+
+            $temp[$next] = $kuerzel;
+            $_SESSION['eventWildTemp'] = $temp;
+
+        }
+        else
+        {
+            $_SESSION['wildCardError'] = true;
+        }
+
+    }
+    else
+    {
+        $kuerzel = $_POST['schuelerKuerzel'];
+        $temp[0] = $kuerzel;
+        $_SESSION['eventWildTemp'] = $temp;
+    }
+}
+
+
+if ( isset($_GET['deleteKuerzel']))
+{
+    if ( key_exists('eventWildTemp', $_SESSION))
+    {
+        $kuerzel = $_POST['schuelerKuerzel'];
+        $temp = $_SESSION['eventWildTemp'];
+        unset($temp[array_search($kuerzel, $temp)]);
+    }
 }

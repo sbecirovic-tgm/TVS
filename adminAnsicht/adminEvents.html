@@ -97,7 +97,7 @@
                     <div class="card-body">
 
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-primary text-light adminEventText" id="inputGroup-sizing-default">Eventname</span>
@@ -106,7 +106,7 @@
                                         aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-primary text-light adminEventText">Datum</span>
@@ -116,6 +116,25 @@
                                         </i>
                                     </div>
                                     <input class="form-control" id="date" name="date" placeholder="DD-MM-YYYY" type="text" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="btn-group">
+                                    <script type="application/javascript">
+                                        function setAwardButton(value) {
+                                            document.getElementById("awardType").innerHTML = value;
+                                            document.getElementById("awardTypeBackend").value = value;
+                                        }
+                                    </script>
+                                    <button type="button" name="awardType" id="awardType" class="btn dropdown-toggle btn-primary"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Award auswählen</button>
+                                    <input type="text" min="0" id="awardTypeBackend" name="awardTypeBackend" class="hiddenMeldung" value="">
+
+                                    <div class="dropdown-menu">
+                                        <?php
+                                            printAwardDropDown();
+                                        ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -128,23 +147,36 @@
                         </div>
                         <hr>
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-primary text-light adminEventText">Kategorien:</span>
-                            </div>
-                            <div class="container input-group-prepend" id="addKat">
-
-                            </div>
-                            <div class="col-sm-12 input-group-prepend">
-                                <div class="col-sm-6">
-                                    <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#popUpKategorie">
-                                        <span class="iconic iconic-plus iconic-md" title="plus" aria-hidden="true"></span> Neue Kateogrie hinzufügen
-                                    </button>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <h4>Kategorien</h4>
                                 </div>
-                                <div class="col-sm-6">
-                                    <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#popUpWildcard">
-                                        <span class="iconic iconic-md" data-glyph="wrench" title="wrench" aria-hidden="true"></span> Zugänglichkeit bearbeiten
-                                    </button>
+                                <hr class="col-xs-12">
+                                <div class="row">
+                                    <form id="katForm" action="?deleteKat=1" method="post">
+                                        <input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">
+                                        <div id="katListBackend">
+                                        </div>
+                                    </form>
+                                    <div class="col-sm-12">
+                                        <ol id="kategorienListe" class="list-group">
+                                            <?php
+                                                printKatList();
+                                            ?>
+                                        </ol>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" data-toggle="modal" data-target="#popUpKategorie">Neue Kategorie hinzufügen</button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm('katForm')" >Ausgewähle Kategorien löschen</button>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <?php
+                                    printWildcard();
+                                ?>
                             </div>
                         </div>
                         <hr>
@@ -161,11 +193,11 @@
                         <!-- Jetzt kommen die popovers -->
                         <div class="modal fade" id="popUpKategorie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
-                                <form id="eventAntrag'.$i.'" action="?requestTokenEvent=1" method="post">
+                                <form id="addKat" action="?addKat=1" method="post">
                                         <div class="modal-content">
                                         <div class="modal-header">
                                             <div class="col-sm-6">
-                                                <h5 class="modal-title">Antrag zu dem Event stellen: '.$name.'</h5>
+                                                <h5 class="modal-title">Kategorie zum Event hinzufügen</h5>
                                             </div>
                                             <div class="col-sm-6">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -176,26 +208,24 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
-                                                <div class="col-sm-8">
-                                                    <div class="btn-group">
-                                                        <button type="button" id="katTyp'.$i.'" class="btn btn-primary dropdown-toggle btn-outline-primary"
-                                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategorie ausw&auml;hlen</button>
-                                                        <input type="text" id="katTypBackend'.$i.'" name="katTypBackend" class="hiddenMeldung" value="">
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="#" onclick="">Andere Kategorie</a>
-                                                            '.printUnter($event, $i).'
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-12">
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text bg-primary text-light">Token</span>
+                                                            <span class="input-group-text bg-primary text-light">Name</span>
                                                         </div>
-                                                        <input type="number" min="1" id="tokenAnzahlUnterKat'.$i.'" name="tokenAnzahlUnterKat" class="form-control tokens"
-                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled readonly value="">
-                                                        <input type="number" id="tokenAnzahlUnterKatBackend'.$i.'" name="tokenAnzahlUnterKatBackend" class="hiddenMeldung" value="">
-
+                                                        <input type="text" id="name" name="name" class="form-control" minlength="1"
+                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-primary text-light">Vorgegebene Tokenanzahl</span>
+                                                        </div>
+                                                        <input type="number" min="1" id="tokenAnzahlUnterKat" name="tokenAnzahlUnterKat" class="form-control tokens"
+                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -203,97 +233,19 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label>Kategroiebeschreibung:</label>
-                                                        <textarea class="form-control" rows="3" minlength="1" id="katBeschreibung'.$i.'" disabled readonly></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr class="col-xs-12">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="input-group mb-3">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text bg-primary text-light">Betreff</span>
-                                                        </div>
-                                                        <input type="text" id="betreff'.$i.'" name="betreff" class="form-control" minlength="1"
-                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group">
-                                                        <label>Beschreibung:</label>
-                                                        <textarea class="form-control" rows="3" minlength="1" id="beschreibung'.$i.'" name="beschreibung" required></textarea>
+                                                        <textarea class="form-control" rows="3" minlength="1" id="katBeschreibung" name="katBeschreibung"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schlie&szlig;en</button>
-                                            <button type="button" class="btn btn-outline-primary" onclick="submitEventForm('.$i.')">Antrag stellen</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="submitForm('addKat')">Hinzufügen</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
-
-                        <!-- Wildcard -->
-                        <script>
-                            function submitForm( name )
-                            {
-
-                            }
-                        </script>
-                        <div class="modal fade" id="popUpWildcard" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <form id="addWildcard" action="?addWildcard=1" method="post">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <div class="col-sm-6">
-                                                <h5 class="modal-title">Wildcard zu dem Event hinzufügen</h5>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="input-group mb-3">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text bg-primary text-light">Kürzel des Schülers</span>
-                                                        </div>
-                                                        <input type="text" id="schuelerKuerzel" name="schuelerKuerzel" class="form-control" minlength="1"
-                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                                        <div class="input-group-append">
-                                                            <button type="button" class="btn btn-outline-primary" onclick="">Hinzufügen</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group">
-                                                        <label>Berechtigte Schüler:</label>
-                                                        <select id="selectedSchueler" style="width:90%;height:30%; margin: 0% 10% 2% 10%" multiple class="form-control">
-
-                                                        </select>
-                                                        <button type="button" class="btn btn-outline-primary" onclick="">Ausgewählten Schüler entfernen</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schlie&szlig;en</button>
-                                            <button type="button" class="btn btn-outline-primary" onclick="submitEventForm('.$i.')">Wildcard hinzufügen</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
                         <!-- ende der popups -->
                     </div>
                 </div>
@@ -330,12 +282,91 @@
             var date_input = $('input[name="date"]'); //our date input has the name "date"
             var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
             date_input.datepicker({
-                format: 'dd-mm-yyyy',
+                format: 'yyyy-mm-dd',
                 container: container,
                 todayHighlight: true,
                 autoclose: true,
             })
         })
+    </script>
+    <script type="application/javascript">
+        function changeDiv()
+        {
+            var button = document.getElementById("wildcardButton");
+            var div = document.getElementById("wildcardDiv");
+            div.classList.remove("disabledDiv");
+            if ( button.innerHTML === "Aktivieren")
+            {
+                button.innerHTML = "Deaktivieren";
+                document.getElementById("wildcardActBackend").value = "1";
+                div.classList.remove("disabledDiv");
+            }
+            else
+            {
+                button.innerHTML = "Aktivieren";
+                document.getElementById("wildcardActBackend").value = "0";
+                div.classList.add("disabledDiv");
+            }
+
+        }
+        function markElm( name, tokenAnzahl, beschreibung ) {
+            var elm = document.getElementById(name);
+            var selected = document.getElementById("anzahlSelected");
+            var div = document.getElementById("katListBackend");
+            if ( elm.classList.contains("blau") )
+            {
+                alert("Okkkk");
+                elm.classList.remove("blau");
+                selected.value = selected.value - 1;
+
+                // loop
+                var chilrden = div.getElementsByTagName('*');
+                var removed = false;
+                var setNewNumb = false;
+                for ( var i = 0; i < chilrden.length; i++) {
+                    var child = chilrden[i];
+                    var id = child.id;
+                    var elmId = id.substr(0,12);
+                    var num = id.substr(12,id.length);
+                    if ( setNewNumb )
+                    {
+                        child.id = elmId + lastNum;
+                        child.name = elmId + lastNum;
+                        lastNum++;
+                    } else if ( !removed )
+                    {
+                        if ( elmId === name )
+                        {
+                            div.removeChild(child);
+                            removed = true;
+                        }
+                    }
+                    else
+                    {
+                        var j = 1;
+                        div.removeChild(child);
+                        j++;
+                        if ( j >= 3 )
+                        {
+                            setNewNumb = true;
+                        }
+                    }
+                    if ( !setNewNumb )
+                    {
+                        var lastNum = num;
+                    }
+                }
+            }
+            else
+            {
+                alert("naja");
+                elm.classList.add("blau");
+                var val = selected.value;
+                var out = '<input type="text" id="toDeleteName'+val+'" name="toDeleteName'+val+'" class="hiddenMeldung" value="'+name+'"><input type="text" id="toDeleteToken'+val+'" name="toDeleteToken'+val+'" class="hiddenMeldung" value="'+tokenAnzahl+'"><input type="text" id="toDeleteBesch'+val+'" name="toDeleteBesch'+val+'" class="hiddenMeldung" value="'+beschreibung+'">';
+                div.innerHTML = div.innerHTML + out;
+                selected.value = selected.value + 1;
+            }
+        }
     </script>
 
 </body>

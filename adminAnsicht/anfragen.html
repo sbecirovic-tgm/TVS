@@ -21,8 +21,10 @@
 <?php
         include_once("highscore.php");
     ?>
+
 <!--HEADER-->
-<header class="headerEvents">
+
+<header class="headerStartseite">
     <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
         <div class="container">
             <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
@@ -37,9 +39,9 @@
                     <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                         <?php
-                            include_once("../php/userCheck.php");
-                            echo getNameFromKuerzel($userName);
-                        ?>
+                                include_once("../php/userCheck.php");
+                                echo getNameFromKuerzel($userName);
+                            ?>
                     </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">Mein Profil</a>
@@ -49,7 +51,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </nav>
 </header>

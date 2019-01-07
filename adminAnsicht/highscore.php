@@ -326,6 +326,12 @@ if (isset($_GET['highscoreSortiert']))
     }
 }
 
+if (isset($_GET['anfrageVerwalten']))
+{
+    $_SESSION['anfrageVerwaltung'] = NULL;
+    header("Refresh:0; url=anfragen.html");
+}
+
 if(isset($_GET['logout']))
 {
     include_once("../php/userCheck.php");
