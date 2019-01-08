@@ -73,7 +73,7 @@ function printEvents()
                 form.submit();
             }
         </script>';
-    $use = $_SESSION['eventEintragung'];
+    $use = $_SESSION['eventVerwaltung'];
 
     $found = -1;
     foreach ($events as $event)
@@ -87,7 +87,7 @@ function printEvents()
         $name = $event['name'];
         $aName = $event['aName'];
         $bescheibung = $event['beschreibung'];
-
+        $_SESSION['eventVerwalten'.$i] = $event;
 
         if ( $use != NULL )
         {
@@ -110,16 +110,7 @@ function printEvents()
         {
             $badge = '<span class="badge badge-secondary">'.$day.'</span>';
         }
-        if ( isSchuelerInWildcard($name, $dateString, $aName, $userName))
-        {
-            $lock = "";
-            $popover = 'data-toggle="modal" data-target="#popUp'.$i.'"';
-        }
-        else
-        {
-            $lock = "disabled";
-            $popover = 'data-toggle="tooltip" data-placement="bottom"  data-html="true" title="Dieses Event ist mit einer Wildcard gesch&uuml;tzt. Sie k&ouml;nnen sich nicht einschreiben."';
-        }
+
         echo '<div class="row row-striped"><div class="col-2 text-right"><h1 class="display-4">'.$badge.'</h1>
                     <h2>'.$mon.'</h2>
                 </div>
@@ -131,99 +122,12 @@ function printEvents()
                     <p>'.$bescheibung.'</p>
                 </div>
                 <div class="col-12 text-center">
-                    <button id="tokenButton'.$i.'" type="button" class="btn btn-outline-primary adminEventButton abstand1 center-block" '.$popover.' '.$lock.'>Token beantragen</button>
+                    <button id="eventVerwalten'.$i.'" type="button" class="btn btn-outline-primary adminEventButton abstand1 center-block">Event verwalten</button>
                 </div>';
-        /*
-        if ( $lock != 'disabled')
-        {
-            echo '<div class="modal fade" id="popUp'.$i.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <form id="eventAntrag'.$i.'" action="?requestTokenEvent=1" method="post">
-                            <!-- inputs für die values -->
-                            <input type="text" id="awardTypeBackend'.$i.'" name="awardTypeBackend" class="hiddenMeldung" value="'.$aName.'">
-                            <input type="text" id="eventNameBackend'.$i.'" name="eventNameBackend" class="hiddenMeldung" value="'.$name.'">
-                            <input type="text" id="eventDateBackend'.$i.'" name="eventDateBackend" class="hiddenMeldung" value="'.$dateString.'">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <div class="col-sm-6">
-                                        <h5 class="modal-title">Antrag zu dem Event stellen: '.$name.'</h5>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <hr class="col-xs-12">
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-sm-8">
-                                            <div class="btn-group">
-                                                <button type="button" id="katTyp'.$i.'" class="btn btn-primary dropdown-toggle btn-outline-primary"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategorie ausw&auml;hlen</button>
-                                                <input type="text" id="katTypBackend'.$i.'" name="katTypBackend" class="hiddenMeldung" value="">
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#" onclick="changeValues(\'Andere Kategorie\', \'Bitte genau beschreiben\', -1, '.$i.')">Andere Kategorie</a>
-                                                    '.printUnter($event, $i).'
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text bg-primary text-light">Token</span>
-                                                </div>
-                                                <input type="number" min="1" id="tokenAnzahlUnterKat'.$i.'" name="tokenAnzahlUnterKat" class="form-control tokens"
-                                                    aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled readonly value="">
-                                                <input type="number" id="tokenAnzahlUnterKatBackend'.$i.'" name="tokenAnzahlUnterKatBackend" class="hiddenMeldung" value="">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label>Kategroiebeschreibung:</label>
-                                                <textarea class="form-control" rows="3" minlength="1" id="katBeschreibung'.$i.'" disabled readonly></textarea>
-                                            </div>
-                                        </div>  
-                                    </div>
-                                    <hr class="col-xs-12">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text bg-primary text-light">Betreff</span>
-                                                </div>
-                                                <input type="text" id="betreff'.$i.'" name="betreff" class="form-control" minlength="1"
-                                                    aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label>Beschreibung:</label>
-                                                <textarea class="form-control" rows="3" minlength="1" id="beschreibung'.$i.'" name="beschreibung" required></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schlie&szlig;en</button>
-                                    <button type="button" class="btn btn-outline-primary" onclick="submitEventForm('.$i.')">Antrag stellen</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>';
-        }*/
         echo '</div>';
         $i++;
     }
-    //printFoundScript($found);
 }
-
 
 
 function printUnter( $event, $i )
@@ -400,22 +304,30 @@ if (isset($_GET['addKat']))
     $name = $_POST['name'];
     $tokenAnzahl = $_POST['tokenAnzahlUnterKat'];
     $beschreibung = $_POST['katBeschreibung'];
-    if ( key_exists('kategorienListe', $_SESSION))
+    if ( strlen($name) == 0 || strlen($tokenAnzahl) == 0 || strlen($beschreibung) == 0)
     {
-        $list = $_SESSION['kategorienListe'];
-        $num = count($list);
-        $list[$num]['name'] = $name;
-        $list[$num]['tokenAnzahl'] = $tokenAnzahl;
-        $list[$num]['beschreibung'] = $beschreibung;
-        $_SESSION['kategorienListe'] = $list;
+        $_SESSION['addKatError'] = true;
     }
     else
     {
-        $list[0]['name'] = $name;
-        $list[0]['tokenAnzahl'] = $tokenAnzahl;
-        $list[0]['beschreibung'] = $beschreibung;
-        $_SESSION['kategorienListe'] = $list;
+        if ( key_exists('kategorienListe', $_SESSION))
+        {
+            $list = $_SESSION['kategorienListe'];
+            $num = count($list);
+            $list[$num]['name'] = $name;
+            $list[$num]['tokenAnzahl'] = $tokenAnzahl;
+            $list[$num]['beschreibung'] = $beschreibung;
+            $_SESSION['kategorienListe'] = $list;
+        }
+        else
+        {
+            $list[0]['name'] = $name;
+            $list[0]['tokenAnzahl'] = $tokenAnzahl;
+            $list[0]['beschreibung'] = $beschreibung;
+            $_SESSION['kategorienListe'] = $list;
+        }
     }
+
 }
 
 if ( isset($_GET['deleteKat']))
@@ -443,12 +355,30 @@ if ( isset($_GET['deleteKat']))
 // error popup
 function printError()
 {
+    if ( key_exists('addKatError', $_SESSION))
+    {
+        $error = $_SESSION['addKatError'];
+        if ( $error )
+        {
+            echo '<script>function f() {var form = document.getElementById("alertKatDismiss"); form.submit();}</script><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertKatDismiss" action="?alertKatDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Bitte alle Felder entsprechend ausfüllen!</form></div>';
+        }
+    }
+}
+// popup dismiss
+if (isset($_GET['alertKatDismiss']))
+{
+    unset($_SESSION['addKatError']);
+}
+
+// error popup
+function printKatError()
+{
     if ( key_exists('wildCardError', $_SESSION))
     {
         $error = $_SESSION['wildCardError'];
         if ( $error )
         {
-            echo '<script>function f() {var form = document.getElementById("alertForm"); form.submit();}</script><div class="alert alert-success alert-dismissible fade show abstand1" role="alert"><form id="alertForm" action="?alertDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Dieser Sch&uuml;ler konnte nicht hinzugefügt werden, da er noch nicht in der Datenbank eingetragen ist.</form></div>';
+            echo '<script>function f() {var form = document.getElementById("alertForm"); form.submit();}</script><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertForm" action="?alertDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Dieser Sch&uuml;ler konnte nicht hinzugefügt werden, da er noch nicht in der Datenbank eingetragen ist.</form></div>';
         }
     }
 }

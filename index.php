@@ -33,7 +33,7 @@ if(isset($_GET['login']))
             elseif ( $ergLehrer == 1 )
             {
                 if (!checkIfUserInDatabase($kuerzel, 1)) {
-                    insertLehrer($kuerzel, NULL);
+                    insertLehrer($kuerzel, NULL, NULL);
                 }
             }
 
