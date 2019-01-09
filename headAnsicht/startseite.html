@@ -61,20 +61,24 @@
             <nav class="nav nav-underline">
                 <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
                 <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
-                    <a class="nav-link active" href="" onclick="submitForm('eventForm')">
+                    <a class="nav-link active" href="#" onclick="submitForm('eventForm')">
                         Events
+                        <!--
                         <span class="badge badge-pill bg-light align-text-bottom">
-                        <?php
+                            <?php
                             include_once("../php/eventsVerwalten.php");
                             echo countNewEvents();
                         ?>
                         </span>
+                        -->
                     </a>
                 </form>
-
-                <a class="nav-link active" href="">Anfragen</a>
+                <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
+                    <a class="nav-link active" href="#"onclick="submitForm('anfragenForm')">Anfragen</a>
+                </form>
+                <a class="nav-link active" href="berechtigung.html">Berechtigen</a>
                 <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
-                    <a class="nav-link active" href="" onclick="submitForm('highscoreForm')">Highscores</a>
+                    <a class="nav-link active" href="#" onclick="submitForm('highscoreForm')">Highscores</a>
                 </form>
             </nav>
         </div>
@@ -84,10 +88,6 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
-                <h1>Dashboard</h1>
-                <hr>
-            </div>
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
@@ -101,19 +101,23 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Token</th>
                                         <th scope="col">Betreff</th>
+                                        <th scope="col">Datum</th>
+                                        <th scope="col">&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    <?php
+                                        printAnfragenLimit4();
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-sm-12 text-center">
-                            <form action="?overallHighscoreAnzeigen=1" method="post">
-                                <input type="submit" class="btn btn-outline-primary dashboardButtons" value="Mehr">
-                            </form>
-                        </div>
                     </div>
+                </div>
+                <div class="col-sm-12 text-center">
+                    <form action="?anfrageVerwalten=1" method="post">
+                        <input type="submit" class="btn btn-outline-primary dashboardButtons abstand1" href="events.html" value="Mehr anzeigen">
+                    </form>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -125,14 +129,14 @@
                         <div class="col-sm-12">
                             <table class="table table-borderd">
                                 <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Token</th>
-                                    </tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Token</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
+                                <?php
                                     printHighscoreTop3Overall();
                                 ?>
                                 </tbody>
@@ -179,8 +183,8 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    printHighscoreTop3Award();
-                                ?>
+                                        printHighscoreTop3Award();
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -195,7 +199,7 @@
         </div>
     </div>
     <footer class="footerSticky">
-            © 2018 Wahl, Becirovic, Gavric, Filipovic
+            © 2018 Wahl, Becirovic, Gavric, Filipovic 
     </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
