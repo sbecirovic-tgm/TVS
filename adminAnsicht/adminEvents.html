@@ -94,93 +94,106 @@
             </div>
             <div class="col-sm-12 tokenAnfragen">
                 <div class="card">
-                    <div class="card-body">
-
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text bg-primary text-light adminEventText" id="inputGroup-sizing-default">Eventname</span>
-                                    </div>
-                                    <input type="text" id="betreff" name="betreff" class="form-control" minlength="1"
-                                        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text bg-primary text-light adminEventText">Datum</span>
-                                    </div>
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar">
-                                        </i>
-                                    </div>
-                                    <input class="form-control" id="date" name="date" placeholder="DD-MM-YYYY" type="text" />
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="btn-group">
-                                    <script type="application/javascript">
-                                        function setAwardButton(value) {
-                                            document.getElementById("awardType").innerHTML = value;
-                                            document.getElementById("awardTypeBackend").value = value;
-                                        }
-                                    </script>
-                                    <button type="button" name="awardType" id="awardType" class="btn dropdown-toggle btn-primary"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Award auswählen</button>
-                                    <input type="text" min="0" id="awardTypeBackend" name="awardTypeBackend" class="hiddenMeldung" value="">
-
-                                    <div class="dropdown-menu">
-                                        <?php
-                                            printAwardDropDown();
-                                        ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-primary text-light adminEventText">Beschreibung</span>
-                            </div>
-                            <textarea class="form-control" name="beschreibung" id="beschreibung" aria-label="With textarea"></textarea>
-                        </div>
-                        <hr>
-                        <div class="input-group">
-                            <div class="col-sm-6">
-                                <div class="row">
+                    <div class="input-group abstand1">
+                        <div class="col-sm-6">
+                            <div class="row ">
+                                <div class="col-sm-12">
                                     <h4>Kategorien</h4>
                                 </div>
-                                <hr class="col-xs-12">
-                                <div class="row">
-                                    <form id="katForm" action="?deleteKat=1" method="post">
-                                        <input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">
-                                        <div id="katListBackend">
-                                        </div>
-                                    </form>
-                                    <div class="col-sm-12">
-                                        <ol id="kategorienListe" class="list-group">
-                                            <?php
+                            </div>
+                            <hr class="col-xs-12">
+                            <div class="row">
+                                <form id="katForm" action="?deleteKat=1" method="post">
+                                    <input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">
+                                    <div id="katListBackend">
+                                    </div>
+                                </form>
+                                <div class="col-sm-12">
+                                    <ol id="kategorienListe" class="list-group">
+                                        <?php
                                                 printKatList();
-                                                printKatError();
                                             ?>
-                                        </ol>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" data-toggle="modal" data-target="#popUpKategorie">Neue Kategorie hinzufügen</button>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm('katForm')" >Ausgewähle Kategorien löschen</button>
-                                    </div>
+                                    </ol>
+                                    <?php
+                                            printKatError();
+                                        ?>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" data-toggle="modal" data-target="#popUpKategorie">Neue Kategorie hinzufügen</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm('katForm')" >Ausgewähle Kategorien löschen</button>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <?php
+                        </div>
+                        <div class="col-sm-6">
+                            <form id="schuelerForm" action="?deleteKuerzel=1" method="post">
+                                <input type="number" id="anzahlSelectedSch" name="anzahlSelected" class="hiddenMeldung" value="0">
+                                <div id="schuelerListBackend">
+                                </div>
+                            </form>
+                            <?php
                                     printWildcard();
                                     printError();
                                 ?>
+                            <div class="col-sm-12 text-right">
+                                <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm('schuelerForm')" >Ausgewähle Schüler löschen</button>
                             </div>
                         </div>
+                    </div>
+                    <hr>
+                    <div class="card-body">
+                        <form id="addEvent" action="?addEvent=1" method="post">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-primary text-light adminEventText" id="inputGroup-sizing-default">Eventname</span>
+                                        </div>
+                                        <input type="text" id="eName" name="name" class="form-control" minlength="1"
+                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-primary text-light adminEventText">Datum</span>
+                                        </div>
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar">
+                                            </i>
+                                        </div>
+                                        <input class="form-control" id="date" name="date" placeholder="DD-MM-YYYY" type="text" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="btn-group">
+                                        <script type="application/javascript">
+                                            function setAwardButton(value) {
+                                                document.getElementById("awardType").innerHTML = value;
+                                                document.getElementById("awardTypeBackend").value = value;
+                                            }
+                                        </script>
+                                        <button type="button" name="awardType" id="awardType" class="btn dropdown-toggle btn-primary"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="">Award auswählen</button>
+                                        <input type="text" min="0" id="awardTypeBackend" name="awardTypeBackend" class="hiddenMeldung" value="">
+
+                                        <div class="dropdown-menu">
+                                            <?php
+                                                printAwardDropDown();
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-primary text-light adminEventText">Beschreibung</span>
+                                </div>
+                                <textarea class="form-control" name="beschreibung" id="beschreibung" aria-label="With textarea" required></textarea>
+                            </div>
+                        </form>
                         <hr>
                         <div class="input-group">
                             <div class="row">
@@ -188,8 +201,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12 text-center">
-                            <input type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick=""
-                                readonly value="Event hinzufügen">
+                            <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm('addEvent')">Event hinzufügen</button>
                         </div>
 
                         <!-- Jetzt kommen die popovers -->
@@ -366,6 +378,67 @@
                 div.innerHTML = div.innerHTML + out;
                 selected.value = selected.value + 1;
             }
+        }
+
+        function markSchueler( name ) {
+            var elm = document.getElementById(name);
+            var selected = document.getElementById("anzahlSelectedSch");
+            var div = document.getElementById("schuelerListBackend");
+            if ( elm.classList.contains("blau") )
+            {
+                elm.classList.remove("blau");
+                selected.value = selected.value - 1;
+
+                // loop
+                var chilrden = div.getElementsByTagName('*');
+                var removed = false;
+                var setNewNumb = false;
+                for ( var i = 0; i < chilrden.length; i++) {
+                    var child = chilrden[i];
+                    var id = child.id;
+                    var elmId = id.substr(0,12);
+                    var num = id.substr(12,id.length);
+                    if ( setNewNumb )
+                    {
+                        child.id = elmId + lastNum;
+                        child.name = elmId + lastNum;
+                        lastNum++;
+                    } else if ( !removed )
+                    {
+                        if ( elmId === name )
+                        {
+                            div.removeChild(child);
+                            removed = true;
+                        }
+                    }
+                    else
+                    {
+                        var j = 1;
+                        div.removeChild(child);
+                        j++;
+                        if ( j >= 3 )
+                        {
+                            setNewNumb = true;
+                        }
+                    }
+                    if ( !setNewNumb )
+                    {
+                        var lastNum = num;
+                    }
+                }
+            }
+            else
+            {
+                elm.classList.add("blau");
+                var val = selected.value;
+                var out = '<input type="text" id="toDeleteName'+val+'" name="toDeleteName'+val+'" class="hiddenMeldung" value="'+name+'">';
+                div.innerHTML = div.innerHTML + out;
+                selected.value = selected.value + 1;
+            }
+        }
+        
+        function addAllValuesToInputs() {
+            
         }
     </script>
 

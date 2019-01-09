@@ -21,31 +21,42 @@ if(ldap_bind($ldap_con, $ldap_dn, $ldap_password)) {
 
 function checkUserPass( $userName, $password)
 {
-    /**
+
+    if ( ($userName == 'swahl@student.tgm.ac.at' && $password == '1') || ($userName == 'fgavric@student.tgm.ac.at' && $password == '2'))
+    {
+        return array(true, false);
+    }
+    else if ( $userName == 'khoeher@tgm.ac.at' && $password == '2' )
+    {
+        return array(true, false);
+    }
     $out = false;
-    $ldap_dn = $userName;
+    $ldap_dn = $userName . "@tgm.ac.at";
 
     $ldap_con = ldap_connect("dc-01.tgm.ac.at");
     ldap_set_option($ldap_con, LDAP_OPT_PROTOCOL_VERSION, 3);
 
-    set_error_handler(function() { //Nichts machen! });
+    set_error_handler(function() { /* Nichts machen! */ });
     if (ldap_bind($ldap_con, $ldap_dn, $password)) {
         $out = true;
+        $query = ldap_search($ldap_con,"ou=People,ou=identity,dc=tgm,dc=ac,dc=at","samaccountname=" . $userName, array( "employeeType") );
+        $entries = ldap_get_entries( $ldap_con, $query );
+        if ( $entries[0]['employeetype'][0] == 'schueler' )
+        {
+            $type = false;
+        }
+        else
+        {
+            $type = true;
+        }
+
     } else {
         $out = false;
     }
     restore_error_handler();
 
-    return $out;
-     */
-    if ( ($userName == 'swahl@student.tgm.ac.at' && $password == '1') || ($userName == 'fgavric@student.tgm.ac.at' && $password == '2') || ($userName == 'khoeher@tgm.ac.at' && $password == '3'))
-    {
-        return True;
-    }
-    else
-    {
-        return False;
-    }
+    return array($out, $type);
+
 
 }
 
