@@ -133,9 +133,9 @@
                                 </div>
                             </form>
                             <?php
-                                    printWildcard();
-                                    printError();
-                                ?>
+                                printWildcard();
+                                printError();
+                            ?>
                             <div class="col-sm-12 text-right">
                                 <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm('schuelerForm')" >Ausgewähle Schüler löschen</button>
                             </div>
@@ -143,7 +143,7 @@
                     </div>
                     <hr>
                     <div class="card-body">
-                        <form id="addEvent" action="?addEvent=1" method="post">
+                        <form id="updateEvent" action="?updateEvent=1" method="post">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="input-group mb-3">
@@ -151,7 +151,7 @@
                                             <span class="input-group-text bg-primary text-light adminEventText" id="inputGroup-sizing-default">Eventname</span>
                                         </div>
                                         <input type="text" id="eName" name="name" class="form-control" minlength="1"
-                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
@@ -195,20 +195,17 @@
                             </div>
                         </form>
                         <hr>
-                        <div class="input-group">
-                            <div class="row">
-
-                            </div>
-                        </div>
+                        <form id="deleteEvent" action="?deleteEvent=1" method="post"></form>
                         <div class="col-sm-12 text-center">
-                            <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm('addEvent')">Event hinzufügen</button>
+                            <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm('updateEvent')">Event speichern</button>
+                            <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm('deleteEvent')">Event löschen</button>
                         </div>
 
                         <!-- Jetzt kommen die popovers -->
                         <div class="modal fade" id="popUpKategorie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <form id="addKat" action="?addKat=1" method="post">
-                                        <div class="modal-content">
+                                    <div class="modal-content">
                                         <div class="modal-header">
                                             <div class="col-sm-6">
                                                 <h5 class="modal-title">Kategorie zum Event hinzufügen</h5>

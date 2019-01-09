@@ -14,17 +14,17 @@ if(isset($_GET['login']))
     $result = checkUserPass($userName, $password);
     if ( $result[0] )
     {
-        $kuerzel = substr($userName, 0, strpos($userName, "@"));
+        $kuerzel = $userName;
         if ( !$result[1] )
         {
             if (!checkIfUserInDatabase($kuerzel, 0)) {
-                insertSchueler($kuerzel, NULL);
+                insertSchueler($kuerzel, $result[2]);
             }
         }
         else
         {
             if (!checkIfUserInDatabase($kuerzel, 1)) {
-                insertLehrer($kuerzel, NULL, NULL);
+                insertLehrerShort($kuerzel, $result[2]);
             }
         }
 
@@ -35,6 +35,7 @@ if(isset($_GET['login']))
         // 1: Schüler
         // -1: Headadmin
         // weiterleiten auf die unterseite
+
         if ( !$result[1] )
         {
             header("Refresh:0; url=userAnsicht\startseite.html");

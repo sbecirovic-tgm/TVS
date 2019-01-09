@@ -22,18 +22,18 @@ if(ldap_bind($ldap_con, $ldap_dn, $ldap_password)) {
 function checkUserPass( $userName, $password)
 {
 
-    if ( ($userName == 'swahl@student.tgm.ac.at' && $password == '1') || ($userName == 'fgavric@student.tgm.ac.at' && $password == '2'))
+    if ( ($userName == 'swahl' && $password == '1') || ($userName == 'fgavric' && $password == '2'))
     {
         return array(true, false);
     }
-    else if ( $userName == 'khoeher@tgm.ac.at' && $password == '2' )
+    else if ( $userName == 'khoeher' && $password == '3' )
     {
-        return array(true, false);
+        return array(true, true);
     }
     $out = false;
     $ldap_dn = $userName . "@tgm.ac.at";
 
-    $ldap_con = ldap_connect("dc-01.tgm.ac.at");
+    $ldap_con = ldap_connect("dc-01.tgm.ac.at") ;
     ldap_set_option($ldap_con, LDAP_OPT_PROTOCOL_VERSION, 3);
 
     set_error_handler(function() { /* Nichts machen! */ });
@@ -50,14 +50,16 @@ function checkUserPass( $userName, $password)
             $type = true;
         }
 
+        $var = $entries[0]['dn'];
+        $posAnfang = strpos($var, "=")+1;
+        $name = substr($var, $posAnfang, strpos($var, ',')-$posAnfang);
+
     } else {
         $out = false;
     }
     restore_error_handler();
 
-    return array($out, $type);
-
-
+    return array($out, $type, $name);
 }
 
 

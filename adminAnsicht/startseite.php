@@ -46,7 +46,7 @@ function printEventLimit4()
         $name = $event['name'];
         $aName = $event['aName'];
 
-        echo '<div class="card-body"><form action="?eventEintragen'.$i.'=1" method="post"><div class="row"><div class="col-sm-9"><a name="event'.$i.'"> '.$name.' ('.$aName.') - '.$datum.'</a><input type="hidden" name="eventName'.$i.'" value="'.$name.'"><input type="hidden" name="eventAName'.$i.'" value="'.$aName.'"><input type="hidden" name="eventDatum'.$i.'" value="'.$datum.'"></div><div class="col-sm-3"><input class="btn btn-outline-primary" type="submit" name="eintragenEvent" value="Verwalten"></div></div></form></div>';
+        echo '<div class="card-body"><form action="?eventVerwalten'.$i.'=1" method="post"><div class="row"><div class="col-sm-9"><a name="event'.$i.'"> '.$name.' ('.$aName.') - '.$datum.'</a><input type="hidden" name="eventName'.$i.'" value="'.$name.'"><input type="hidden" name="eventAName'.$i.'" value="'.$aName.'"><input type="hidden" name="eventDatum'.$i.'" value="'.$datum.'"></div><div class="col-sm-3"><input class="btn btn-outline-primary" type="submit" name="eintragenEvent" value="Verwalten"></div></div></form></div>';
         /*
         $out['name'] = $event_array['name'];
         $out['datum'] = $event_array['datum'];

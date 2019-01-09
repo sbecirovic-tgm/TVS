@@ -189,7 +189,14 @@ function getNameFromKuerzel ( $kuerzel )
 function insertLehrer ( $kuerzel, $skuerzel, $lName )
 {
     global $db;
-    $sqlC = "insert into lehrer ( kuerzel, skuerzel, lName ) values ( '$kuerzel', '$skuerzel', '$lName')";
+    $sqlC = "insert into lehrer ( kuerzel, lName, skuerzel ) values ( '$kuerzel', '$lName', '$skuerzel')";
+    return mysqli_query($db, $sqlC);
+}
+function insertLehrerShort ( $kuerzel, $lName )
+{
+    global $db;
+    $sqlC = "insert into lehrer ( kuerzel, lName ) values ( '$kuerzel', '$lName')";
+    echo $sqlC;
     return mysqli_query($db, $sqlC);
 }
 

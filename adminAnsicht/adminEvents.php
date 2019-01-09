@@ -145,6 +145,368 @@ function printUnter( $event, $i )
     return $out;
 }
 
+function printVerwalten()
+{
+    $verw = $_SESSION['eventVerwaltung'];
+    if ( $verw == NULL )
+    {
+        echo '<div class="row">
+            <div class="col-sm-12">
+                <h1>Events</h1>
+                <hr>
+            </div>
+            <div class="col-sm-12 tokenAnfragen">
+                <div class="card">
+                    <div class="input-group abstand1">
+                        <div class="col-sm-6">
+                            <div class="row ">
+                                <div class="col-sm-12">
+                                    <h4>Kategorien</h4>
+                                </div>
+                            </div>
+                            <hr class="col-xs-12">
+                            <div class="row">
+                                <form id="katForm" action="?deleteKat=1" method="post">
+                                    <input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">
+                                    <div id="katListBackend">
+                                    </div>
+                                </form>
+                                <div class="col-sm-12">
+                                    <ol id="kategorienListe" class="list-group">
+                                        <?php
+                                                printKatList();
+                                            ?>
+                                    </ol>
+                                    <?php
+                                            printKatError();
+                                        ?>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" data-toggle="modal" data-target="#popUpKategorie">Neue Kategorie hinzufügen</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'katForm\')" >Ausgewähle Kategorien löschen</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <form id="schuelerForm" action="?deleteKuerzel=1" method="post">
+                                <input type="number" id="anzahlSelectedSch" name="anzahlSelected" class="hiddenMeldung" value="0">
+                                <div id="schuelerListBackend">
+                                </div>
+                            </form>
+                            <?php
+                                    printWildcard();
+                                    printError();
+                                ?>
+                            <div class="col-sm-12 text-right">
+                                <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'schuelerForm\')" >Ausgewähle Schüler löschen</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body">
+                        <form id="addEvent" action="?addEvent=1" method="post">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-primary text-light adminEventText" id="inputGroup-sizing-default">Eventname</span>
+                                        </div>
+                                        <input type="text" id="eName" name="name" class="form-control" minlength="1"
+                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-primary text-light adminEventText">Datum</span>
+                                        </div>
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar">
+                                            </i>
+                                        </div>
+                                        <input class="form-control" id="date" name="date" placeholder="DD-MM-YYYY" type="text" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="btn-group">
+                                        <script type="application/javascript">
+                                            function setAwardButton(value) {
+                                                document.getElementById("awardType").innerHTML = value;
+                                                document.getElementById("awardTypeBackend").value = value;
+                                            }
+                                        </script>
+                                        <button type="button" name="awardType" id="awardType" class="btn dropdown-toggle btn-primary"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="">Award auswählen</button>
+                                        <input type="text" min="0" id="awardTypeBackend" name="awardTypeBackend" class="hiddenMeldung" value="">
+
+                                        <div class="dropdown-menu">
+                                            <?php
+                                                printAwardDropDown();
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-primary text-light adminEventText">Beschreibung</span>
+                                </div>
+                                <textarea class="form-control" name="beschreibung" id="beschreibung" aria-label="With textarea" required></textarea>
+                            </div>
+                        </form>
+                        <hr>
+                        <div class="input-group">
+                            <div class="row">
+
+                            </div>
+                        </div>
+                        <div class="col-sm-12 text-center">
+                            <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'addEvent\')">Event hinzufügen</button>
+                        </div>
+
+                        <!-- Jetzt kommen die popovers -->
+                        <div class="modal fade" id="popUpKategorie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <form id="addKat" action="?addKat=1" method="post">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <div class="col-sm-6">
+                                                <h5 class="modal-title">Kategorie zum Event hinzufügen</h5>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <hr class="col-xs-12">
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-primary text-light">Name</span>
+                                                        </div>
+                                                        <input type="text" id="name" name="name" class="form-control" minlength="1"
+                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-primary text-light">Vorgegebene Tokenanzahl</span>
+                                                        </div>
+                                                        <input type="number" min="1" id="tokenAnzahlUnterKat" name="tokenAnzahlUnterKat" class="form-control tokens"
+                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Kategroiebeschreibung:</label>
+                                                        <textarea class="form-control" rows="3" minlength="1" id="katBeschreibung" name="katBeschreibung" required></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schlie&szlig;en</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="submitForm(\'addKat\')">Hinzufügen</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- ende der popups -->
+                    </div>
+                </div>
+            </div>
+        </div>';
+    }
+    else
+    {
+        echo '<div class="row">
+            <div class="col-sm-12">
+                <h1>Events</h1>
+                <hr>
+            </div>
+            <div class="col-sm-12 tokenAnfragen">
+                <div class="card">
+                    <div class="input-group abstand1">
+                        <div class="col-sm-6">
+                            <div class="row ">
+                                <div class="col-sm-12">
+                                    <h4>Kategorien</h4>
+                                </div>
+                            </div>
+                            <hr class="col-xs-12">
+                            <div class="row">
+                                <form id="katForm" action="?deleteKat=1" method="post">
+                                    <input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">
+                                    <div id="katListBackend">
+                                    </div>
+                                </form>
+                                <div class="col-sm-12">
+                                    <ol id="kategorienListe" class="list-group">
+                                        <?php
+                                                printKatList();
+                                            ?>
+                                    </ol>
+                                    <?php
+                                            printKatError();
+                                        ?>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" data-toggle="modal" data-target="#popUpKategorie">Neue Kategorie hinzufügen</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'katForm\')" >Ausgewähle Kategorien löschen</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <form id="schuelerForm" action="?deleteKuerzel=1" method="post">
+                                <input type="number" id="anzahlSelectedSch" name="anzahlSelected" class="hiddenMeldung" value="0">
+                                <div id="schuelerListBackend">
+                                </div>
+                            </form>
+                            <?php
+                                    printWildcard();
+                                    printError();
+                                ?>
+                            <div class="col-sm-12 text-right">
+                                <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'schuelerForm\')" >Ausgewähle Schüler löschen</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body">
+                        <form id="addEvent" action="?addEvent=1" method="post">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-primary text-light adminEventText" id="inputGroup-sizing-default">Eventname</span>
+                                        </div>
+                                        <input type="text" id="eName" name="name" class="form-control" minlength="1"
+                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-primary text-light adminEventText">Datum</span>
+                                        </div>
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar">
+                                            </i>
+                                        </div>
+                                        <input class="form-control" id="date" name="date" placeholder="DD-MM-YYYY" type="text" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="btn-group">
+                                        <script type="application/javascript">
+                                            function setAwardButton(value) {
+                                                document.getElementById("awardType").innerHTML = value;
+                                                document.getElementById("awardTypeBackend").value = value;
+                                            }
+                                        </script>
+                                        <button type="button" name="awardType" id="awardType" class="btn dropdown-toggle btn-primary"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="">Award auswählen</button>
+                                        <input type="text" min="0" id="awardTypeBackend" name="awardTypeBackend" class="hiddenMeldung" value="">
+
+                                        <div class="dropdown-menu">
+                                            <?php
+                                                printAwardDropDown();
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-primary text-light adminEventText">Beschreibung</span>
+                                </div>
+                                <textarea class="form-control" name="beschreibung" id="beschreibung" aria-label="With textarea" required></textarea>
+                            </div>
+                        </form>
+                        <hr>
+                        <div class="col-sm-12 text-center">
+                            <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'addEvent\')">Event hinzufügen</button>
+                        </div>
+
+                        <!-- Jetzt kommen die popovers -->
+                        <div class="modal fade" id="popUpKategorie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <form id="addKat" action="?addKat=1" method="post">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <div class="col-sm-6">
+                                                <h5 class="modal-title">Kategorie zum Event hinzufügen</h5>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <hr class="col-xs-12">
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-primary text-light">Name</span>
+                                                        </div>
+                                                        <input type="text" id="name" name="name" class="form-control" minlength="1"
+                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-primary text-light">Vorgegebene Tokenanzahl</span>
+                                                        </div>
+                                                        <input type="number" min="1" id="tokenAnzahlUnterKat" name="tokenAnzahlUnterKat" class="form-control tokens"
+                                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Kategroiebeschreibung:</label>
+                                                        <textarea class="form-control" rows="3" minlength="1" id="katBeschreibung" name="katBeschreibung" required></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schlie&szlig;en</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="submitForm(\'addKat\')">Hinzufügen</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- ende der popups -->
+                    </div>
+                </div>
+            </div>
+        </div>';
+    }
+}
+
 function printKatList()
 {
     if ( key_exists('kategorienListe', $_SESSION))
@@ -481,46 +843,37 @@ if ( isset($_GET['addEvent']))
         $_SESSION['addEventError'] = true;
     }
     else {
-        $temp = addEvent($name, $datum, $userName, $aName, $beschreibung);
-        if ( $temp )
+        if ( key_exists('eventWildTemp', $_SESSION))
         {
-            echo 1;
+            $result = addWildcard($_SESSION['eventWildTemp']);
         }
-        else
-        {
-            echo 0;
-        }
-        echo '<br>';
-        $temp = addWildcard($_SESSION['eventWildTemp']);
-        if ( $temp )
-        {
-            echo 1;
-        }
-        else
-        {
-            echo 0;
-        }
+        addEvent($name, $datum, $userName, $aName, $beschreibung, $result[1]);
+
         echo '<br>';
 
+        if ( key_exists('kategorienListe', $_SESSION))
+        {
+            $unterKatArr = $_SESSION['kategorienListe'];
 
-        $unterKatArr = $_SESSION['kategorienListe'];
-
-        foreach ($unterKatArr as $unterKat) {
-            /*
-             ['name']
-             ['tokenAnzahl']
-             ['beschreibung']
-             */
-            $temp = addUnterkateogrie($unterKat['name'], $name, $aName, $datum, $unterKat['tokenAnzahl'], $unterKat['beschreibung']);
-            if ( $temp )
-            {
-                echo 1;
-            }
-            else
-            {
-                echo 0;
+            foreach ($unterKatArr as $unterKat) {
+                /*
+                 ['name']
+                 ['tokenAnzahl']
+                 ['beschreibung']
+                 */
+                $temp = addUnterkateogrie($unterKat['name'], $name, $aName, $datum, $unterKat['tokenAnzahl'], $unterKat['beschreibung']);
+                echo 'Kat';
+                if ( $temp )
+                {
+                    echo 1;
+                }
+                else
+                {
+                    echo 0;
+                }
             }
         }
+
 
         // dinger löschen
         unset($_SESSION['eventWildTemp']);
@@ -544,4 +897,60 @@ function printEventError()
 if (isset($_GET['alertEventDismiss']))
 {
     unset($_SESSION['addEventError']);
+}
+
+if ( isset($_GET['deleteEvent']))
+{
+    include_once ("../php/awardsVerwalten.php");
+    $temp = $_SESSION['eventVerwaltung'];
+    deleteEvent($temp['eName'], $temp['eDatum'], $temp['aName']);
+}
+
+if ( isset($_GET['updateEvent']))
+{
+    include_once ("../php/awardsVerwalten.php");
+    $temp = $_SESSION['eventVerwaltung'];
+    $name = $_POST['name'];
+    $datum = $_POST['date'];
+    $aName = $_POST['awardTypeBackend'];
+    $beschreibung = $_POST['beschreibung'];
+
+    if ( strlen($name) == 0 && strlen($datum) == 0 && strlen($aName) == 0 && strlen($beschreibung) == 0 )
+    {
+        $_SESSION['addEventError'] = true;
+    }
+    else {
+
+        if ( $_SESSION['wildcardStatus'])
+        {
+            // alte mit neuer Wildcard vergleichen und dann die die nicht mehr dabei sind löschen und die neuen hinzufügen
+            $result = addWildcard($_SESSION['eventWildTemp']);
+        }
+        else
+        {
+            $wID = Null;
+        }
+        changeEvent($temp['eName'], $temp['eDatum'], $temp['aName'], $userName, $name, $datum, $aName, $beschreibung, $wID );
+
+        /*
+        if ( key_exists('kategorienListe', $_SESSION))
+        {
+            $unterKatArr = $_SESSION['kategorienListe'];
+
+            foreach ($unterKatArr as $unterKat) {
+                /*
+                 ['name']
+                 ['tokenAnzahl']
+                 ['beschreibung']
+                 */
+                /*addUnterkateogrie($unterKat['name'], $name, $aName, $datum, $unterKat['tokenAnzahl'], $unterKat['beschreibung']);
+            }
+        }
+        */
+
+        // dinger löschen
+        unset($_SESSION['eventWildTemp']);
+        unset($_SESSION['kategorienListe']);
+    }
+
 }
