@@ -13,139 +13,13 @@
     <link rel="stylesheet" href="../css/bootstrap-grid.css">
     <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="../img/open-iconic-master/font/css/open-iconic-bootstrap.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
-    </link>
-    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/multiselect.js"></script>
 
-    <script>
-        var lehrer;
-        var options = {};
-        var mitRechtListe = [];
-        var ohneRechtListe = [];
-
-        function onclickTeacher(id)
-        {
-            lehrer = document.getElementById(id);
-            var element = document.querySelector(id);
-            if ( element.classList.contains("blau") )
-            {   
-                lehrer.classList.remove("blau");
-                lehrer.classList.add("weiß"); 
-                if (document.getElementById(id).parentNode == document.getElementById('ohneRecht')) 
-                {
-                    deleteFromOhneRechtLsitItems(id);
-                }
-                else
-                {
-                    deleteFromRechtListItems(id);
-                }
-                removeFromField(id);
-
-            }
-            else
-            {
-                if (element.classList.contains("weiß"))
-                {
-                    lehrer.classList.remove("weiß");
-                }
-                element.classList.add("blau");
-                if (document.getElementById(id).parentNode == document.getElementById('ohneRecht')) 
-                {
-                    addToOhneRechtListItems(id);
-                }
-                else
-                {
-                    addToRechtListItems(id);
-                }
-                addToTextField(id);  
-            }
-            printField();
-        }
-
-        function addToTextField(id) 
-        {
-            options[id] = "<option id=\"" + id + "\">" + lehrer.innerHTML + "</option>";
-        }
-
-        function printField()
-        {
-            var out;
-            for (var key in options) 
-            {
-                out += options[key];
-            }
-            document.getElementById('selectedLehrer').innerHTML = out;
-        }
-
-        function removeFromField(id) 
-        {
-            delete options[id];
-        }
-
-        function addToRechtListItems(id)
-        {
-            mitRechtListe.push(document.getElementById(id));
-        }
-
-        function deleteFromRechtListItems(id)
-        {
-            delete mitRechtListe[id];
-        }
-
-        function addToOhneRechtListItems(id)
-        {
-            ohneRechtListe.push(document.getElementById(id));
-        }
-
-        function deleteFromOhneRechtLsitItems(id)
-        {
-            delete ohneRechtListe[id];
-        }
-
-        function rechteGeben() 
-        {
-            var removedElements = [];
-            for (var i = 0; i < ohneRechtListe.length;i++)
-            {   
-                var element = document.getElementById('ohneRecht');
-                removedElements.push(element.removeChild(ohneRechtListe[i]));
-            }
-            
-            for (var i = 0; i < ohneRechtListe.length;i++)
-            {
-                var element = document.getElementById('mitRecht');
-                removedElements[i].style.backgroundColor = "white";
-                removedElements[i].style.color = "black"
-                element.appendChild(removedElements[i]);
-            }
-            options = {};
-            ohneRechtListe = [];
-            printField();
-        }
-
-        function rechteNehmen() 
-        {
-            var addedElements = [];
-            for (var i = 0; i < mitRechtListe.length; i++)
-            {
-                var element = document.getElementById('mitRecht');
-                addedElements.push(element.removeChild(mitRechtListe[i]));
-            }
-
-            for (var i = 0; i < mitRechtListe.length; i++)
-            {
-                var element = document.getElementById('ohneRecht');
-                addedElements[i].style.backgroundColor = "white";
-                addedElements[i].style.color = "black";
-                element.appendChild(addedElements[i]);
-            }
-            options = {};
-            mitRechtListe = [];
-            printField();
-        }
-
+    <script type="text/javascript">
+        $(function(){
+            $('#multiselect').multiselect();
+        });
     </script>
 
     <title>Tokenverwaltung</title>
@@ -214,52 +88,39 @@
             </div>
     </div>
     <div class="container">
-        <div class="card col-sm-12" id="lehrer">
-            <div class="col-sm-12">
-                <h3 class="abstand1 font-weight-bold">Lehrer-Liste</h3>
-                <hr>
+        <div class="row">
+            <div class="col-sm-5">
+              <select name="from" id="multiselect" class="form-control" size="8" multiple="multiple">
+                <option value="1">C++</option>
+                <option value="2">C#</option>
+                <option value="3">Haskell</option>
+                <option value="4">Java</option>
+                <option value="5">JavaScript</option>
+                <option value="6">Lisp</option>
+                <option value="7">Lua</option>
+                <option value="8">MATLAB</option>
+                <option value="9">NewLISP</option>
+                <option value="10">PHP</option>
+                <option value="11">Perl</option>
+                <option value="12">SQL</option>
+                <option value="13">Unix shell</option>
+              </select>
             </div>
-            <div class="row">
-                <div class="card-body col-sm-4">
-                    <ol id="ohneRecht" class="list-group">
-                        <li id="RAFM" class="list-group-item" onclick="onclickTeacher('RAFM')"><strong>Raffeiner Magor</strong></li>
-                        <li id="KRAH0" class="list-group-item" onclick="onclickTeacher('KRAH0')"><strong>Kraus Helmut</strong></li>
-                        <li id="SOEB" class="list-group-item" onclick="onclickTeacher('SOEB')"><strong>Schöll Barbara</strong></li>
-                        <li id="ENZD" class="list-group-item" onclick="onclickTeacher('ENZD')"><strong>Enzenebner Daniel</strong></li>
-                        <li id="ZAKS" class="list-group-item" onclick="onclickTeacher('ZAKS')"><strong>Zakall Stefan</strong></li>
-                        <li id="PAMT" class="list-group-item" onclick="onclickTeacher('PAMT')"><strong>Pamperl Thomas</strong></li>
-                        <li id="VITL" class="list-group-item" onclick="onclickTeacher('VITL')"><strong>Vittori Lisa</strong></li>
-                    </ol>
-                </div>
-                <div class="col-sm-4">
-                    <button style="width: 30%;height: 10%;margin: 20% 35% 0% 35%" type="button" class="btn btn-primary" onclick="rechteGeben()"><span class="oi oi-arrow-thick-right"></span></button>
-                    <button style="width: 30%;height: 10%;margin: 10% 35% 0% 35%" type="button" class="btn btn-primary" onclick="rechteNehmen()"><span class="oi oi-arrow-thick-left"></span></button>
-                    <div class="form-group">
-                        <label style="margin: 10% 10% 0% 10%">Hinzugefügte/Entfernte Lehrer</label>
-                        <select id="selectedLehrer" style="width:80%;height:30%; margin: 0% 10% 10% 10%" multiple class="form-control">
-                        </select>
-                    </div>
-                </div>
-                <div class="card-body col-sm-4">
-                    <ol id="mitRecht" class="list-group">
-                        <li id="FEJW" class="list-group-item" onclick="onclickTeacher('FEJW')"><strong>Fejan Wolfgang</strong></li>
-                        <li id="GUEM" class="list-group-item" onclick="onclickTeacher('GUEM')"><strong>Günthör Michael</strong></li>
-                    </ol>
-                </div>
+            <div class="col-sm-2">
+              <button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+              <button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+              <button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+              <button type="button" id="multiselect_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
             </div>
-        </div>
+            <div class="col-sm-5">
+              <select name="to" id="multiselect_to" class="form-control" size="8" multiple="multiple">
+              </select>
+            </div>
+          </div>    
     </div>
     <footer class="footerSticky">
             © 2018 Wahl, Becirovic, Gavric, Filipovic 
     </footer>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
 
 </body>
 
