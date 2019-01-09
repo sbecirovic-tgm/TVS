@@ -155,7 +155,7 @@ function printKatList()
             $name = $elm['name'];
             $tokenAnzahl = $elm['tokenAnzahl'];
             $beschreibung = $elm['beschreibung'];
-            echo '<li id="'.$name.'" class="list-group-item" style="cursor: pointer;" onclick="markElm(\''.$name.'\', '.$tokenAnzahl.', \''.$beschreibung.'\')">'.$name.' ('.$tokenAnzahl.' Token)<strong></strong></li>';
+            echo '<li id="'.$name.'" class="list-group-item" style="cursor: pointer;" onclick="markElm(\''.$name.'\', '.$tokenAnzahl.', \''.$beschreibung.'\')"><strong>'.$name.'</strong> ('.$tokenAnzahl.' Token)</li>';
         }
     }
     else
@@ -181,7 +181,9 @@ function printWildcard()
                     <form id="changeWildcard" action="?changeWildcard=1" method="post">
                         <input type="number" id="wildcardActBackend" name="wildcardActBackend" class="hiddenMeldung" value="1">
                     </form>
-                    <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="submitForm(\'changeWildcard\')">Deaktivieren</button>
+                    <div class="col-sm-12 text-right">
+                        <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="submitForm(\'changeWildcard\')">Deaktivieren</button>
+                    </div>
                 </div>
             </div>
             <hr>
@@ -211,7 +213,9 @@ function printWildcard()
                     <form id="changeWildcard" action="?changeWildcard=1" method="post">
                         <input type="number" id="wildcardActBackend" name="wildcardActBackend" class="hiddenMeldung" value="0">
                     </form>
-                    <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="submitForm(\'changeWildcard\')">Aktivieren</button>
+                    <div class="col-sm-12 text-right">
+                        <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="submitForm(\'changeWildcard\')">Aktivieren</button>
+                    </div>
                 </div>
             </div>
             <hr>
@@ -243,7 +247,9 @@ function printWildcard()
                     <form id="changeWildcard" action="?changeWildcard=1" method="post">
                         <input type="number" id="wildcardActBackend" name="wildcardActBackend" class="hiddenMeldung" value="0">
                     </form>
-                    <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="submitForm(\'changeWildcard\')">Aktivieren</button>
+                    <div class="col-sm-12 text-right">
+                        <button id="wildcardButton" type="button" class="btn btn-outline-primary" onclick="submitForm(\'changeWildcard\')">Aktivieren</button>
+                    </div>
                 </div>
             </div>
             <hr>
@@ -268,20 +274,20 @@ function printWildcard()
 function printSchuelerList()
 {
     include_once ("../php/userCheck.php");
-    if ( key_exists('schuelerListe', $_SESSION))
+    if ( key_exists('eventWildTemp', $_SESSION))
     {
-        $list = $_SESSION['schuelerListe'];
+        $list = $_SESSION['eventWildTemp'];
         $out = '';
         foreach ( $list as $elm )
         {
-            $name = getAllSchuelerNamesToKurzel()[$elm['name']];
-            $out = $out . '<li id="'.$name.'" class="list-group-item" style="cursor: pointer;" onclick="">'.$name.'<strong></strong></li>';
+            $name = getAllSchuelerNamesToKurzel()[$elm];
+            $out = $out . '<li id="'.$elm.'" class="list-group-item" style="cursor: pointer;" onclick="markSchueler(\''.$elm.'\')">'.$name.'</li>';
         }
         return $out;
     }
     else
     {
-        return '<li id="startValueSch" class="list-group-item"><strong>Noch keine Eintr&auml;ge</strong></li>';
+        return '<li id="startValueSch" class="list-group-item">Noch keine Eintr&auml;ge</li>';
     }
 }
 
@@ -353,14 +359,14 @@ if ( isset($_GET['deleteKat']))
 }
 
 // error popup
-function printError()
+function printKatError()
 {
     if ( key_exists('addKatError', $_SESSION))
     {
         $error = $_SESSION['addKatError'];
         if ( $error )
         {
-            echo '<script>function f() {var form = document.getElementById("alertKatDismiss"); form.submit();}</script><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertKatDismiss" action="?alertKatDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Bitte alle Felder entsprechend ausfüllen!</form></div>';
+            echo '<script>function f() {var form = document.getElementById("alertKatDismiss"); form.submit();}</script><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertKatDismiss" action="?alertKatDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Bitte alle Felder entsprechend ausf&uuml;llen!</form></div>';
         }
     }
 }
@@ -371,14 +377,14 @@ if (isset($_GET['alertKatDismiss']))
 }
 
 // error popup
-function printKatError()
+function printError()
 {
     if ( key_exists('wildCardError', $_SESSION))
     {
         $error = $_SESSION['wildCardError'];
         if ( $error )
         {
-            echo '<script>function f() {var form = document.getElementById("alertForm"); form.submit();}</script><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertForm" action="?alertDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Dieser Sch&uuml;ler konnte nicht hinzugefügt werden, da er noch nicht in der Datenbank eingetragen ist.</form></div>';
+            echo '<script>function f() {var form = document.getElementById("alertForm"); form.submit();}</script><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertForm" action="?alertDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Dieser Sch&uuml;ler konnte nicht hinzugef&uuml;gt werden, da er noch nicht in der Datenbank eingetragen ist.</form></div>';
         }
     }
 }
@@ -414,10 +420,10 @@ if(isset($_GET['logout']))
 if (isset($_GET['addKuerzel']))
 {
     include_once ("../php/userCheck.php");
-
     if ( key_exists('eventWildTemp', $_SESSION))
     {
         $kuerzel = $_POST['schuelerKuerzel'];
+        echo $kuerzel;
         if ( checkIfUserInDatabase($kuerzel, 0) )
         {
             $temp = $_SESSION['eventWildTemp'];
@@ -446,8 +452,96 @@ if ( isset($_GET['deleteKuerzel']))
 {
     if ( key_exists('eventWildTemp', $_SESSION))
     {
-        $kuerzel = $_POST['schuelerKuerzel'];
-        $temp = $_SESSION['eventWildTemp'];
-        unset($temp[array_search($kuerzel, $temp)]);
+        $selected = $_POST['anzahlSelected'];
+
+        for ( $i = 0; $i < $selected; $i++ )
+        {
+            $kurz = $_POST['toDeleteName'.$i];
+
+            $pos = array_search($kurz, $_SESSION['eventWildTemp']);
+            unset($_SESSION['eventWildTemp'][$pos]);
+        }
+        if ( count($_SESSION['eventWildTemp']) == 0 )
+        {
+            unset($_SESSION['eventWildTemp']);
+        }
     }
+}
+
+if ( isset($_GET['addEvent']))
+{
+    include_once ("../php/eventsVerwalten.php");
+    $name = $_POST['name'];
+    $datum = $_POST['date'];
+    $aName = $_POST['awardTypeBackend'];
+    $beschreibung = $_POST['beschreibung'];
+
+    if ( strlen($name) == 0 && strlen($datum) == 0 && strlen($aName) == 0 && strlen($beschreibung) == 0 )
+    {
+        $_SESSION['addEventError'] = true;
+    }
+    else {
+        $temp = addEvent($name, $datum, $userName, $aName, $beschreibung);
+        if ( $temp )
+        {
+            echo 1;
+        }
+        else
+        {
+            echo 0;
+        }
+        echo '<br>';
+        $temp = addWildcard($_SESSION['eventWildTemp']);
+        if ( $temp )
+        {
+            echo 1;
+        }
+        else
+        {
+            echo 0;
+        }
+        echo '<br>';
+
+
+        $unterKatArr = $_SESSION['kategorienListe'];
+
+        foreach ($unterKatArr as $unterKat) {
+            /*
+             ['name']
+             ['tokenAnzahl']
+             ['beschreibung']
+             */
+            $temp = addUnterkateogrie($unterKat['name'], $name, $aName, $datum, $unterKat['tokenAnzahl'], $unterKat['beschreibung']);
+            if ( $temp )
+            {
+                echo 1;
+            }
+            else
+            {
+                echo 0;
+            }
+        }
+
+        // dinger löschen
+        unset($_SESSION['eventWildTemp']);
+        unset($_SESSION['kategorienListe']);
+    }
+}
+
+// error popup
+function printEventError()
+{
+    if ( key_exists('addEventError', $_SESSION))
+    {
+        $error = $_SESSION['addEventError'];
+        if ( $error )
+        {
+            echo '<script>function f() {var form = document.getElementById("alertEventForm"); form.submit();}</script><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertEventForm" action="?alertEventDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Bitte alle Felder ausfüllen!</form></div>';
+        }
+    }
+}
+// popup dismiss
+if (isset($_GET['alertEventDismiss']))
+{
+    unset($_SESSION['addEventError']);
 }

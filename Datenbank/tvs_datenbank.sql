@@ -9,7 +9,6 @@ USE tvs_datenbank;
 
 CREATE TABLE wildcard (
 		id INTEGER NOT NULL AUTO_INCREMENT,
-		beschreibung TEXT,
 		PRIMARY KEY ( id )
 ) ENGINE = INNODB;
 

@@ -58,7 +58,7 @@ function checkIfUserIsSuperUser ( $kuerzel )
     $sqlC = 'select kuerzel from superuser';
     $headadmin = mysqli_query($db, $sqlC);
     $headadminArray = mysqli_fetch_assoc($headadmin);
-    return is_array($kuerzel, $headadminArray);
+    return in_array($kuerzel, $headadminArray);
 }
 
 // Schüler

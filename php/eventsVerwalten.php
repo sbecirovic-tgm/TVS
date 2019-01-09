@@ -96,7 +96,8 @@ function addEvent ( $name, $datum, $kuerzel, $aName, $beschreibung)
     {
         $sqlC = "insert into event(name, datum, superKuerzel, lKuerzel, aName, beschreibung) values('$name', '$datum', NULL, '$kuerzel', '$aName', '$beschreibung')";
     }
-    return mysqli_query($db, $sqlC);
+    $out = mysqli_query($db, $sqlC);
+    return $out;
 }
 
 function changeEvent ( $name, $datum, $aName, $kuerzel, $nameNeu, $datumNeu, $aNameNeu, $beschreibungNeu)
@@ -159,6 +160,74 @@ function isSchuelerInWildcard( $name, $datum, $aName, $userName )
         }
         return false;
     }
+}
+
+
+function addWildcard( $schuelerArray )
+{
+    global $db;
+    $sqlC = "insert into wildcard";
+    $result = mysqli_query($db, $sqlC);
+
+    $sqlC = "select id from wildcard order by id desc limit 1";
+    $temp = mysqli_query($db, $sqlC);
+    $id = mysqli_fetch_assoc($temp)['id'];
+    /*
+        CREATE TABLE wildcard (
+		id INTEGER NOT NULL AUTO_INCREMENT,
+		PRIMARY KEY ( id )
+        ) ENGINE = INNODB;
+     */
+
+    foreach ($schuelerArray as $kuerzel )
+    {
+        $sqlC2 = "Insert into zuordnung (wId, skuerzel) values('$id', '$kuerzel')";
+        /*
+        CREATE TABLE zuordnung (
+        wID INTEGER,
+		skuerzel VARCHAR(255),
+
+		PRIMARY KEY (wID, skuerzel),
+
+		FOREIGN KEY ( wID )
+		REFERENCES wildcard(id)
+		ON UPDATE CASCADE
+		On DELETE CASCADE,
+		FOREIGN KEY ( skuerzel )
+		REFERENCES schueler(kuerzel)
+		ON UPDATE CASCADE
+		On DELETE CASCADE
+        ) ENGINE = INNODB;
+        */
+        $result2 = mysqli_query($db, $sqlC2);
+    }
+
+    if ( $result && $result2 )
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+}
+
+function addUnterkateogrie( $name, $eName, $aName, $eDatum, $tokenAnzahl, $beschreibung)
+{
+    global $db;
+    $sqlC = "Insert into unterkategorie ( name, eName, aName, eDatum, tokenAnzahl, beschreibung) values (\''$name'\', \''$eName'\', \''$aName'\', \''$eDatum'\', \''$tokenAnzahl'\', \''$beschreibung'\' )";
+    $result = mysqli_query($db, $sqlC);
+    return $result;
+    /*CREATE TABLE unterkategorie (
+		name VARCHAR(255),
+
+		eName VARCHAR(255),
+		aName VARCHAR(255),
+		eDatum DATE,
+
+		tokenAnzahl INTEGER,
+		beschreibung TEXT,*/
 }
 
 ?>
