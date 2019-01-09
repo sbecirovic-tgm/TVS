@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/tvs.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-grid.css">
+    <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="../img/open-iconic-master/font/css/open-iconic-bootstrap.css">
+
+    <title>Highscore-Liste</title>
+</head>
+
+<body>
+<?php
+        include_once("highscore.php");
+    ?>
+<!--HEADER-->
+
+<header class="headerStartseite">
+    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <?php
+                                include_once("../php/userCheck.php");
+                                echo getNameFromKuerzel($userName);
+                            ?>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Mein Profil</a>
+                        <form id="logoutForm" action="?logout=1" method="post">
+                            <a class="dropdown-item" href="#" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<script language="JavaScript" type="text/javascript">
+    function submitForm(form) {
+        var myForm = document.getElementById(form);
+        myForm.submit();
+    }
+</script>
+<div class="nav-scroller bg-white shadow-md">
+    <div class="container">
+        <nav class="nav nav-underline">
+            <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
+                <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
+                    <a class="nav-link active" href="#" onclick="submitForm('eventForm')">
+                        Events
+                        <!--
+                        <span class="badge badge-pill bg-light align-text-bottom">
+                            <?php
+                            include_once("../php/eventsVerwalten.php");
+                            echo countNewEvents();
+                        ?>
+                        </span>
+                        -->
+                    </a>
+                </form>
+                <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
+                    <a class="nav-link active" href="#"onclick="submitForm('anfragenForm')">Anfragen</a>
+                </form>
+                <a class="nav-link active" href="berechtigung.html">Berechtigen</a>
+                <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
+                    <a class="nav-link active" href="#" onclick="submitForm('highscoreForm')">Highscores</a>
+                </form>
+        </nav>
+    </div>
+</div>
+
+
+<!-- Inhalt -->
+<div class="container">
+    <h3>Highscore-Liste</h3>
+    <div class="row">
+        <div class="col-sm-3" data-toggle="tooltip"  data-placement="bottom" title="Einfach und schnell nach einem Schülernamen suchen">
+            <input type="text" id="nameFilter" class="form-control" onkeyup="filterFunction()" placeholder="Nach Namen Filtern" aria-label="Sizing example input"
+                   aria-describedby="inputGroup-sizing-default" >
+        </div>
+    </div>
+    <br>
+    <h4>Spezial Filter</h4>
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="btn-group">
+                <form id="highscoreFrom" action="?highscoreForm=1" method="post">
+                    <?php
+                            setHighscoreType();
+                        ?>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" onclick="setHighscoreButton('Award Highscore')" href="#">Award Highscore</a>
+                        <a class="dropdown-item" onclick="setHighscoreButton('Token Highscore')" href="#">Token Highscore</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="btn-group">
+                <form id="awardForm" action="?awardForm=1" method="post">
+                    <?php
+                            setAwardType();
+                        ?>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" onclick="setAwardButton('All Awards')" href="#">All Awards</a>
+                        <?php
+                                printAwardDropDown();
+                            ?>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="input-group" data-toggle="tooltip" data-placement="top"  data-html="true" title="Zum Übernehmen der Einstellungen auf &quot;Anwenden&quot; klicken. <br>Mit der Eingabe 0 wird die jetztige Saison genommen.<br>Mit der Eingabe -1 wird der Highscore aus allen Saisions genommen.<br><br><em>Eine Saison beginnt immer mit Anfang des Semesters und ist mit ende des Semesters ebenfalls abgeschlossen</em>">
+                <?php
+                        setSaisonNum();
+                    ?>
+                <button id="apply" name="apply" class="btn btn-primary btn-outline-primary" onClick="applyFilter()">Anwenden</button>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="btn-group">
+                <form id="highscoreSortiert" action="?highscoreSortiert=1" method="post">
+                    <?php
+                            setSortieren();
+                        ?>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" onclick="setSortButton('Aufsteigend')">Aufsteigend</a>
+                        <a class="dropdown-item" href="#" onclick="setSortButton('Absteigend')">Absteigend</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container table-responsive" style="margin-top:10px;">
+    <table class="table table-striped" id="myTable">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <?php
+                        setHighscoreList();
+                    ?>
+        </tr>
+        <?php
+                    printHighscore();
+                ?>
+        </thead>
+    </table>
+</div>
+
+<footer class="footerSticky">
+    © 2018 Wahl, Becirovic, Gavric, Filipovic
+</footer>
+<script type="application/javascript">
+
+    function applyFilter()
+    {
+        var form = document.getElementById("saisonNumForm");
+        form.submit();
+    }
+
+    function setSortButton(value) {
+        document.getElementById("SortTypeTemp").value = value;
+        document.getElementById("SortType").innerHTML = value;
+        var form = document.getElementById("highscoreSortiert");
+        form.submit();
+
+    }
+
+    function setAwardButton(value) {
+        document.getElementById("AwardType").innerHTML = value;
+        document.getElementById("AwardTypeTemp").value = value;
+        var form = document.getElementById("awardForm");
+        form.submit();
+    }
+
+    function setHighscoreButton(value) {
+        document.getElementById("highscoreType").innerHTML = value;
+        document.getElementById("highscoreTypeTemp").value = value;
+        var form = document.getElementById("highscoreFrom");
+        form.submit();
+    }
+
+    function filterFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("nameFilter");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $("[data-toggle=\"tooltip\"]").tooltip();
+</script>
+</body>
+
+</html>
