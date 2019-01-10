@@ -13,12 +13,14 @@ $userName = $_SESSION['userName'];
 function printAwardDropDown ()
 {
     global $db;
+    $out = '';
     $sqlC = 'select name from award';
     $award = mysqli_query($db, $sqlC);
     for (; $award_array = mysqli_fetch_assoc($award); ) {
         $name = $award_array['name'];
-        echo '<a class="dropdown-item" href="#" onclick="setAwardButton(\'' . $name . '\')">' . $name . '</a>';
+        $out = $out . '<a class="dropdown-item" href="#" onclick="setAwardButton(\'' . $name . '\')">' . $name . '</a>';
     }
+    return $out;
 }
 
 function printEvents()
@@ -76,6 +78,7 @@ function printEvents()
     $use = $_SESSION['eventVerwaltung'];
 
     $found = -1;
+
     foreach ($events as $event)
     {
         // als datum YYYY-MM-DD
@@ -93,7 +96,7 @@ function printEvents()
         {
             $nameFind = $use['eName'];
             $aNameFind = $use['aName'];
-            $dateStringFind = $use['eDate'];
+            $dateStringFind = $use['eDatum'];
 
 
             if ( $name == $nameFind and $aNameFind == $aName and $dateStringFind == $dateString )
@@ -122,7 +125,7 @@ function printEvents()
                     <p>'.$bescheibung.'</p>
                 </div>
                 <div class="col-12 text-center">
-                    <button id="eventVerwalten'.$i.'" type="button" class="btn btn-outline-primary adminEventButton abstand1 center-block">Event verwalten</button>
+                    <button id="eventVerwalten'.$i.'" type="button" class="btn btn-outline-primary adminEventButton abstand1 center-block" onclick="setEventInForm( \''.$name.'\', \''.$dateString.'\', \''.$aName.'\' )">Event verwalten</button>
                 </div>';
         echo '</div>';
         $i++;
@@ -130,23 +133,18 @@ function printEvents()
 }
 
 
-function printUnter( $event, $i )
+if ( isset($_GET['setSessionToEvent']))
 {
-    $out = '';
-    $unterKat = getUnterKatProEvent($event['name'], $event['datum'],$event['aName']);
-    foreach ($unterKat as $kat )
-    {
-        $name = $kat['name'];
-        $beschreibung = $kat['beschreibung'];
-        $tokenAnzahl = $kat['tokenAnzahl'];
-        $out = $out . '<a class="dropdown-item" href="#" onclick="changeValues(\''.$name.'\', \''.$beschreibung.'\', '.$tokenAnzahl.', '.$i.')">' . $name . '</a>';
-    }
+    $temp['eName'] = $_POST['name'];
+    $temp['eDatum'] = $_POST['datum'];
+    $temp['aName'] = $_POST['aName'];
+    $_SESSION['eventVerwaltung'] = $temp;
 
-    return $out;
 }
 
 function printVerwalten()
 {
+    include_once ("../php/eventsVerwalten.php");
     $verw = $_SESSION['eventVerwaltung'];
     if ( $verw == NULL )
     {
@@ -172,20 +170,14 @@ function printVerwalten()
                                     </div>
                                 </form>
                                 <div class="col-sm-12">
-                                    <ol id="kategorienListe" class="list-group">
-                                        <?php
-                                                printKatList();
-                                            ?>
-                                    </ol>
-                                    <?php
-                                            printKatError();
-                                        ?>
+                                    <ol id="kategorienListe" class="list-group">' . printKatList() . '
+                                    </ol>' . printKatError() . '
                                 </div>
                                 <div class="col-sm-6">
-                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" data-toggle="modal" data-target="#popUpKategorie">Neue Kategorie hinzufügen</button>
+                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" data-toggle="modal" data-target="#popUpKategorie">Neue Kategorie hinzuf&uuml;gen</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'katForm\')" >Ausgewähle Kategorien löschen</button>
+                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'katForm\')" >Ausgew&auml;hle Kategorien l&ouml;schen</button>
                                 </div>
                             </div>
                         </div>
@@ -194,14 +186,7 @@ function printVerwalten()
                                 <input type="number" id="anzahlSelectedSch" name="anzahlSelected" class="hiddenMeldung" value="0">
                                 <div id="schuelerListBackend">
                                 </div>
-                            </form>
-                            <?php
-                                    printWildcard();
-                                    printError();
-                                ?>
-                            <div class="col-sm-12 text-right">
-                                <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'schuelerForm\')" >Ausgewähle Schüler löschen</button>
-                            </div>
+                            </form>' . printWildcard() . printError() . '
                         </div>
                     </div>
                     <hr>
@@ -238,13 +223,10 @@ function printVerwalten()
                                             }
                                         </script>
                                         <button type="button" name="awardType" id="awardType" class="btn dropdown-toggle btn-primary"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="">Award auswählen</button>
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="">Award ausw&auml;hlen</button>
                                         <input type="text" min="0" id="awardTypeBackend" name="awardTypeBackend" class="hiddenMeldung" value="">
 
-                                        <div class="dropdown-menu">
-                                            <?php
-                                                printAwardDropDown();
-                                            ?>
+                                        <div class="dropdown-menu">' . printAwardDropDown() . '
                                         </div>
                                     </div>
                                 </div>
@@ -264,7 +246,7 @@ function printVerwalten()
                             </div>
                         </div>
                         <div class="col-sm-12 text-center">
-                            <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'addEvent\')">Event hinzufügen</button>
+                            <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'addEvent\')">Event hinzuf&uuml;gen</button>
                         </div>
 
                         <!-- Jetzt kommen die popovers -->
@@ -274,7 +256,7 @@ function printVerwalten()
                                         <div class="modal-content">
                                         <div class="modal-header">
                                             <div class="col-sm-6">
-                                                <h5 class="modal-title">Kategorie zum Event hinzufügen</h5>
+                                                <h5 class="modal-title">Kategorie zum Event hinzuf&uuml;gen</h5>
                                             </div>
                                             <div class="col-sm-6">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -317,7 +299,7 @@ function printVerwalten()
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schlie&szlig;en</button>
-                                            <button type="button" class="btn btn-outline-primary" onclick="submitForm(\'addKat\')">Hinzufügen</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="submitForm(\'addKat\')">Hinzuf&uuml;gen</button>
                                         </div>
                                     </div>
                                 </form>
@@ -331,6 +313,42 @@ function printVerwalten()
     }
     else
     {
+        $wID = getAttrFromEvent('wID', $verw['eName'], $verw['eDatum'], $verw['aName'] );
+        if ( $wID != null )
+        {
+            $_SESSION['wildcardStatus'] = true;
+            $_SESSION['eventWildTemp'] = getAllZuordnungToID($wID);
+            $_SESSION['eventWildTempBackUp'] = getAllZuordnungToID($wID);
+        }
+        else
+        {
+            $_SESSION['wildcardStatus'] = false;
+            unset($_SESSION['eventWildTemp']);
+        }
+        $kats = getAllUnterkatToEvent($verw['eName'], $verw['eDatum'], $verw['aName']);
+        if ( $kats != null )
+        {
+            $_SESSION['kategorienListe']  = $kats;
+            $_SESSION['kategorienListeBakUp'] = $kats;
+        }
+        else
+        {
+            unset($_SESSION['kategorienListe']);
+        }
+        $event = getEvent($verw['eName'], $verw['eDatum'], $verw['aName']);
+        $name = $event['name'];
+        $datum = $event['datum'];
+        $aName = $event['aName'];
+        $beschreibung = $event['beschreibung'];
+        /*
+        $out['name'] = $event_array['name'];
+        $out['datum'] = $event_array['datum'];
+        $out['superKuerzel'] = $event_array['superKuerzel'];
+        $out['lKuerzel'] = $event_array['lKuerzel'];
+        $out['aName'] = $event_array['aName'];
+        $out['beschreibung'] = $event_array['beschreibung'];
+        */
+
         echo '<div class="row">
             <div class="col-sm-12">
                 <h1>Events</h1>
@@ -353,20 +371,14 @@ function printVerwalten()
                                     </div>
                                 </form>
                                 <div class="col-sm-12">
-                                    <ol id="kategorienListe" class="list-group">
-                                        <?php
-                                                printKatList();
-                                            ?>
-                                    </ol>
-                                    <?php
-                                            printKatError();
-                                        ?>
+                                    <ol id="kategorienListe" class="list-group">' . printKatList() . '
+                                    </ol>' . printKatError() . '
                                 </div>
                                 <div class="col-sm-6">
-                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" data-toggle="modal" data-target="#popUpKategorie">Neue Kategorie hinzufügen</button>
+                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" data-toggle="modal" data-target="#popUpKategorie">Neue Kategorie hinzuf&uuml;gen</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'katForm\')" >Ausgewähle Kategorien löschen</button>
+                                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'katForm\')" >Ausgew&auml;hle Kategorien l&ouml;schen</button>
                                 </div>
                             </div>
                         </div>
@@ -375,19 +387,12 @@ function printVerwalten()
                                 <input type="number" id="anzahlSelectedSch" name="anzahlSelected" class="hiddenMeldung" value="0">
                                 <div id="schuelerListBackend">
                                 </div>
-                            </form>
-                            <?php
-                                    printWildcard();
-                                    printError();
-                                ?>
-                            <div class="col-sm-12 text-right">
-                                <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'schuelerForm\')" >Ausgewähle Schüler löschen</button>
-                            </div>
+                            </form>' . printWildcard() . '' . printError() . '
                         </div>
                     </div>
                     <hr>
                     <div class="card-body">
-                        <form id="addEvent" action="?addEvent=1" method="post">
+                        <form id="updateEvent" action="?updateEvent=1" method="post">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="input-group mb-3">
@@ -395,7 +400,7 @@ function printVerwalten()
                                             <span class="input-group-text bg-primary text-light adminEventText" id="inputGroup-sizing-default">Eventname</span>
                                         </div>
                                         <input type="text" id="eName" name="name" class="form-control" minlength="1"
-                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required value="'.$name.'">
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
@@ -407,7 +412,7 @@ function printVerwalten()
                                             <i class="fa fa-calendar">
                                             </i>
                                         </div>
-                                        <input class="form-control" id="date" name="date" placeholder="DD-MM-YYYY" type="text" required>
+                                        <input class="form-control" id="date" name="date" placeholder="DD-MM-YYYY" type="text" required value="'.$datum.'">
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
@@ -419,13 +424,10 @@ function printVerwalten()
                                             }
                                         </script>
                                         <button type="button" name="awardType" id="awardType" class="btn dropdown-toggle btn-primary"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="">Award auswählen</button>
-                                        <input type="text" min="0" id="awardTypeBackend" name="awardTypeBackend" class="hiddenMeldung" value="">
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="">'.$aName.'</button>
+                                        <input type="text" min="0" id="awardTypeBackend" name="awardTypeBackend" class="hiddenMeldung" value="'.$aName.'">
 
-                                        <div class="dropdown-menu">
-                                            <?php
-                                                printAwardDropDown();
-                                            ?>
+                                        <div class="dropdown-menu">' . printAwardDropDown() . '
                                         </div>
                                     </div>
                                 </div>
@@ -435,12 +437,16 @@ function printVerwalten()
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-primary text-light adminEventText">Beschreibung</span>
                                 </div>
-                                <textarea class="form-control" name="beschreibung" id="beschreibung" aria-label="With textarea" required></textarea>
+                                <textarea class="form-control" name="beschreibung" id="beschreibung" aria-label="With textarea" required>'.$beschreibung.'</textarea>
                             </div>
                         </form>
                         <hr>
+                        <form id="deleteEvent" action="?deleteEvent=1" method="post"></form>
+                        <form id="stop" action="?stop=1" method="post"></form>
                         <div class="col-sm-12 text-center">
-                            <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'addEvent\')">Event hinzufügen</button>
+                            <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'deleteEvent\')">Event l&ouml;schen</button>
+                            <button type="button" class="btn btn-outline-secondary dashboardButtons abstand1" onclick="submitForm(\'stop\')">Abbrechen</button>
+                            <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'updateEvent\')">Event speichern</button>
                         </div>
 
                         <!-- Jetzt kommen die popovers -->
@@ -450,7 +456,7 @@ function printVerwalten()
                                         <div class="modal-content">
                                         <div class="modal-header">
                                             <div class="col-sm-6">
-                                                <h5 class="modal-title">Kategorie zum Event hinzufügen</h5>
+                                                <h5 class="modal-title">Kategorie zum Event hinzuf&uuml;gen</h5>
                                             </div>
                                             <div class="col-sm-6">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -493,13 +499,14 @@ function printVerwalten()
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Schlie&szlig;en</button>
-                                            <button type="button" class="btn btn-outline-primary" onclick="submitForm(\'addKat\')">Hinzufügen</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="submitForm(\'addKat\')">Hinzuf&uuml;gen</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
                         <!-- ende der popups -->
+                    </div>
                     </div>
                 </div>
             </div>
@@ -509,6 +516,7 @@ function printVerwalten()
 
 function printKatList()
 {
+    $out = '';
     if ( key_exists('kategorienListe', $_SESSION))
     {
         $list = $_SESSION['kategorienListe'];
@@ -517,25 +525,29 @@ function printKatList()
             $name = $elm['name'];
             $tokenAnzahl = $elm['tokenAnzahl'];
             $beschreibung = $elm['beschreibung'];
-            echo '<li id="'.$name.'" class="list-group-item" style="cursor: pointer;" onclick="markElm(\''.$name.'\', '.$tokenAnzahl.', \''.$beschreibung.'\')"><strong>'.$name.'</strong> ('.$tokenAnzahl.' Token)</li>';
+            $out = $out . '<li id="'.$name.'" class="list-group-item" style="cursor: pointer;" onclick="markElm(\''.$name.'\', '.$tokenAnzahl.', \''.$beschreibung.'\')"><strong>'.$name.'</strong> ('.$tokenAnzahl.' Token)</li>';
         }
     }
     else
     {
-        echo '<li id="startValueKat" class="list-group-item"><strong>Noch keine Eintr&auml;ge</strong></li>';
+        $out = '<li id="startValueKat" class="list-group-item"><strong>Noch keine Eintr&auml;ge</strong></li>';
     }
+
+    return $out;
 }
 
 function printWildcard()
 {
     // false: deaktiviert
     // true: aktiviert
+    echo 'aendern';
     if ( key_exists('wildcardStatus', $_SESSION))
     {
         $status = $_SESSION['wildcardStatus'];
+        echo  $status;
         if ( $status )
         {
-            echo '<div class="row">
+            return '<div class="row">
                 <div class="col-sm-8">
                     <h4>Zug&auml;nglichkeit</h4>
                 </div>
@@ -563,11 +575,14 @@ function printWildcard()
                 </form>
                 <ol id="schuelerList" class="list-group">' . printSchuelerList() . '
                 </ol>
+                <div class="col-sm-12 text-right">
+                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'schuelerForm\')" >Ausgew&auml;hle Sch&uuml;ler l&ouml;schen</button>
+                </div>
             </div>';
         }
         else
         {
-            echo '<div class="row">
+            return '<div class="row">
                 <div class="col-sm-8">
                     <h4>Zug&auml;nglichkeit</h4>
                 </div>
@@ -595,13 +610,16 @@ function printWildcard()
                 </form>
                 <ol id="schuelerList" class="list-group">' . printSchuelerList() . '
                 </ol>
+                <div class="col-sm-12 text-right">
+                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'schuelerForm\')" >Ausgew&auml;hle Sch&uuml;ler l&ouml;schen</button>
+                </div>
             </div>';
         }
     }
     else
     {
         $_SESSION['wildcardStatus'] = false;
-        echo '<div class="row">
+        return '<div class="row">
                 <div class="col-sm-8">
                     <h4>Zug&auml;nglichkeit</h4>
                 </div>
@@ -629,6 +647,9 @@ function printWildcard()
                 </form>
                 <ol id="schuelerList" class="list-group">' . printSchuelerList() . '
                 </ol>
+                <div class="col-sm-12 text-right">
+                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm(\'schuelerForm\')" >Ausgew&auml;hle Sch&uuml;ler l&ouml;schen</button>
+                </div>
             </div>';
     }
 }
@@ -667,6 +688,35 @@ if (isset($_GET['changeWildcard']))
     }
 }
 
+if ( isset($_GET['stop']))
+{
+    include_once ("../php/eventsVerwalten.php");
+
+    unset($_SESSION['eventWildTemp']);
+    unset($_SESSION['kategorienListe']);
+    unset($_SESSION['addKatError']);
+    unset($_SESSION['wildCardError']);
+
+    // altes wiederherstellen
+    $temp = $_SESSION['eventVerwaltung'];
+
+    $kuerzelArray = $_SESSION['eventWildTempBackUp'];
+    $wID = getAttrFromEvent("wID", $temp['eName'], $temp['eDatum'], $temp['aName']);
+
+    foreach ($kuerzelArray as $kuerzel) {
+        addToWildCard($wID, $kuerzelArray);
+    }
+
+    $katArray = $_SESSION['kategorienListeBakUp'];
+    foreach ($katArray as $kat) {
+        addUnterkategorie($kat['name'], $temp['eName'], $temp['eDatum'], $temp['aName'], $kat['tokenAnzahl'], $kat['beschreibung']);
+    }
+
+    unset($_SESSION['kategorienListeBakUp']);
+    unset($_SESSION['eventWildTempBackUp']);
+    $_SESSION['eventVerwaltung'] = null;
+}
+
 if (isset($_GET['addKat']))
 {
     $name = $_POST['name'];
@@ -694,12 +744,19 @@ if (isset($_GET['addKat']))
             $list[0]['beschreibung'] = $beschreibung;
             $_SESSION['kategorienListe'] = $list;
         }
+
+        $temp = $_SESSION['eventVerwaltung'];
+        if ( $temp != null )
+        {
+            addUnterkategorie($name, $temp['eName'], $temp['aName'], $temp['eDatum'], $tokenAnzahl, $beschreibung);
+        }
     }
 
 }
 
 if ( isset($_GET['deleteKat']))
 {
+    include_once ("../php/eventsVerwalten.php");
     if ( key_exists('kategorienListe', $_SESSION))
     {
         $selected = $_POST['anzahlSelected'];
@@ -710,6 +767,11 @@ if ( isset($_GET['deleteKat']))
             $search['tokenAnzahl'] = $_POST['toDeleteToken'.$i];
             $search['beschreibung'] = $_POST['toDeleteBesch'.$i];
 
+            $temp = $_SESSION['eventVerwaltung'];
+            if ( $temp != null )
+            {
+                deleteUnterkategorie($search['name'], $temp['eName'], $temp['aName'], $temp['eDatum']);
+            }
             $pos = array_search($search, $_SESSION['kategorienListe']);
             unset($_SESSION['kategorienListe'][$pos]);
         }
@@ -728,9 +790,10 @@ function printKatError()
         $error = $_SESSION['addKatError'];
         if ( $error )
         {
-            echo '<script>function f() {var form = document.getElementById("alertKatDismiss"); form.submit();}</script><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertKatDismiss" action="?alertKatDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Bitte alle Felder entsprechend ausf&uuml;llen!</form></div>';
+            return '<script>function f() {var form = document.getElementById("alertKatDismiss"); form.submit();}</script><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertKatDismiss" action="?alertKatDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Bitte alle Felder entsprechend ausf&uuml;llen!</form></div>';
         }
     }
+    return '';
 }
 // popup dismiss
 if (isset($_GET['alertKatDismiss']))
@@ -746,9 +809,10 @@ function printError()
         $error = $_SESSION['wildCardError'];
         if ( $error )
         {
-            echo '<script>function f() {var form = document.getElementById("alertForm"); form.submit();}</script><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertForm" action="?alertDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Dieser Sch&uuml;ler konnte nicht hinzugef&uuml;gt werden, da er noch nicht in der Datenbank eingetragen ist.</form></div>';
+            return '<script>function f() {var form = document.getElementById("alertForm"); form.submit();}</script><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertForm" action="?alertDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Dieser Sch&uuml;ler konnte nicht hinzugef&uuml;gt werden, da er noch nicht in der Datenbank eingetragen ist.</form></div>';
         }
     }
+    return '';
 }
 // popup dismiss
 if (isset($_GET['alertDismiss']))
@@ -782,10 +846,13 @@ if(isset($_GET['logout']))
 if (isset($_GET['addKuerzel']))
 {
     include_once ("../php/userCheck.php");
+    include_once ("../php/eventsVerwalten.php");
+
+    $temp = $_SESSION['eventVerwaltung'];
+
+    $kuerzel = $_POST['schuelerKuerzel'];
     if ( key_exists('eventWildTemp', $_SESSION))
     {
-        $kuerzel = $_POST['schuelerKuerzel'];
-        echo $kuerzel;
         if ( checkIfUserInDatabase($kuerzel, 0) )
         {
             $temp = $_SESSION['eventWildTemp'];
@@ -793,6 +860,7 @@ if (isset($_GET['addKuerzel']))
 
             $temp[$next] = $kuerzel;
             $_SESSION['eventWildTemp'] = $temp;
+
 
         }
         else
@@ -803,17 +871,32 @@ if (isset($_GET['addKuerzel']))
     }
     else
     {
-        $kuerzel = $_POST['schuelerKuerzel'];
-        $temp[0] = $kuerzel;
-        $_SESSION['eventWildTemp'] = $temp;
+        if ( checkIfUserInDatabase($kuerzel, 0) )
+        {
+            $temp[0] = $kuerzel;
+            $_SESSION['eventWildTemp'] = $temp;
+        }
+        else
+        {
+            $_SESSION['wildCardError'] = true;
+        }
+    }
+
+    if ( $temp != null )
+    {
+        $wID = getAttrFromEvent("wID", $temp['eName'], $temp['eDatum'], $temp['aName']);
+        addToWildCard($wID, $kuerzel);
     }
 }
 
 
 if ( isset($_GET['deleteKuerzel']))
 {
+    include_once ("../php/eventsVerwalten.php");
     if ( key_exists('eventWildTemp', $_SESSION))
     {
+        $temp = $_SESSION['eventVerwaltung'];
+
         $selected = $_POST['anzahlSelected'];
 
         for ( $i = 0; $i < $selected; $i++ )
@@ -822,6 +905,12 @@ if ( isset($_GET['deleteKuerzel']))
 
             $pos = array_search($kurz, $_SESSION['eventWildTemp']);
             unset($_SESSION['eventWildTemp'][$pos]);
+
+            if ( $temp != null )
+            {
+                $wID = getAttrFromEvent("wID", $temp['eName'], $temp['eDatum'], $temp['aName']);
+                removeFromWildCard($wID, $kurz);
+            }
         }
         if ( count($_SESSION['eventWildTemp']) == 0 )
         {
@@ -847,9 +936,12 @@ if ( isset($_GET['addEvent']))
         {
             $result = addWildcard($_SESSION['eventWildTemp']);
         }
-        addEvent($name, $datum, $userName, $aName, $beschreibung, $result[1]);
+        else
+        {
+            $result[0] = Null;
+        }
+        addEvent($name, $datum, $userName, $aName, $beschreibung, $result[0]);
 
-        echo '<br>';
 
         if ( key_exists('kategorienListe', $_SESSION))
         {
@@ -861,16 +953,8 @@ if ( isset($_GET['addEvent']))
                  ['tokenAnzahl']
                  ['beschreibung']
                  */
-                $temp = addUnterkateogrie($unterKat['name'], $name, $aName, $datum, $unterKat['tokenAnzahl'], $unterKat['beschreibung']);
                 echo 'Kat';
-                if ( $temp )
-                {
-                    echo 1;
-                }
-                else
-                {
-                    echo 0;
-                }
+                $temp = addUnterkategorie($unterKat['name'], $name, $aName, $datum, $unterKat['tokenAnzahl'], $unterKat['beschreibung']);
             }
         }
 
@@ -901,14 +985,14 @@ if (isset($_GET['alertEventDismiss']))
 
 if ( isset($_GET['deleteEvent']))
 {
-    include_once ("../php/awardsVerwalten.php");
+    include_once ("../php/eventsVerwalten.php");
     $temp = $_SESSION['eventVerwaltung'];
     deleteEvent($temp['eName'], $temp['eDatum'], $temp['aName']);
 }
 
 if ( isset($_GET['updateEvent']))
 {
-    include_once ("../php/awardsVerwalten.php");
+    include_once ("../php/eventsVerwalten.php");
     $temp = $_SESSION['eventVerwaltung'];
     $name = $_POST['name'];
     $datum = $_POST['date'];
@@ -920,37 +1004,66 @@ if ( isset($_GET['updateEvent']))
         $_SESSION['addEventError'] = true;
     }
     else {
-
+        $wID = getAttrFromEvent('wID', $temp['eName'], $temp['eDatum'], $temp['aName'] );
         if ( $_SESSION['wildcardStatus'])
         {
             // alte mit neuer Wildcard vergleichen und dann die die nicht mehr dabei sind löschen und die neuen hinzufügen
-            $result = addWildcard($_SESSION['eventWildTemp']);
+            $schNames = getAllZuordnungToID($wID);
+            $schNamesNew = $_SESSION['eventWildTemp'];
+            $toAdd = buildMix($schNames, $schNamesNew);
+            $result = addArrayToWildcard($wID, $toAdd);
         }
         else
         {
+            if ( $wID != Null )
+            {
+                deleteWildcard($wID);
+            }
             $wID = Null;
         }
+        $katRightNow = getUnterKatProEvent($temp['eName'], $temp['eDatum'], $temp['aName']);
         changeEvent($temp['eName'], $temp['eDatum'], $temp['aName'], $userName, $name, $datum, $aName, $beschreibung, $wID );
 
-        /*
+
         if ( key_exists('kategorienListe', $_SESSION))
         {
             $unterKatArr = $_SESSION['kategorienListe'];
-
-            foreach ($unterKatArr as $unterKat) {
+            $katToAdd = buildMix($katRightNow, $unterKatArr);
+            foreach ($katToAdd as $unterKat) {
                 /*
                  ['name']
                  ['tokenAnzahl']
                  ['beschreibung']
                  */
-                /*addUnterkateogrie($unterKat['name'], $name, $aName, $datum, $unterKat['tokenAnzahl'], $unterKat['beschreibung']);
+                addUnterkategorie($unterKat['name'], $name, $aName, $datum, $unterKat['tokenAnzahl'], $unterKat['beschreibung']);
             }
         }
-        */
+        else
+        {
+            // remove unterkat
+            deleteAllUnterkategorieToEvent($name, $datum, $aName);
+        }
+
 
         // dinger löschen
         unset($_SESSION['eventWildTemp']);
         unset($_SESSION['kategorienListe']);
+        $_SESSION['eventVerwaltung'] = NULL;
     }
 
+}
+
+// arrNeu ist das "starke array"
+function buildMix( $arr, $arrNeu )
+{
+    foreach ( $arr as $items )
+    {
+        if ( in_array($items, $arrNeu))
+        {
+            $ind = array_search($items, $arrNeu);
+            unset($arrNeu[$ind]);
+        }
+    }
+
+    return $arrNeu;
 }

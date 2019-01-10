@@ -140,7 +140,7 @@ if (isset($_GET['eventVerwalten0']))
     $out = array();
     $out['eName'] = $_POST['eventName0'];
     $out['aName'] = $_POST['eventAName0'];
-    $out['eDate'] = $_POST['eventDatum0'];
+    $out['eDatum'] = $_POST['eventDatum0'];
 
     $_SESSION['eventVerwaltung'] = $out;
     header("Refresh:0; url=events.html");
@@ -151,7 +151,7 @@ if (isset($_GET['eventVerwalten1']))
     $out = array();
     $out['eName'] = $_POST['eventName1'];
     $out['aName'] = $_POST['eventAName1'];
-    $out['eDate'] = $_POST['eventDatum1'];
+    $out['eDatum'] = $_POST['eventDatum1'];
 
     $_SESSION['eventVerwaltung'] = $out;
     header("Refresh:0; url=events.html");
@@ -162,7 +162,7 @@ if (isset($_GET['eventVerwalten2']))
     $out = array();
     $out['eName'] = $_POST['eventName2'];
     $out['aName'] = $_POST['eventAName2'];
-    $out['eDate'] = $_POST['eventDatum2'];
+    $out['eDatum'] = $_POST['eventDatum2'];
 
     $_SESSION['eventVerwaltung'] = $out;
     header("Refresh:0; url=events.html");
@@ -173,7 +173,7 @@ if (isset($_GET['eventVerwalten3']))
     $out = array();
     $out['eName'] = $_POST['eventName3'];
     $out['aName'] = $_POST['eventAName3'];
-    $out['eDate'] = $_POST['eventDatum3'];
+    $out['eDatum'] = $_POST['eventDatum3'];
 
     $_SESSION['eventVerwaltung'] = $out;
     header("Refresh:0; url=events.html");

@@ -27,6 +27,15 @@ function listAllEvents()
 
 }
 
+function getAttrFromEvent ( $attr, $name, $date, $aName )
+{
+    global $db;
+    $sqlC = "select $attr from event where name = '$name' and date = '$date' and aName = '$aName'";
+    $temp = mysqli_query($db, $sqlC);
+    $out = $temp[$attr];
+    return $out;
+}
+
 function listAllEventsLimit($limit)
 {
     $events = listAllEvents();
@@ -58,6 +67,7 @@ function getEvent( $name, $datum, $aName )
     global $db;
     $sqlC = "select * from event where name = '$name' and datum = '$datum' and aName = '$aName'";
     $events = mysqli_query($db, $sqlC);
+    $out = null;
     for(; $event_array = mysqli_fetch_assoc($events);)
     {
         $out['name'] = $event_array['name'];
@@ -88,13 +98,27 @@ function getUnterKatProEvent( $name, $datum, $aName )
 function addEvent ( $name, $datum, $kuerzel, $aName, $beschreibung, $wID )
 {
     global $db;
-    if (checkIfUserIsSuperUser($kuerzel))
+    if ( $wID != null )
     {
-        $sqlC = "insert into event(name, datum, superKuerzel, lKuerzel, aName, beschreibung, wID) values('$name', '$datum', '$kuerzel', NULL, '$aName','$beschreibung', '$wID')";
+        if (checkIfUserIsSuperUser($kuerzel))
+        {
+            $sqlC = "insert into event(name, datum, superKuerzel, lKuerzel, aName, beschreibung, wID) values('$name', '$datum', '$kuerzel', NULL, '$aName','$beschreibung', '$wID')";
+        }
+        else
+        {
+            $sqlC = "insert into event(name, datum, superKuerzel, lKuerzel, aName, beschreibung, wID) values('$name', '$datum', NULL, '$kuerzel', '$aName', '$beschreibung', '$wID')";
+        }
     }
     else
     {
-        $sqlC = "insert into event(name, datum, superKuerzel, lKuerzel, aName, beschreibung, wID) values('$name', '$datum', NULL, '$kuerzel', '$aName', '$beschreibung', '$wID')";
+        if (checkIfUserIsSuperUser($kuerzel))
+        {
+            $sqlC = "insert into event(name, datum, superKuerzel, lKuerzel, aName, beschreibung, wID) values('$name', '$datum', '$kuerzel', NULL, '$aName','$beschreibung', NULL )";
+        }
+        else
+        {
+            $sqlC = "insert into event(name, datum, superKuerzel, lKuerzel, aName, beschreibung, wID) values('$name', '$datum', NULL, '$kuerzel', '$aName', '$beschreibung', NULL )";
+        }
     }
     echo $sqlC;
     $out = mysqli_query($db, $sqlC);
@@ -107,22 +131,27 @@ function changeEvent ( $name, $datum, $aName, $kuerzel, $nameNeu, $datumNeu, $aN
 
     if ( checkIfUserIsSuperUser($kuerzel))
     {
-        $sKuerzel = $kuerzel;
-        $lKuerzel = Null;
+        if ( $wIDNeu != null )
+        {
+            $sqlC = "update event set name = '$nameNeu', datum = '$datumNeu',superKuerzel = '$kuerzel', lKuerzel = NULL, aName = '$aNameNeu', beschreibung = '$beschreibungNeu', wID = '$wIDNeu' where name = '$name' and datum = '$datum' and aName = '$aName'";
+        }
+        else
+        {
+            $sqlC = "update event set name = '$nameNeu', datum = '$datumNeu',superKuerzel = '$kuerzel', lKuerzel = NULL, aName = '$aNameNeu', beschreibung = '$beschreibungNeu', wID = NULL where name = '$name' and datum = '$datum' and aName = '$aName'";
+        }
     }
     else
     {
-        $sKuerzel = Null;
-        $lKuerzel = $kuerzel;
+        if ( $wIDNeu != null )
+        {
+            $sqlC = "update event set name = '$nameNeu', datum = '$datumNeu',superKuerzel = NULL, lKuerzel = '$kuerzel', aName = '$aNameNeu', beschreibung = '$beschreibungNeu', wID = '$wIDNeu' where name = '$name' and datum = '$datum' and aName = '$aName'";
+        }
+        else
+        {
+            $sqlC = "update event set name = '$nameNeu', datum = '$datumNeu',superKuerzel = NULL, lKuerzel = '$kuerzel', aName = '$aNameNeu', beschreibung = '$beschreibungNeu', wID = NULL where name = '$name' and datum = '$datum' and aName = '$aName'";
+        }
     }
-    if ( $wIDNeu != null )
-    {
-        $sqlC = "update event set name = '$nameNeu', datum = '$datumNeu',superKuerzel = '$sKuerzel', lKuerzel = '$lKuerzel', aName = '$aNameNeu', bescheibung = '$beschreibungNeu', wID = '$wIDNeu' where name = '$name' and datum = '$datum' and aName = '$aName'";
-    }
-    else
-    {
-        $sqlC = "update event set name = '$nameNeu', datum = '$datumNeu',superKuerzel = '$sKuerzel', lKuerzel = '$lKuerzel', aName = '$aNameNeu', bescheibung = '$beschreibungNeu', wID = NULL where name = '$name' and datum = '$datum' and aName = '$aName'";
-    }
+
     return mysqli_query($db,$sqlC);
 }
 
@@ -221,10 +250,39 @@ function addWildcard( $schuelerArray )
 
 }
 
+function deleteWildcard($wID)
+{
+    global $db;
+    $sqlC = "delete from wild where id = '$wID'";
+    $result = mysqli_query($db, $sqlC);
+    return $result;
+}
+
 function getAllZuordnungToID ( $wID )
 {
     global $db;
     $sqlC = "select * from zuordnung where wID = $wID";
+    $res = mysqli_query($db, $sqlC);
+    for ($i = 0; $arr = mysqli_fetch_assoc($res); )
+    {
+        $out[$i]= $arr['skuerzel'];
+    }
+    return $out;
+}
+
+
+function addArrayToWildcard( $wID, $kuerzelArr )
+{
+    $out = true;
+    foreach ($kuerzelArr as $kuerzel )
+    {
+        $result = addToWildCard($wID, $kuerzel);
+        if ( $result != true )
+        {
+            $out = false;
+        }
+    }
+    return $out;
 }
 
 function addToWildCard( $wID, $kuerzel)
@@ -243,11 +301,12 @@ function removeFromWildCard ( $wID, $kuerzel )
     return $result;
 }
 
-function addUnterkateogrie( $name, $eName, $aName, $eDatum, $tokenAnzahl, $beschreibung, $wID)
+function addUnterkategorie( $name, $eName, $aName, $eDatum, $tokenAnzahl, $beschreibung )
 {
     global $db;
-    $sqlC = "Insert into unterkategorie ( name, eName, aName, eDatum, tokenAnzahl, beschreibung, wID) values ('$name', '$eName', '$aName', '$eDatum', '$tokenAnzahl', '$beschreibung', '$wID' )";
+    $sqlC = "Insert into unterkategorie ( name, eName, aName, eDatum, tokenAnzahl, beschreibung ) values ('$name', '$eName', '$aName', '$eDatum', '$tokenAnzahl', '$beschreibung' )";
     $result = mysqli_query($db, $sqlC);
+    echo $sqlC;
     return $result;
     /*CREATE TABLE unterkategorie (
 		name VARCHAR(255),
@@ -258,6 +317,43 @@ function addUnterkateogrie( $name, $eName, $aName, $eDatum, $tokenAnzahl, $besch
 
 		tokenAnzahl INTEGER,
 		beschreibung TEXT,*/
+}
+
+function deleteAllUnterkategorieToEvent ( $eName, $aName, $eDatum )
+{
+    global $db;
+    $sqlC = "delete from unterkategorie where eName = '$eName' and eDatum = '$eDatum' and aName = '$aName'";
+    $result = mysqli_query($db, $sqlC);
+    return $result;
+}
+
+function deleteUnterkategorie( $name, $eName, $aName, $eDatum )
+{
+    global $db;
+    $sqlC = "delete from unterkategorie where name = '$name' and eName = '$eName' and eDatum = '$eDatum' and aName = '$aName'";
+    $result = mysqli_query($db, $sqlC);
+    return $result;
+}
+
+function getAllUnterkatToEvent( $eName, $eDate, $aName )
+{
+    global $db;
+    $sqlC = "select * from unterkategorie where eName = '$eName' and eDatum = '$eDate' and aName = '$aName'";
+    $temp = mysqli_query($db, $sqlC);
+    $out = null;
+    for ( $i = 0; $array = mysqli_fetch_assoc($temp); $i++ )
+    {
+        /*
+         ['name']
+         ['tokenAnzahl']
+         ['beschreibung']
+         */
+        $out[$i]['name'] = $array['name'];
+        $out[$i]['tokenAnzahl'] = $array['tokenAnzahl'];
+        $out[$i]['beschreibung'] = $array['beschreibung'];
+    }
+
+    return $out;
 }
 
 ?>

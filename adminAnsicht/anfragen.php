@@ -22,7 +22,7 @@ if (isset($_GET['highscoreAnzeigen']))
 
 if (isset($_GET['eventAnzeigen']))
 {
-    $_SESSION['eventEintragung'] = NULL;
+    $_SESSION['eventVerwaltung'] = NULL;
     header("Refresh:0; url=adminEvents.html");
 }
 
