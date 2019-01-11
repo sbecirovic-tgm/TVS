@@ -388,3 +388,28 @@ tbody.collapse.in {
   pointer-events: none;
   opacity: 0.4;
 }
+
+@media(max-width: 575.98px) {
+  .linksrechts {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media(max-width: 1199.98px) and (min-width: 575.98px) {
+  .linksrechts {
+    margin-top: 13rem;
+  }
+}
+
+@media(min-width: 1200px) {
+  .linksrechts {
+    margin-top: 13rem;
+  }
+}
+
+@media(max-width: 575.98px) {
+  .linksrechts {
+    margin-bottom: 1rem;
+  }
+}
