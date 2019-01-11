@@ -121,7 +121,6 @@ function addEvent ( $name, $datum, $kuerzel, $aName, $beschreibung, $wID )
             $sqlC = "insert into event(name, datum, superKuerzel, lKuerzel, aName, beschreibung, wID) values('$name', '$datum', NULL, '$kuerzel', '$aName', '$beschreibung', NULL )";
         }
     }
-    echo $sqlC;
     $out = mysqli_query($db, $sqlC);
     return $out;
 }
@@ -313,7 +312,6 @@ function addUnterkategorie( $name, $eName, $aName, $eDatum, $tokenAnzahl, $besch
     global $db;
     $sqlC = "Insert into unterkategorie ( name, eName, aName, eDatum, tokenAnzahl, beschreibung ) values ('$name', '$eName', '$aName', '$eDatum', '$tokenAnzahl', '$beschreibung' )";
     $result = mysqli_query($db, $sqlC);
-    echo $sqlC;
     return $result;
     /*CREATE TABLE unterkategorie (
 		name VARCHAR(255),

@@ -318,21 +318,30 @@ function printVerwalten()
     else
     {
         $wID = getAttrFromEvent('wID', $verw['eName'], $verw['eDatum'], $verw['aName']);
+        if ( !key_exists('eventWildTempBackUp', $_SESSION) && $wID != null)
+        {
+            $_SESSION['wildcardStatus'] = true;
+        }
         if ( $_SESSION['wildcardStatus'])
         {
             if ($wID != null) {
-                $_SESSION['wildcardStatus'] = true;
                 if ( !key_exists('eventWildTemp', $_SESSION))
                 {
                     $_SESSION['eventWildTemp'] = getAllZuordnungToID($wID);
                 }
                 $_SESSION['eventWildTempBackUp'] = getAllZuordnungToID($wID);
             }
+            else
+            {
+                $_SESSION['eventWildTempBackUp'] = array();
+            }
         }
         else {
             if ($wID != null) {
-                $_SESSION['wildcardStatus'] = true;
-                $_SESSION['eventWildTemp'] = getAllZuordnungToID($wID);
+                if ( !key_exists('eventWildTemp', $_SESSION))
+                {
+                    $_SESSION['eventWildTemp'] = getAllZuordnungToID($wID);
+                }
                 $_SESSION['eventWildTempBackUp'] = getAllZuordnungToID($wID);
             } else {
                 $_SESSION['eventWildTempBackUp'] = array();
@@ -343,7 +352,10 @@ function printVerwalten()
         $kats = getAllUnterkatToEvent($verw['eName'], $verw['eDatum'], $verw['aName']);
         if ( $kats != null )
         {
-            $_SESSION['kategorienListe']  = $kats;
+            if ( !key_exists('kategorienListe', $_SESSION))
+            {
+                $_SESSION['kategorienListe'] = $kats;
+            }
             $_SESSION['kategorienListeBakUp'] = $kats;
         }
         else

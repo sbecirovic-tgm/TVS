@@ -73,7 +73,7 @@ function printAnfragenLimit4()
         $betreff = $anfrage['betreff'];
         $id = $anfrage['id'];
 
-        echo '<form action="?eventVerwalten'.$i.'=1" method="post"><input type="number" name="idBackend" class="hiddenMeldung" value="'.$id.'"><tr><th scope="row">'.$name.'</th><td>'.$tokenAnzahl.'</td><td>'.$betreff.'</td><td>'.$datum.'</td><td><input class="btn btn-outline-primary" type="submit" value="Verwalten"></td></tr></form>';
+        echo '<form action="?anfrageVerwalten'.$i.'=1" method="post"><input type="number" name="idBackend" class="hiddenMeldung" value="'.$id.'"><tr><th scope="row">'.$name.'</th><td>'.$tokenAnzahl.'</td><td>'.$betreff.'</td><td>'.$datum.'</td><td><input class="btn btn-outline-primary" type="submit" value="Verwalten"></td></tr></form>';
         $i++;
     }
     /*
@@ -143,7 +143,7 @@ if (isset($_GET['eventVerwalten0']))
     $out['eDatum'] = $_POST['eventDatum0'];
 
     $_SESSION['eventVerwaltung'] = $out;
-    header("Refresh:0; url=events.html");
+    header("Refresh:0; url=adminEvents.html");
 }
 
 if (isset($_GET['eventVerwalten1']))
@@ -154,7 +154,7 @@ if (isset($_GET['eventVerwalten1']))
     $out['eDatum'] = $_POST['eventDatum1'];
 
     $_SESSION['eventVerwaltung'] = $out;
-    header("Refresh:0; url=events.html");
+    header("Refresh:0; url=adminEvents.html");
 }
 
 if (isset($_GET['eventVerwalten2']))
@@ -165,7 +165,7 @@ if (isset($_GET['eventVerwalten2']))
     $out['eDatum'] = $_POST['eventDatum2'];
 
     $_SESSION['eventVerwaltung'] = $out;
-    header("Refresh:0; url=events.html");
+    header("Refresh:0; url=adminEvents.html");
 }
 
 if (isset($_GET['eventVerwalten3']))
@@ -176,7 +176,7 @@ if (isset($_GET['eventVerwalten3']))
     $out['eDatum'] = $_POST['eventDatum3'];
 
     $_SESSION['eventVerwaltung'] = $out;
-    header("Refresh:0; url=events.html");
+    header("Refresh:0; url=adminEvents.html");
 }
 
 if (isset($_GET['overallHighscoreAnzeigen']))

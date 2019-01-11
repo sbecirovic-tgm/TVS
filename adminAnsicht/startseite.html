@@ -39,7 +39,7 @@
                             ?>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a>
+                            <!-- <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a> -->
                             <form id="logoutForm" action="?logout=1" method="post">
                                 <a class="dropdown-item" style="cursor: pointer;" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
                             </form>
@@ -161,7 +161,7 @@
                     ?>
                 </div>
                 <div class="col-sm-12 text-center">
-                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" href="events.html">Mehr
+                    <button type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick="submitForm('eventForm')">Mehr
                         anzeigen</button>
                 </div>
             </div>

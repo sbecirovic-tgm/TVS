@@ -16,10 +16,10 @@
 
 <body onload="pressButton()">
 <?php
-    include_once("adminEvents.php");
-?>
-
+        include_once("adminEvents.php");
+    ?>
 <!--HEADER-->
+
 <header class="headerStartseite">
     <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
         <div class="container">
@@ -40,7 +40,7 @@
                             ?>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a>
+                        <!-- <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a> -->
                         <form id="logoutForm" action="?logout=1" method="post">
                             <a class="dropdown-item" style="cursor: pointer;" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
                         </form>
@@ -167,7 +167,6 @@
         var elm = document.getElementById(name);
         var selected = document.getElementById("anzahlSelected");
         var selectedValue = selected.value;
-        alert(selectedValue);
         var div = document.getElementById("katListBackend");
         if ( elm.classList.contains("blau") )
         {
@@ -219,7 +218,6 @@
             var out = '<input type="text" id="toDeleteName'+val+'" name="toDeleteName'+val+'" class="hiddenMeldung" value="'+name+'"><input type="text" id="toDeleteToken'+val+'" name="toDeleteToken'+val+'" class="hiddenMeldung" value="'+tokenAnzahl+'"><input type="text" id="toDeleteBesch'+val+'" name="toDeleteBesch'+val+'" class="hiddenMeldung" value="'+beschreibung+'">';
             div.innerHTML = div.innerHTML + out;
             selected.value = selectedValue + 1;
-            alert(selected.value);
         }
     }
 
