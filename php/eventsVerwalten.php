@@ -30,9 +30,9 @@ function listAllEvents()
 function getAttrFromEvent ( $attr, $name, $date, $aName )
 {
     global $db;
-    $sqlC = "select $attr from event where name = '$name' and date = '$date' and aName = '$aName'";
+    $sqlC = "select $attr from event where name = '$name' and datum = '$date' and aName = '$aName'";
     $temp = mysqli_query($db, $sqlC);
-    $out = $temp[$attr];
+    $out = mysqli_fetch_assoc($temp)[$attr];
     return $out;
 }
 
@@ -86,6 +86,7 @@ function getUnterKatProEvent( $name, $datum, $aName )
     $sqlC = "select name, beschreibung, tokenAnzahl from unterkategorie where eName = '$name' and eDatum = '$datum' and aName = '$aName'";
     $unter = mysqli_query($db, $sqlC);
     $i = 0;
+    $out = array();
     for(; $event_array = mysqli_fetch_assoc($unter);)
     {
         $out[$i]['name'] = $event_array['name'];
@@ -205,6 +206,7 @@ function addWildcard( $schuelerArray )
     global $db;
     $sqlC = "insert into wildcard() values()";
     $result = mysqli_query($db, $sqlC);
+    $out = true;
 
     $sqlC = "select id from wildcard order by id desc limit 1";
     $temp = mysqli_query($db, $sqlC);
@@ -237,9 +239,13 @@ function addWildcard( $schuelerArray )
         ) ENGINE = INNODB;
         */
         $result2 = mysqli_query($db, $sqlC2);
+        if ( $result2 == false )
+        {
+            $out = false;
+        }
     }
 
-    if ( $result && $result2 )
+    if ( $result && $out )
     {
         return array($id, true);
     }
@@ -261,9 +267,10 @@ function deleteWildcard($wID)
 function getAllZuordnungToID ( $wID )
 {
     global $db;
-    $sqlC = "select * from zuordnung where wID = $wID";
+    $sqlC = "select * from zuordnung where wID = '$wID'";
     $res = mysqli_query($db, $sqlC);
-    for ($i = 0; $arr = mysqli_fetch_assoc($res); )
+    $out = array();
+    for ($i = 0; $arr = mysqli_fetch_assoc($res); $i++ )
     {
         $out[$i]= $arr['skuerzel'];
     }

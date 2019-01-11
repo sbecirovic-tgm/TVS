@@ -120,7 +120,7 @@ function printAwardDropDown ()
 
     for (; $award_array = mysqli_fetch_assoc($award); ) {
         $name = $award_array['name'];
-        echo '<a class="dropdown-item" onclick="setAwardButton(\'' . $name . '\')" href="#">' . $name . '</a>';
+        echo '<a class="dropdown-item" onclick="setAwardButton(\'' . $name . '\')" style="cursor: pointer;">' . $name . '</a>';
     }
 }
 

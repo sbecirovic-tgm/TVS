@@ -39,9 +39,9 @@
                             ?>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Mein Profil</a>
+                            <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a>
                             <form id="logoutForm" action="?logout=1" method="post">
-                                <a class="dropdown-item" href="#" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
+                                <a class="dropdown-item" style="cursor: pointer;" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
                             </form>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
             <nav class="nav nav-underline">
                 <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
                 <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
-                    <a class="nav-link active" href="#" onclick="submitForm('eventForm')">
+                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('eventForm')">
                         Events
                         <!--
                         <span class="badge badge-pill bg-light align-text-bottom">
@@ -74,10 +74,10 @@
                     </a>
                 </form>
                 <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
-                    <a class="nav-link active" href="#"onclick="submitForm('anfragenForm')">Anfragen</a>
+                    <a class="nav-link active" style="cursor: pointer;"onclick="submitForm('anfragenForm')">Anfragen</a>
                 </form>
                 <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
-                    <a class="nav-link active" href="#" onclick="submitForm('highscoreForm')">Highscores</a>
+                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('highscoreForm')">Highscores</a>
                 </form>
             </nav>
         </div>

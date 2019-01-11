@@ -161,7 +161,7 @@ function printEvents()
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategorie ausw&auml;hlen</button>
                                             <input type="text" id="katTypBackend'.$i.'" name="katTypBackend" class="hiddenMeldung" value="">
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#" onclick="changeValues(\'Andere Kategorie\', \'Bitte genau beschreiben\', -1, '.$i.')">Andere Kategorie</a>
+                                                <a class="dropdown-item" style="cursor: pointer;" onclick="changeValues(\'Andere Kategorie\', \'Bitte genau beschreiben\', -1, '.$i.')">Andere Kategorie</a>
                                                 '.printUnter($event, $i).'
                                             </div>
                                         </div>
@@ -252,7 +252,7 @@ function printUnter( $event, $i )
         $name = $kat['name'];
         $beschreibung = $kat['beschreibung'];
         $tokenAnzahl = $kat['tokenAnzahl'];
-        $out = $out . '<a class="dropdown-item" href="#" onclick="changeValues(\''.$name.'\', \''.$beschreibung.'\', '.$tokenAnzahl.', '.$i.')">' . $name . '</a>';
+        $out = $out . '<a class="dropdown-item" style="cursor: pointer;" onclick="changeValues(\''.$name.'\', \''.$beschreibung.'\', '.$tokenAnzahl.', '.$i.')">' . $name . '</a>';
     }
 
     return $out;
