@@ -195,6 +195,11 @@ function printVerwalten()
                     </div>
                     <hr>
                     <div class="card-body">
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <h5>Event Daten</h5>
+                            </div>
+                        </div>
                         <form id="addEvent" action="?addEvent=1" method="post">
                             <div class="row">
                                 <div class="col-sm-4">
@@ -219,7 +224,7 @@ function printVerwalten()
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <div class="btn-group">
+                                    <div>
                                         <script type="application/javascript">
                                             function setAwardButton(value) {
                                                 document.getElementById("awardType").innerHTML = value;
@@ -419,6 +424,11 @@ function printVerwalten()
                     </div>
                     <hr>
                     <div class="card-body">
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <h5>Event Daten</h5>
+                            </div>
+                        </div>
                         <form id="updateEvent" action="?updateEvent=1" method="post">
                             <div class="row">
                                 <div class="col-sm-4">
@@ -443,7 +453,7 @@ function printVerwalten()
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <div class="btn-group">
+                                    <div>
                                         <script type="application/javascript">
                                             function setAwardButton(value) {
                                                 document.getElementById("awardType").innerHTML = value;
@@ -981,7 +991,7 @@ if ( isset($_GET['addEvent']))
     $aName = $_POST['awardTypeBackend'];
     $beschreibung = $_POST['beschreibung'];
 
-    if ( strlen($name) == 0 && strlen($datum) == 0 && strlen($aName) == 0 && strlen($beschreibung) == 0 )
+    if ( strlen($name) == 0 && strlen($datum) == 0 && strlen($aName) == 0 )
     {
         $_SESSION['addEventError'] = true;
     }
@@ -1037,7 +1047,7 @@ function printEventError()
         $error = $_SESSION['addEventError'];
         if ( $error )
         {
-            echo '<script>function f() {var form = document.getElementById("alertEventForm"); form.submit();}</script><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertEventForm" action="?alertEventDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Bitte alle Felder ausfüllen!</form></div>';
+            echo '<script>function f() {var form = document.getElementById("alertEventForm"); form.submit();}</script><div class="bottomAlert"><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertEventForm" action="?alertEventDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Bitte alle blau markierten Felder ausf&uuml;llen!</form></div></div>';
         }
     }
 }
@@ -1064,7 +1074,7 @@ if ( isset($_GET['updateEvent']))
     $aName = $_POST['awardTypeBackend'];
     $beschreibung = $_POST['beschreibung'];
 
-    if ( strlen($name) == 0 && strlen($datum) == 0 && strlen($aName) == 0 && strlen($beschreibung) == 0 )
+    if ( strlen($name) == 0 && strlen($datum) == 0 && strlen($aName) == 0 )
     {
         $_SESSION['addEventError'] = true;
     }
