@@ -185,6 +185,7 @@ function getNameFromKuerzel ( $kuerzel )
     return $out['sName'];
 }
 
+
 // Lehrer
 function insertLehrer ( $kuerzel, $skuerzel, $lName )
 {
@@ -298,6 +299,14 @@ function deleteSuper ( $kuerzel )
     global  $db;
     $sqlC = "delete from superuser where kuerzel = '$kuerzel'";
     return mysqli_query($db, $sqlC);
+}
+
+function getNameFormSuper( $kuerzel )
+{
+    global $db;
+    $sqlC = "select lName from superuser where kuerzel = '$kuerzel'";
+    $temp = mysqli_query($db, $sqlC);
+    return mysqli_fetch_assoc($temp)['lName'];
 }
 
 ?>

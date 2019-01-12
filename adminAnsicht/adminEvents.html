@@ -36,7 +36,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                             <?php
                                 include_once("../php/userCheck.php");
-                                echo getNameFromKuerzel($userName);
+                                echo getNameToLehrerKuerzel($userName);
                             ?>
                         </button>
                         <div class="dropdown-menu">
@@ -163,10 +163,13 @@
             var selected = document.getElementById("anzahlSelected");
             var selectedValue = selected.value;
             var div = document.getElementById("katListBackend");
+            var myForm = document.getElementById("katForm");
             if ( elm.classList.contains("blau") )
             {
                 elm.classList.remove("blau");
-                selected.value = selected.value - 1;
+                selectedValue--;
+                myForm.removeChild(selected);
+                myForm.innerHTML = myForm.innerHTML + '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="'+selectedValue+'">';
 
                 // loop
                 var chilrden = div.getElementsByTagName('*');
@@ -212,18 +215,24 @@
                 var val = selected.value;
                 var out = '<input type="text" id="toDeleteName'+val+'" name="toDeleteName'+val+'" class="hiddenMeldung" value="'+name+'"><input type="text" id="toDeleteToken'+val+'" name="toDeleteToken'+val+'" class="hiddenMeldung" value="'+tokenAnzahl+'"><input type="text" id="toDeleteBesch'+val+'" name="toDeleteBesch'+val+'" class="hiddenMeldung" value="'+beschreibung+'">';
                 div.innerHTML = div.innerHTML + out;
-                selected.value = selectedValue + 1;
+                selectedValue++;
+                myForm.removeChild(selected);
+                myForm.innerHTML = myForm.innerHTML + '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="'+selectedValue+'">';
             }
         }
 
         function markSchueler( name ) {
             var elm = document.getElementById(name);
             var selected = document.getElementById("anzahlSelectedSch");
+            var selectedValue = selected.value;
             var div = document.getElementById("schuelerListBackend");
+            var myForm = document.getElementById("schuelerForm");
             if ( elm.classList.contains("blau") )
             {
                 elm.classList.remove("blau");
-                selected.value = selected.value - 1;
+                selectedValue--;
+                myForm.removeChild(selected);
+                myForm.innerHTML = myForm.innerHTML + '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="'+selectedValue+'">';
 
                 // loop
                 var chilrden = div.getElementsByTagName('*');
@@ -269,7 +278,9 @@
                 var val = selected.value;
                 var out = '<input type="text" id="toDeleteName'+val+'" name="toDeleteName'+val+'" class="hiddenMeldung" value="'+name+'">';
                 div.innerHTML = div.innerHTML + out;
-                selected.value = selected.value + 1;
+                selectedValue++;
+                myForm.removeChild(selected);
+                myForm.innerHTML = myForm.innerHTML + '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="'+selectedValue+'">';
             }
         }
 

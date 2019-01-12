@@ -289,7 +289,14 @@ if (isset($_GET['requestTokenEvent']))
     $beschreibung = $_POST['beschreibungBackend'];
 
     $unterKatName = $_POST['katTypBackend'];
-    $result = requestTokenExt($awardTyp, $eventName, $eventDate, $unterKatName, $userName, $tokenAnzahl, $beschreibung, $betreff);
+    if ( $unterKatName == 'Andere Kategorie' )
+    {
+        $result = requestTokenExtOhneKat($awardTyp, $eventName, $eventDate, $userName, $tokenAnzahl, $beschreibung, $betreff);
+    }
+    else
+    {
+        $result = requestTokenExt($awardTyp, $eventName, $eventDate, $unterKatName, $userName, $tokenAnzahl, $beschreibung, $betreff);
+    }
     $_SESSION['eventRequestResult'] = $result;
 }
 

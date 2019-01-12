@@ -30,6 +30,16 @@ function requestTokenExt ( $awardTyp, $eventName, $eventDate, $unterKatName, $us
     return $result;
 }
 
+function requestTokenExtOhneKat ( $awardTyp, $eventName, $eventDate, $userKuerzel, $tokenAnzahl, $beschreibung, $betreff )
+{
+    global $db;
+    // inserten, alles andere auf NULL setzten --> bei der normalen abfrage nicht notwendig
+    $sqlC = "insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, tokenAnzahlNeu, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), '$awardTyp', NULL, NULL, '$eventName', '$eventDate', NULL, '$userKuerzel', $tokenAnzahl, NULL, '$beschreibung', '$betreff', NULL, NULL)";
+
+    $result = mysqli_query($db, $sqlC);
+    return $result;
+}
+
 function changeTokenRequestToken ( $id, $userKeurzel, $datum, $zeit, $awardTypNeu, $eventNameNeu, $eventDateNeu, $unterKatNameNeu, $tokenAnzahlBenutzerNeu, $beschreibungNeu, $betreffNeu )
 {
     global $db;
@@ -48,16 +58,16 @@ function changeTokenRequestToken ( $id, $userKeurzel, $datum, $zeit, $awardTypNe
     }
 }
 
-function deleteTokenRequest ( $id, $userKeurzel, $datum, $zeit )
+function deleteTokenRequest ( $id, $userKeurzel )
 {
     global $db;
 
-    $sqlCeck = "select wirdBewilligt from anfrage where id = '$id' and datum = '$datum' and zeit = '$zeit' and skuerzel = '$userKeurzel'";
+    $sqlCeck = "select wirdBewilligt from anfrage where id = '$id'and skuerzel = '$userKeurzel'";
     $request = mysqli_query($db, $sqlCeck);
     $requestArray = mysqli_fetch_assoc($request);
-    if ( $requestArray['wirdBewilligt'] == NULL )
+    if ( $requestArray['wirdBewilligt'] == '' )
     {
-        $sqlC = "delete from anfrage where id = '$id' and datum = '$datum' and zeit = '$zeit' and skuerzel = '$userKeurzel'";
+        $sqlC = "delete from anfrage where id = '$id' and skuerzel = '$userKeurzel'";
         return mysqli_query($db, $sqlC);
     }
     else
@@ -213,6 +223,7 @@ function listAllRequestsProSchueler( $kuerzel )
         $out[$i]['eDatum'] = $anfragen_array['eDatum'];
         $out[$i]['untName'] = $anfragen_array['untName'];
         $out[$i]['tokenAnzahl'] = $anfragen_array['tokenAnzahl'];
+        $out[$i]['tokenAnzahlNeu'] = $anfragen_array['tokenAnzahlNeu'];
         $out[$i]['beschreibung'] = $anfragen_array['beschreibung'];
         $out[$i]['betreff'] = $anfragen_array['betreff'];
         $out[$i]['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];

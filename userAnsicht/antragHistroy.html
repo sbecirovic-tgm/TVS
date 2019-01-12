@@ -13,13 +13,15 @@
     <link rel="stylesheet" type="text/css" href="../css/antragHistory.css"/>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
-    <script src="../js/antragHistory.js"> </script> 
+    <!--<script src="../js/antragHistory.js"> </script> Mal ohne script hab ne eigene Lösung gefunden - seb -->
 
     
     
     <title>Tokenverwaltung</title>
 </head>
-
+<?php
+    include_once("antragHistroy.php");
+?>
 <body>
     <!--HEADER-->
     <header class="headerEvents">
@@ -27,7 +29,7 @@
             <div class="container">
                 <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -35,15 +37,16 @@
                     </ul>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
+                                aria-haspopup="true" aria-expanded="false">
                             <?php
-                                include_once("../php/userCheck.php");
-                                echo getNameFromKuerzel($userName);
-                            ?>
+                                    include_once("../php/userCheck.php");
+                                    echo getNameFromKuerzel($userName);
+                                ?>
                         </button>
                         <div class="dropdown-menu">
+                            <!-- <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a> -->
                             <form id="logoutForm" action="?logout=1" method="post">
-                                <a class="dropdown-item" href="#" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
+                                <a class="dropdown-item" style="cursor: pointer;" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
                             </form>
                         </div>
                     </div>
@@ -64,20 +67,20 @@
             <nav class="nav nav-underline">
                 <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
                 <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
-                    <a class="nav-link active" href="#" onclick="submitForm('eventForm')">
+                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('eventForm')">
                         Events
                         <span class="badge badge-pill bg-light align-text-bottom">
-                            <?php
-                            include_once("../php/eventsVerwalten.php");
-                            echo countNewEvents();
-                        ?>
-                        </span>
+                                <?php
+                                include_once("../php/eventsVerwalten.php");
+                                echo countNewEvents();
+                            ?>
+                            </span>
                     </a>
                 </form>
 
                 <a class="nav-link active" href="antragHistroy.html">Antraghistory</a>
                 <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
-                    <a class="nav-link active" href="#" onclick="submitForm('highscoreForm')">Highscores</a>
+                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('highscoreForm')">Highscores</a>
                 </form>
             </nav>
         </div>
@@ -95,7 +98,7 @@
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <div class="pull-right">
+                        <div class="pull-right abstand1AllAround">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-success btn-filter" onclick="filter('bestätigt')">Bestätigt</button>
                                 <button type="button" class="btn btn-warning btn-filter" onclick="filter('inbearbeitung')">in Bearbeitung</button>
@@ -103,34 +106,46 @@
                                 <button type="button" class="btn btn-default btn-filter" onclick="filter('alle')">Alle</button>
                             </div>
                         </div>
-
                         <div class="table-container">
                             <table id="filterTable" class="table table-filter">
                                 <tbody>
-                                    <tr data-status="abgelehnt">
-                                        <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" id="editCheckBox">
+                                <!-- erstes zum testen drinnen -->
+                                <tr data-status="abgelehnt">
+                                    <td>
+                                        <div class="form-check">
+                                            <input type="checkbox" id="editCheckBox">
+                                        </div>
+                                    </td>
+                                    <td class="clickable" data-toggle="collapse" data-target="#anfrage-1" aria-expanded="false" aria-controls="anfrage-1"></td>
+                                    <td class="clickable" data-toggle="collapse" data-target="#anfrage-1" aria-expanded="false" aria-controls="anfrage-1">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <span class="media-meta pull-right">Dezember 5, 2018</span>
+                                                <h4 class="title"> Betreff: Tag der offenen Tür
+                                                    <span class="pull-right abgelehnt">(Abgelehnt)</span>
+                                                </h4>
+                                                <p class="summary"></p>
                                             </div>
-                                        </td>
-                                        <td class="clickable" data-toggle="collapse" data-target="#anfrage1" aria-expanded="false" aria-controls="anfrage1"></td>
-                                        <td class="clickable" data-toggle="collapse" data-target="#anfrage1" aria-expanded="false" aria-controls="anfrage1">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <span class="media-meta pull-right">Dezember 5, 2018</span>
-                                                    <h4 class="title"> Betreff: Tag der offenen Tür
-                                                        <span class="pull-right abgelehnt">(Abgelehnt)</span>
-                                                    </h4>
-                                                    <p class="summary"></p>
-                                                </div>
-                                            </div>
-                                            <div id="anfrage1" class="collapse">
-                                                Restliche info
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                        <div id="anfrage-1" class="collapse">
+                                            Restliche info
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <?php
+                                    printAntraege();
+                                ?>
                                 </tbody>
                             </table>
+                        </div>
+                        <form id="deleteForm" action="?deleteAntraege=1" method="post">
+                            <input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">
+                            <div id="antrListBackend">
+                            </div>
+                        </form>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-primary abstand1AllAround" onclick="submitForm('deleteForm')" >Ausgew&auml;hle Anträge l&ouml;schen</button>
                         </div>
                     </div>
                 </div>
@@ -141,30 +156,65 @@
         © 2018 Wahl, Becirovic, Gavric, Filipovic
     </footer>
     <script>
+        function addToDelete( num )
+        {
+            var id = "deleteCheckBox" + num;
+            var checkBox = document.getElementById(id);
+            var addDiv = document.getElementById("antrListBackend");
+            var myForm = document.getElementById("deleteForm");
+            var selected = document.getElementById("anzahlSelected");
+            var selectedValue = selected.value;
+
+            var checkID = checkBox.value;
+            if ( checkBox.checked )
+            {
+                var add = '<input type="text" id="antrag'+selectedValue+'" name="antrag'+selectedValue+'" class="hiddenMeldung" value="'+checkID+'">';
+                addDiv.innerHTML = addDiv.innerHTML + add;
+                selectedValue++;
+                myForm.removeChild(selected);
+                myForm.innerHTML = myForm.innerHTML + '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="'+selectedValue+'">';
+            }
+            else
+            {
+                var children = addDiv.getElementsByTagName('*');
+                for ( var i = 0; i < children.length; i++ )
+                {
+                    var child = children[i];
+                    if ( child.value = checkBox.id )
+                    {
+                        addDiv.removeChild(child);
+                    }
+                }
+                selectedValue--;
+                myForm.removeChild(selected);
+                myForm.innerHTML = myForm.innerHTML + '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="'+selectedValue+'">';
+            }
+
+        }
         function filter(state)
         {
             var parent = document.getElementById("filterTable");
             var tbody = parent.getElementsByTagName('*')[0];
 
             var i, child, tag;
-            var childrenArray = tbody.getElementsByTagName('*');
+            var childrenArray = tbody.getElementsByTagName('TR');
             if ( state === "alle" )
             {
                 for ( i = 0; i < childrenArray.length; i++ )
                 {
                     child = childrenArray[i];
-                    child.style.display = "";
+                    child.style = "";
                 }
             }
             else {
                 for (i = 0; i < childrenArray.length; i++) {
                     child = childrenArray[i];
                     tag = child.getAttribute("data-status");
-                    if (tag !== state) {
-                        child.style.display = "none";
+                    if (tag === state) {
+                        child.style = "";
                     }
                     else {
-                        child.style.display = "";
+                        child.style.display = "none";
                     }
                 }
             }

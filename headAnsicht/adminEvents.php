@@ -116,7 +116,7 @@ function printEvents()
             $badge = '<span class="badge badge-secondary">'.$day.'</span>';
         }
 
-        if ( isLehrerBerechtigt($aName, $userName) )
+        if ( isLehrerBerechtigt($aName, $userName) || checkIfUserIsSuperUser($userName) )
         {
             $button = 'onclick="setEventInForm( \''.$name.'\', \''.$dateString.'\', \''.$aName.'\' )';
         }
@@ -172,7 +172,7 @@ function printVerwalten()
                 <div class="card">
                     <div class="input-group abstand1">
                         <div class="col-sm-6">
-                            <div class="row ">
+                            <div class="row">
                                 <div class="col-sm-12">
                                     <h4>Kategorien</h4>
                                 </div>

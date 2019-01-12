@@ -24,7 +24,7 @@ if(isset($_GET['login']))
         else
         {
             #toDo admin darf nicht hinzugefügt werden
-            if (!checkIfUserInDatabase($kuerzel, 1)) {
+            if (!checkIfUserInDatabase($kuerzel, 1) && !checkIfUserIsSuperUser($kuerzel)) {
                 insertLehrerShort($kuerzel, $result[2]);
             }
         }

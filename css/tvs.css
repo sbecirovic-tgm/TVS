@@ -384,9 +384,24 @@ tbody.collapse.in {
   font-size: 14px;
 }
 
+.smallFont {
+  font-size: 14px;
+}
+
+.nullAbstand {
+  margin: 0% !important;
+}
+
 .disabledDiv {
   pointer-events: none;
   opacity: 0.4;
+}
+
+.abstand1AllAround {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 @media(max-width: 575.98px) {
@@ -413,3 +428,4 @@ tbody.collapse.in {
     margin-bottom: 1rem;
   }
 }
+
