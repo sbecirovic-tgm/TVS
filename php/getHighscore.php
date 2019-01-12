@@ -263,7 +263,7 @@ function getAwardHighscoreAllTime()
     return $out;
 }
 
-function getAwardHighscoreProAwardProSaision( $saisonNummer, $aName )
+function getAwardHighscoreProAwardPerSaison( $saisonNummer, $aName )
 {
     global $db;
 

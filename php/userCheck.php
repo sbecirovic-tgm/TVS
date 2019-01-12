@@ -214,6 +214,70 @@ function deleteLehrer ( $kuerzel )
     return mysqli_query($db, $sqlC);
 }
 
+function getBerechtigteLehrerToAward( $aName )
+{
+    global $db;
+    $sqlC = "select * from erlaubnis where aName = '$aName'";
+    $temp = mysqli_query($db, $sqlC);
+    $out = array();
+    for ( $i = 0; $erlaubnisArray = mysqli_fetch_assoc($temp); $i++ )
+    {
+        $out[$i] = $erlaubnisArray['lKuerzel'];
+    }
+    return $out;
+}
+
+function getAllLehrerNotBerechtigt( $aName )
+{
+    global $db;
+    $sqlC = "select kuerzel from lehrer where kuerzel not in (select lKuerzel from erlaubnis where aName = '$aName')";
+    $out = array();
+    $temp = mysqli_query($db, $sqlC);
+    for ( $i = 0; $lehrerArray = mysqli_fetch_assoc($temp); $i++ )
+    {
+        $out[$i] = $lehrerArray['kuerzel'];
+    }
+    return $out;
+}
+
+function getAllLehrer()
+{
+    global $db;
+    $sqlC = "select kuerzel from lehrer";
+    $temp = mysqli_query($db, $sqlC);
+    $out = array();
+    for ( $i = 0; $array = mysqli_fetch_assoc($temp); $i++ )
+    {
+        $out[$i] = $array['kuerzel'];
+    }
+
+    return $out;
+}
+
+function isLehrerBerechtigt( $aName, $kuerzel )
+{
+    global $db;
+    $sqlC = "select count(lKuerzel) as anz from erlaubnis where lKuerzel = '$kuerzel' and aName = '$aName'";
+    $temp = mysqli_query($db, $sqlC);
+    $result = mysqli_fetch_assoc($temp);
+    if ( $result['anz'] == 0 )
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+function getNameToLehrerKuerzel( $kuerzel )
+{
+    global $db;
+    $sqlC = "select lName from lehrer where kuerzel = '$kuerzel'";
+    $temp = mysqli_query($db, $sqlC);
+    return mysqli_fetch_assoc($temp)['lName'];
+}
+
 // Superuser
 function insertSuper ( $kuerzel, $lName )
 {

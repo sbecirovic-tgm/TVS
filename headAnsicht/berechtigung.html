@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -26,105 +26,184 @@
 </head>
 
 <body>
-    <!--HEADER-->
-    <header class="headerStartseite">
-        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+<?php
+    include_once("berechtigung.php");
+?>
+
+<!--HEADER-->
+
+<header class="headerStartseite">
+    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav mr-auto">
-                    </ul>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                            <?php
+                        <?php
                                 include_once("../php/userCheck.php");
                                 echo getNameFromKuerzel($userName);
                             ?>
-                        </button>
-                        <div class="dropdown-menu">
-                            <!-- <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a> -->
-                            <form id="logoutForm" action="?logout=1" method="post">
-                                <a class="dropdown-item" style="cursor: pointer;" onclick="submitForm('logoutForm')"
-                                    type="submit" name="logout">Logout</a>
-                            </form>
-                        </div>
+                    </button>
+                    <div class="dropdown-menu">
+                        <!-- <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a> -->
+                        <form id="logoutForm" action="?logout=1" method="post">
+                            <a class="dropdown-item" style="cursor: pointer;" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
+                        </form>
                     </div>
                 </div>
             </div>
-        </nav>
-    </header>
-
-    <script language="JavaScript" type="text/javascript">
-        function submitForm(form) {
-            var myForm = document.getElementById(form);
-            myForm.submit();
-        }
-    </script>
-    <div class="nav-scroller bg-white shadow-md">
-        <div class="container">
-            <nav class="nav nav-underline">
-                <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
-                <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
-                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('eventForm')">
-                        Events
-                    </a>
-                </form>
-                <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
-                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('anfragenForm')">Anfragen</a>
-                </form>
-                <a class="nav-link active" href="berechtigung.html">Berechtigen</a>
-                <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
-                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('highscoreForm')">Highscores</a>
-                </form>
-            </nav>
         </div>
-    </div>
+    </nav>
+</header>
+
+<script language="JavaScript" type="text/javascript">
+    function submitForm(form) {
+        var myForm = document.getElementById(form);
+        myForm.submit();
+    }
+</script>
+<div class="nav-scroller bg-white shadow-md">
     <div class="container">
-        <h1>Berechtigungen</h1>
-        <hr>
-        <div class="row">
-            <!-- Left side select -->
-            <div class="col-xs-5 col-md-5 col-sm-5">
-                <h3 class="abstand1">Verfügbare Lehrer</h3>
-                    <select name="from[]" id="mySideToSideSelect" class="form-control" size="16" multiple="multiple">
-                        <option value="1">Item 1</option>
-                        <option value="3">Item 3</option>
-                        <option value="2">Item 2</option>
-                    </select>
-            </div>
+        <nav class="nav nav-underline">
+            <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
+            <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
+                <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('eventForm')">
+                    Events
+                </a>
+            </form>
+            <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
+                <a class="nav-link active" style="cursor: pointer;"onclick="submitForm('anfragenForm')">Anfragen</a>
+            </form>
+            <a class="nav-link active" href="berechtigung.html">Berechtigen</a>
+            <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
+                <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('highscoreForm')">Highscores</a>
+            </form>
+        </nav>
+    </div>
+</div>
 
-            <!-- Action buttons -->
-            <div class="col-xs-2 col-md-2 col-sm-2 linksrechts">
-                <button type="button" id="mySideToSideSelect_rightSelected" class="btn btn-block btn-primary">
-                    <span class="oi oi-chevron-right"></span>
-                </button>
-                <button type="button" id="mySideToSideSelect_leftSelected" class="btn btn-block btn-primary">
-                    <span class="oi oi-chevron-left"></span>
-                </button>
-            </div>
 
-            <!-- Right side select -->
-            <div class="col-xs-5 col-md-5 col-sm-5">
-                    <h3 class="abstandHLehrer">Hinzugefügte Lehrer</h3>
-                <select name="to[]" id="mySideToSideSelect_to" class="form-control" size="16" multiple="multiple"></select>
+<!-- Inhalt -->
+<div class="container">
+    <h1>Berechtigungen</h1>
+    <hr>
+    <div class="row">
+        <script type="application/javascript">
+            function setAwardButton(value) {
+                document.getElementById("awardType").innerHTML = value;
+                document.getElementById("awardTypeBackend").value = value;
+                var myForm = document.getElementById("awardForm");
+                myForm.submit();
+            }
+        </script>
+        <div class="col-sm-6">
+            <div class="input-group">
+                <div class="col-sm-6">
+                    <h5>Award auswählen:</h5>
+                </div>
+                <div class="col-sm-6">
+                    <?php
+                       //printAward();
+                    ?>
+                </div>
             </div>
         </div>
     </div>
-    <footer class="footerSticky">
-        © 2018 Wahl, Becirovic, Gavric, Filipovic
-    </footer>
+    <div class="row">
+        <!-- Left side select -->
+        <div class="col-xs-5 col-md-5 col-sm-5">
+            <h3>Verfügbare Lehrer</h3>
+            <select name="from[]" id="mySideToSideSelect" class="form-control" style="height:100%;" multiple="multiple">
+                <?php
+                    //printLehrerToAward();
+                ?>
+                <option value="3">Item 1</option>
+                <option value="3">Item 2</option>
+                <option value="3">Item 3</option>
+            </select>
+        </div>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#mySideToSideSelect').multiselect();
-        });
-    </script>
+        <!-- Action buttons -->
+        <div class="col-xs-2 col-md-2 col-sm-2 linksrechts">
+            <button type="button" id="mySideToSideSelect_rightSelected" class="btn btn-block btn-primary">
+                <span class="oi oi-chevron-right"></span>
+            </button>
+            <button type="button" id="mySideToSideSelect_leftSelected" class="btn btn-block btn-primary">
+                <span class="oi oi-chevron-left"></span>
+            </button>
+        </div>
 
+        <!-- Right side select -->
+        <div class="col-xs-5 col-md-5 col-sm-5">
+            <h3>Hinzugefügte Lehrer</h3>
+            <select name="to[]" id="mySideToSideSelect_to" class="form-control" style="height:100%;" multiple="multiple">
+                <?php
+                    //printLehrerBerechtigtToAward();
+                ?>
+            </select>
+        </div>
+    </div>
+    <div class="row abstand1">
+        <div class="col-sm-12">
+            <div class="text-right">
+                <button type="button" class="btn btn-primary" onclick="addToFrom()">Speichern</button>
+            </div>
+            <form id="berechtigen" action="?berechtigen=1" method="post">
+                <input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">
+                <div id="lehrerListBackend">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer class="footerSticky">
+    © 2018 Wahl, Becirovic, Gavric, Filipovic
+</footer>
+<!-- Optional JavaScript -->
+<script type="application/javascript">
+    function addToFrom()
+    {
+        var select = document.getElementById("mySideToSideSelect_to");
+        var elements = select.getElementsByTagName('*');
+        var selected = document.getElementById("anzahlSelected");
+        var add = document.getElementById("lehrerListBackend");
+
+        for ( var i = 0; elements.length; i++ )
+        {
+            var elm = elements[i];
+            var id = elm.id;
+
+            var out = '<input type="text" id="lehrer'+i+'" name="lehrer'+i+'" class="hiddenMeldung" value="'+id+'">';
+            add.innerHTML = add.innerHTML + out;
+        }
+
+        var myForm = document.getElementById("berechtigen");
+        myForm.submit();
+    }
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#mySideToSideSelect').multiselect();
+    });
+</script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<script type="text/javascript"></script>
 </body>
 
 </html>

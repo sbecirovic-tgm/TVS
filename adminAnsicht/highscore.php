@@ -8,6 +8,7 @@
 $db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 session_start();
 $userName = $_SESSION['userName'];
+include_once ("../php/getHighscore.php");
 
 if ( array_key_exists('highscore', $_SESSION))
 {

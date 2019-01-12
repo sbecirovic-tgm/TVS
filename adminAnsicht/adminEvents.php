@@ -27,6 +27,8 @@ function printEvents()
 {
     global $userName;
     include_once ("../php/eventsVerwalten.php");
+    include_once ("../php/userCheck.php");
+
     $events = listAllEvents();
     /*
      * $out[$i]['name'] = $event_array['name'];
@@ -114,6 +116,15 @@ function printEvents()
             $badge = '<span class="badge badge-secondary">'.$day.'</span>';
         }
 
+        if ( isLehrerBerechtigt($aName, $userName) )
+        {
+            $button = 'onclick="setEventInForm( \''.$name.'\', \''.$dateString.'\', \''.$aName.'\' )';
+        }
+        else
+        {
+            $button = 'disabled data-toggle="tooltip" data-placement="bottom"  data-html="true" title="Sie haben keine Berechtigung dieses Event zu verwalten."';
+        }
+
         echo '<div class="row row-striped"><div class="col-2 text-right"><h1 class="display-4">'.$badge.'</h1>
                     <h2>'.$mon.'</h2>
                 </div>
@@ -125,7 +136,7 @@ function printEvents()
                     <p>'.$bescheibung.'</p>
                 </div>
                 <div class="col-12 text-center">
-                    <button id="eventVerwalten'.$i.'" type="button" class="btn btn-outline-primary adminEventButton abstand1 center-block" onclick="setEventInForm( \''.$name.'\', \''.$dateString.'\', \''.$aName.'\' )">Event verwalten</button>
+                    <button id="eventVerwalten'.$i.'" type="button" class="btn btn-outline-primary adminEventButton abstand1 center-block" ' . $button . '">Event verwalten</button>
                 </div>';
         echo '</div>';
         $i++;
