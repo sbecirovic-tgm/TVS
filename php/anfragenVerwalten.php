@@ -116,8 +116,28 @@ function addTokenToLeistung ( $schuelerKuerzel, $aName, $token, $saisonNumb)
 }
 
 
+/**
+datum DATE,
+zeit TIME,
+skuerzel VARCHAR(255),
 
-function listAllReqests()
+-- FOREIGN KEYs
+aName VARCHAR(255), -- award name
+superkuerzel VARCHAR(255),
+lehrerKuerzel VARCHAR(255),
+
+eName VARCHAR(255),
+eDatum DATE,
+untName VARCHAR(255),
+
+tokenAnzahl INTEGER NOT NULL,
+tokenAnzahlNeu INTEGER, -- Wird nur vom Admin gesetzt, also ist am Anfang null
+beschreibung TEXT,
+betreff VARCHAR(255),
+wirdBewilligt BOOLEAN, -- NULL wenn noch nichts eingetragen wurde
+kommentar TEXT, -- Admin schreibt ein Kommentar, anfangs NULL
+ */
+function listAllRequests()
 {
     global $db;
     $out = array();
@@ -130,6 +150,36 @@ function listAllReqests()
         $out[$i] = array();
         $out[$i]['datum'] = $anfragen_array['datum'];
         $out[$i]['zeit'] = $anfragen_array['zeit'];
+        $out[$i]['skuerzel'] = $anfragen_array['skuerzel'];
+        $out[$i]['aName'] = $anfragen_array['aName'];
+        $out[$i]['eName'] = $anfragen_array['eName'];
+        $out[$i]['eDatum'] = $anfragen_array['eDatum'];
+        $out[$i]['untName'] = $anfragen_array['untName'];
+        $out[$i]['tokenAnzahl'] = $anfragen_array['tokenAnzahl'];
+        $out[$i]['beschreibung'] = $anfragen_array['beschreibung'];
+        $out[$i]['betreff'] = $anfragen_array['betreff'];
+        $out[$i]['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
+        $out[$i]['kommentar'] = $anfragen_array['kommentar'];
+    }
+
+    return $out;
+}
+
+function listAllRequestsLimit($limit)
+{
+    global $db;
+    $out = array();
+
+    $sqlC = "select * from anfrage order by datum desc, zeit desc limit $limit";
+    $anfragen = mysqli_query($db, $sqlC);
+
+    for( $i = 0; $anfragen_array = mysqli_fetch_assoc($anfragen); $i++)
+    {
+        $out[$i] = array();
+        $out[$i]['id'] = $anfragen_array['id'];
+        $out[$i]['datum'] = $anfragen_array['datum'];
+        $out[$i]['zeit'] = $anfragen_array['zeit'];
+        $out[$i]['skuerzel'] = $anfragen_array['skuerzel'];
         $out[$i]['aName'] = $anfragen_array['aName'];
         $out[$i]['eName'] = $anfragen_array['eName'];
         $out[$i]['eDatum'] = $anfragen_array['eDatum'];
@@ -156,6 +206,7 @@ function listAllRequestsProAward( $aName )
     for( $i = 0; $anfragen_array = mysqli_fetch_assoc($anfragen); $i++)
     {
         $out[$i] = array();
+        $out[$i]['id'] = $anfragen_array['id'];
         $out[$i]['datum'] = $anfragen_array['datum'];
         $out[$i]['zeit'] = $anfragen_array['zeit'];
         $out[$i]['aName'] = $anfragen_array['aName'];
@@ -168,6 +219,31 @@ function listAllRequestsProAward( $aName )
         $out[$i]['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
         $out[$i]['kommentar'] = $anfragen_array['kommentar'];
     }
+
+    return $out;
+}
+
+function getAnfrageFromId( $id )
+{
+    global $db;
+
+    $sqlC = "select * from anfrage where id = '$id'";
+    $anfragen = mysqli_query($db, $sqlC);
+    $anfragen_array = mysqli_fetch_assoc($anfragen);
+
+    $out = array();
+    $out['id'] = $anfragen_array['id'];
+    $out['datum'] = $anfragen_array['datum'];
+    $out['zeit'] = $anfragen_array['zeit'];
+    $out['aName'] = $anfragen_array['aName'];
+    $out['eName'] = $anfragen_array['eName'];
+    $out['eDatum'] = $anfragen_array['eDatum'];
+    $out['untName'] = $anfragen_array['untName'];
+    $out['tokenAnzahl'] = $anfragen_array['tokenAnzahl'];
+    $out['beschreibung'] = $anfragen_array['beschreibung'];
+    $out['betreff'] = $anfragen_array['betreff'];
+    $out['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
+    $out['kommentar'] = $anfragen_array['kommentar'];
 
     return $out;
 }

@@ -42,9 +42,9 @@
                         ?>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Mein Profil</a>
+                            <!-- <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a> -->
                             <form id="logoutForm" action="?logout=1" method="post">
-                                <a class="dropdown-item" href="#" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
+                                <a class="dropdown-item" style="cursor: pointer;" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
                             </form>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
             <nav class="nav nav-underline">
                 <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
                 <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
-                    <a class="nav-link active" href="#" onclick="submitForm('eventForm')">
+                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('eventForm')">
                         Events
                         <span class="badge badge-pill bg-light align-text-bottom">
                             <?php
@@ -78,7 +78,7 @@
 
                 <a class="nav-link active" href="antragHistroy.html">Antraghistory</a>
                 <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
-                    <a class="nav-link active" href="#" onclick="submitForm('highscoreForm')">Highscores</a>
+                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('highscoreForm')">Highscores</a>
                 </form>
             </nav>
         </div>
@@ -104,8 +104,8 @@
                             setHighscoreType();
                         ?>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" onclick="setHighscoreButton('Award Highscore')" href="#">Award Highscore</a>
-                            <a class="dropdown-item" onclick="setHighscoreButton('Token Highscore')" href="#">Token Highscore</a>
+                            <a class="dropdown-item" onclick="setHighscoreButton('Award Highscore')" style="cursor: pointer;">Award Highscore</a>
+                            <a class="dropdown-item" onclick="setHighscoreButton('Token Highscore')" style="cursor: pointer;">Token Highscore</a>
                         </div>
                     </form>
                 </div>
@@ -117,7 +117,7 @@
                             setAwardType();
                         ?>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" onclick="setAwardButton('All Awards')" href="#">All Awards</a>
+                            <a class="dropdown-item" onclick="setAwardButton('All Awards')" style="cursor: pointer;">All Awards</a>
                             <?php
                                 printAwardDropDown();
                             ?>
@@ -140,8 +140,8 @@
                             setSortieren();
                         ?>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" onclick="setSortButton('Aufsteigend')">Aufsteigend</a>
-                            <a class="dropdown-item" href="#" onclick="setSortButton('Absteigend')">Absteigend</a>
+                            <a class="dropdown-item" style="cursor: pointer;" onclick="setSortButton('Aufsteigend')">Aufsteigend</a>
+                            <a class="dropdown-item" style="cursor: pointer;" onclick="setSortButton('Absteigend')">Absteigend</a>
                         </div>
                     </form>
                 </div>

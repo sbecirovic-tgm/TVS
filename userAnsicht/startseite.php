@@ -20,7 +20,7 @@ function printAwardDropDown ()
     $award = mysqli_query($db, $sqlC);
     for (; $award_array = mysqli_fetch_assoc($award); ) {
         $name = $award_array['name'];
-        echo '<a class="dropdown-item" href="#" onclick="setAwardButton(\'' . $name . '\')">' . $name . '</a>';
+        echo '<a class="dropdown-item" style="cursor: pointer;" onclick="setAwardButton(\'' . $name . '\')">' . $name . '</a>';
     }
 }
 
@@ -61,7 +61,7 @@ function printEventLimit4()
         $name = $event['name'];
         $aName = $event['aName'];
 
-        echo '<div class="card-body"><form action="?eventEintragen'.$i.'=1" method="post"><div class="row"><div class="col-sm-9"><a name="event'.$i.'"> '.$name.' ('.$aName.') - '.$datum.'</a><input type="hidden" name="event'.$i.'" value="'.$name.' ('.$aName.') - '.$datum.'"></div><div class="col-sm-3"><input class="btn btn-outline-primary" type="submit" name="eintragenEvent" value="Eintragen"></div></div></form></div>';
+        echo '<div class="card-body"><form action="?eventEintragen'.$i.'=1" method="post"><div class="row"><div class="col-sm-9"><a name="event'.$i.'"> '.$name.' ('.$aName.') - '.$datum.'</a><input type="hidden" name="eventName'.$i.'" value="'.$name.'"><input type="hidden" name="eventAName'.$i.'" value="'.$aName.'"><input type="hidden" name="eventDatum'.$i.'" value="'.$datum.'"></div><div class="col-sm-3"><input class="btn btn-outline-primary" type="submit" value="Eintragen"></div></div></form></div>';
         /*
         $out['name'] = $event_array['name'];
         $out['datum'] = $event_array['datum'];
@@ -99,15 +99,10 @@ if (isset($_GET['eventAnzeigen']))
 
 if (isset($_GET['eventEintragen0']))
 {
-    $temp = $_POST['event0'];
     $out = array();
-    $out['eName'] = substr($temp,0, strpos($temp, "(")-1);
-    $out['aName'] = substr($temp, strpos($temp, "(")+1, strpos($temp, ")")-strpos($temp, "(")-1);
-    $jahr = substr($temp, strpos($temp, "-")+2, strlen($temp)-(strpos($temp, "-")+2));
-    $out['eDateTag']= substr($jahr, 0, strpos($jahr, "."));
-    $rest = substr($jahr, strpos($jahr, ".")+1, strlen($jahr));
-    $out['eDateMon'] = substr($rest, 0, strpos($rest, '.'));
-    $out['eDateJahr'] = substr($rest, strpos($rest, ".")+1, strlen($rest));
+    $out['eName'] = $_POST['eventName0'];
+    $out['aName'] = $_POST['eventAName0'];
+    $out['eDate'] = $_POST['eventDatum0'];
 
     $_SESSION['eventEintragung'] = $out;
     header("Refresh:0; url=events.html");
@@ -115,15 +110,10 @@ if (isset($_GET['eventEintragen0']))
 
 if (isset($_GET['eventEintragen1']))
 {
-    $temp = $_POST['event1'];
     $out = array();
-    $out['eName'] = substr($temp,0, strpos($temp, "(")-1);
-    $out['aName'] = substr($temp, strpos($temp, "(")+1, strpos($temp, ")")-strpos($temp, "(")-1);
-    $jahr = substr($temp, strpos($temp, "-")+2, strlen($temp)-(strpos($temp, "-")+2));
-    $out['eDateTag']= substr($jahr, 0, strpos($jahr, "."));
-    $rest = substr($jahr, strpos($jahr, ".")+1, strlen($jahr));
-    $out['eDateMon'] = substr($rest, 0, strpos($rest, '.'));
-    $out['eDateJahr'] = substr($rest, strpos($rest, ".")+1, strlen($rest));
+    $out['eName'] = $_POST['eventName1'];
+    $out['aName'] = $_POST['eventAName1'];
+    $out['eDate'] = $_POST['eventDatum1'];
 
     $_SESSION['eventEintragung'] = $out;
     header("Refresh:0; url=events.html");
@@ -131,15 +121,10 @@ if (isset($_GET['eventEintragen1']))
 
 if (isset($_GET['eventEintragen2']))
 {
-    $temp = $_POST['event2'];
     $out = array();
-    $out['eName'] = substr($temp,0, strpos($temp, "(")-1);
-    $out['aName'] = substr($temp, strpos($temp, "(")+1, strpos($temp, ")")-strpos($temp, "(")-1);
-    $jahr = substr($temp, strpos($temp, "-")+2, strlen($temp)-(strpos($temp, "-")+2));
-    $out['eDateTag']= substr($jahr, 0, strpos($jahr, "."));
-    $rest = substr($jahr, strpos($jahr, ".")+1, strlen($jahr));
-    $out['eDateMon'] = substr($rest, 0, strpos($rest, '.'));
-    $out['eDateJahr'] = substr($rest, strpos($rest, ".")+1, strlen($rest));
+    $out['eName'] = $_POST['eventName2'];
+    $out['aName'] = $_POST['eventAName2'];
+    $out['eDate'] = $_POST['eventDatum2'];
 
     $_SESSION['eventEintragung'] = $out;
     header("Refresh:0; url=events.html");
@@ -147,15 +132,10 @@ if (isset($_GET['eventEintragen2']))
 
 if (isset($_GET['eventEintragen3']))
 {
-    $temp = $_POST['event3'];
     $out = array();
-    $out['eName'] = substr($temp,0, strpos($temp, "(")-1);
-    $out['aName'] = substr($temp, strpos($temp, "(")+1, strpos($temp, ")")-strpos($temp, "(")-1);
-    $jahr = substr($temp, strpos($temp, "-")+2, strlen($temp)-(strpos($temp, "-")+2));
-    $out['eDateTag']= substr($jahr, 0, strpos($jahr, "."));
-    $rest = substr($jahr, strpos($jahr, ".")+1, strlen($jahr));
-    $out['eDateMon'] = substr($rest, 0, strpos($rest, '.'));
-    $out['eDateJahr'] = substr($rest, strpos($rest, ".")+1, strlen($rest));
+    $out['eName'] = $_POST['eventName3'];
+    $out['aName'] = $_POST['eventAName3'];
+    $out['eDate'] = $_POST['eventDatum3'];
 
     $_SESSION['eventEintragung'] = $out;
     header("Refresh:0; url=events.html");

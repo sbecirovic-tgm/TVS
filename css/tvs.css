@@ -237,7 +237,7 @@ footer p:last-child {
 }
 
 .blau {
-  background-color: rgb(66, 139, 202) !important;
+  background-color: #007bff !important;
   color: #ffffff !important;
 }
 
@@ -295,6 +295,7 @@ tbody.collapse.in {
 .table-filter tr td:first-child {
   width: 38px;
 }
+
 .table-filter tr td:nth-child(2) {
   width: 35px;
 }
@@ -381,5 +382,34 @@ tbody.collapse.in {
 }
 .table-filter .media .summary {
   font-size: 14px;
-  
+}
+
+.disabledDiv {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+@media(max-width: 575.98px) {
+  .linksrechts {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media(max-width: 1199.98px) and (min-width: 575.98px) {
+  .linksrechts {
+    margin-top: 13rem;
+  }
+}
+
+@media(min-width: 1200px) {
+  .linksrechts {
+    margin-top: 13rem;
+  }
+}
+
+@media(max-width: 575.98px) {
+  .linksrechts {
+    margin-bottom: 1rem;
+  }
 }

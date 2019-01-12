@@ -14,15 +14,18 @@
     <title>Tokenverwaltung</title>
 </head>
 
-<body>
+<body onload="pressButton()">
+    <?php
+        include_once("adminEvents.php");
+    ?>
     <!--HEADER-->
 
-    <header class="headerEvents">
+    <header class="headerStartseite">
         <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
             <div class="container">
                 <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -30,17 +33,16 @@
                     </ul>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
+                                aria-haspopup="true" aria-expanded="false">
                             <?php
-                                    echo '$userName';
-                                ?>
+                                include_once("../php/userCheck.php");
+                                echo getNameFromKuerzel($userName);
+                            ?>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Mein Profil</a>
-                            <a class="dropdown-item" href="startseite.html">Startseite</a>
-                            <a class="dropdown-item" href="#">Antrag History</a>
+                            <!-- <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a> -->
                             <form id="logoutForm" action="?logout=1" method="post">
-                                <a class="dropdown-item" href="#" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
+                                <a class="dropdown-item" style="cursor: pointer;" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
                             </form>
                         </div>
                     </div>
@@ -48,6 +50,7 @@
             </div>
         </nav>
     </header>
+
     <script language="JavaScript" type="text/javascript">
         function submitForm(form) {
             var myForm = document.getElementById(form);
@@ -57,13 +60,18 @@
     <div class="nav-scroller bg-white shadow-md">
         <div class="container">
             <nav class="nav nav-underline">
-                <a class="nav-link" href="#" style="padding-left: 0;">Dashboard</a>
-                <a class="nav-link active" href="#">
-                    Events
-                    <span class="badge badge-pill bg-light align-text-bottom">27</span>
-                </a>
-                <a class="nav-link" href="#">Tokenhistory</a>
-                <a class="nav-link" href="#">Highscores</a>
+                <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
+                <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
+                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('eventForm')">
+                        Events
+                    </a>
+                </form>
+                <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
+                    <a class="nav-link active" style="cursor: pointer;"onclick="submitForm('anfragenForm')">Anfragen</a>
+                </form>
+                <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
+                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('highscoreForm')">Highscores</a>
+                </form>
             </nav>
         </div>
     </div>
@@ -71,176 +79,34 @@
 
     <!--Inhalt-->
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <h1>Events</h1>
-                <hr>
-            </div>
-            <div class="col-sm-12 tokenAnfragen">
-                <div class="card">
-                    <div class="card-body">
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text bg-primary text-light adminEventText" id="inputGroup-sizing-default">Eventname</span>
-                                    </div>
-                                    <input type="text" id="betreff" name="betreff" class="form-control" minlength="1"
-                                        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text bg-primary text-light adminEventText">Datum</span>
-                                    </div>
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar">
-                                        </i>
-                                    </div>
-                                    <input class="form-control" id="date" name="date" placeholder="DD-MM-YYYY" type="text" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-primary text-light adminEventText">Beschreibung</span>
-                            </div>
-                            <textarea class="form-control" aria-label="With textarea"></textarea>
-                        </div>
-
-                        <div class="col-sm-12 text-center">
-                            <input type="button" class="btn btn-outline-primary dashboardButtons abstand1" onclick=""
-                                readonly value="Anfordern">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <?php
+            printVerwalten();
+        ?>
+        <script type="application/javascript">
+            function setEventInForm( name, datum, aName )
+            {
+                var myForm = document.getElementById("verwaltenForm");
+                document.getElementById("verwaltenDatum").value = datum;
+                document.getElementById("verwaltenName").value = name;
+                document.getElementById("verwaltenAName").value = aName;
+                myForm.submit();
+            }
+        </script>
+        <form id="verwaltenForm" action="?setSessionToEvent=1" method="post">
+            <input type="text" id="verwaltenDatum" name="datum" class="hiddenMeldung" value="">
+            <input type="text" id="verwaltenName" name="name" class="hiddenMeldung" value="">
+            <input type="text" id="verwaltenAName" name="aName" class="hiddenMeldung" value="">
+        </form>
         <div class="col-sm-12">
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">23</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h4 class="text-uppercase"><strong>We are developers</strong></h4>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Monday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 12:30 PM -
-                            2:00
-                            PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Cafe</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore
-                        et dolore magna aliqua.</p>
-                </div>
-                <div class="col-12 text-center">
-                    <button type="button" class="btn btn-outline-primary adminEventButton abstand1 center-block">Event verwalten</button>
-                </div>
-            </div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-primary">27</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10 eventMedia">
-                    <h3 class="text-uppercase"><strong>Tag der offenen Tür</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
+            <?php
+                printEvents();
+            ?>
         </div>
     </div>
+    <!-- Print error -->
+    <?php
+        printEventError();
+    ?>
     <footer class="footerSticky">
         © 2018 Wahl, Becirovic, Gavric, Filipovic
     </footer>
@@ -265,12 +131,151 @@
             var date_input = $('input[name="date"]'); //our date input has the name "date"
             var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
             date_input.datepicker({
-                format: 'dd-mm-yyyy',
+                format: 'yyyy-mm-dd',
                 container: container,
                 todayHighlight: true,
                 autoclose: true,
             })
         })
+    </script>
+    <script type="application/javascript">
+        function changeDiv()
+        {
+            var button = document.getElementById("wildcardButton");
+            var div = document.getElementById("wildcardDiv");
+            div.classList.remove("disabledDiv");
+            if ( button.innerHTML === "Aktivieren")
+            {
+                button.innerHTML = "Deaktivieren";
+                document.getElementById("wildcardActBackend").value = "1";
+                div.classList.remove("disabledDiv");
+            }
+            else
+            {
+                button.innerHTML = "Aktivieren";
+                document.getElementById("wildcardActBackend").value = "0";
+                div.classList.add("disabledDiv");
+            }
+
+        }
+        function markElm( name, tokenAnzahl, beschreibung ) {
+            var elm = document.getElementById(name);
+            var selected = document.getElementById("anzahlSelected");
+            var selectedValue = selected.value;
+            var div = document.getElementById("katListBackend");
+            if ( elm.classList.contains("blau") )
+            {
+                elm.classList.remove("blau");
+                selected.value = selected.value - 1;
+
+                // loop
+                var chilrden = div.getElementsByTagName('*');
+                var removed = false;
+                var setNewNumb = false;
+                for ( var i = 0; i < chilrden.length; i++) {
+                    var child = chilrden[i];
+                    var id = child.id;
+                    var elmId = id.substr(0,12);
+                    var num = id.substr(12,id.length);
+                    if ( setNewNumb )
+                    {
+                        child.id = elmId + lastNum;
+                        child.name = elmId + lastNum;
+                        lastNum++;
+                    } else if ( !removed )
+                    {
+                        if ( elmId === name )
+                        {
+                            div.removeChild(child);
+                            removed = true;
+                        }
+                    }
+                    else
+                    {
+                        var j = 1;
+                        div.removeChild(child);
+                        j++;
+                        if ( j >= 3 )
+                        {
+                            setNewNumb = true;
+                        }
+                    }
+                    if ( !setNewNumb )
+                    {
+                        var lastNum = num;
+                    }
+                }
+            }
+            else
+            {
+                elm.classList.add("blau");
+                var val = selected.value;
+                var out = '<input type="text" id="toDeleteName'+val+'" name="toDeleteName'+val+'" class="hiddenMeldung" value="'+name+'"><input type="text" id="toDeleteToken'+val+'" name="toDeleteToken'+val+'" class="hiddenMeldung" value="'+tokenAnzahl+'"><input type="text" id="toDeleteBesch'+val+'" name="toDeleteBesch'+val+'" class="hiddenMeldung" value="'+beschreibung+'">';
+                div.innerHTML = div.innerHTML + out;
+                selected.value = selectedValue + 1;
+            }
+        }
+
+        function markSchueler( name ) {
+            var elm = document.getElementById(name);
+            var selected = document.getElementById("anzahlSelectedSch");
+            var div = document.getElementById("schuelerListBackend");
+            if ( elm.classList.contains("blau") )
+            {
+                elm.classList.remove("blau");
+                selected.value = selected.value - 1;
+
+                // loop
+                var chilrden = div.getElementsByTagName('*');
+                var removed = false;
+                var setNewNumb = false;
+                for ( var i = 0; i < chilrden.length; i++) {
+                    var child = chilrden[i];
+                    var id = child.id;
+                    var elmId = id.substr(0,12);
+                    var num = id.substr(12,id.length);
+                    if ( setNewNumb )
+                    {
+                        child.id = elmId + lastNum;
+                        child.name = elmId + lastNum;
+                        lastNum++;
+                    } else if ( !removed )
+                    {
+                        if ( elmId === name )
+                        {
+                            div.removeChild(child);
+                            removed = true;
+                        }
+                    }
+                    else
+                    {
+                        var j = 1;
+                        div.removeChild(child);
+                        j++;
+                        if ( j >= 3 )
+                        {
+                            setNewNumb = true;
+                        }
+                    }
+                    if ( !setNewNumb )
+                    {
+                        var lastNum = num;
+                    }
+                }
+            }
+            else
+            {
+                elm.classList.add("blau");
+                var val = selected.value;
+                var out = '<input type="text" id="toDeleteName'+val+'" name="toDeleteName'+val+'" class="hiddenMeldung" value="'+name+'">';
+                div.innerHTML = div.innerHTML + out;
+                selected.value = selected.value + 1;
+            }
+        }
+        
+        function addAllValuesToInputs() {
+            
+        }
     </script>
 
 </body>

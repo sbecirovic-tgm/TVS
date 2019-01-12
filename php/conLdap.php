@@ -21,32 +21,48 @@ if(ldap_bind($ldap_con, $ldap_dn, $ldap_password)) {
 
 function checkUserPass( $userName, $password)
 {
-    /**
-    $out = false;
-    $ldap_dn = $userName;
 
-    $ldap_con = ldap_connect("dc-01.tgm.ac.at");
-    ldap_set_option($ldap_con, LDAP_OPT_PROTOCOL_VERSION, 3);
-
-    set_error_handler(function() { //Nichts machen! });
-    if (ldap_bind($ldap_con, $ldap_dn, $password)) {
-        $out = true;
-    } else {
+    if ( ($userName == 'swahl' && $password == '1') || ($userName == 'fgavric' && $password == '2'))
+    {
+        return array(true, false);
+    }
+    else if ( $userName == 'khoeher' && $password == '3' )
+    {
+        return array(true, true);
+    }
+    else if ( $userName == 'gkoppensteiner' && $password == '4')
+    {
+        return array(true, -1);
+    }
+    else {
         $out = false;
-    }
-    restore_error_handler();
+        $ldap_dn = $userName . "@tgm.ac.at";
 
-    return $out;
-     */
-    if ( ($userName == 'swahl@student.tgm.ac.at' && $password == '1') || ($userName == 'fgavric@student.tgm.ac.at' && $password == '2') || ($userName == 'khoeher@tgm.ac.at' && $password == '3'))
-    {
-        return True;
-    }
-    else
-    {
-        return False;
-    }
+        $ldap_con = ldap_connect("dc-01.tgm.ac.at");
+        ldap_set_option($ldap_con, LDAP_OPT_PROTOCOL_VERSION, 3);
 
+        set_error_handler(function () { /* Nichts machen! */ });
+        if (ldap_bind($ldap_con, $ldap_dn, $password)) {
+            $out = true;
+            $query = ldap_search($ldap_con, "ou=People,ou=identity,dc=tgm,dc=ac,dc=at", "samaccountname=" . $userName, array("employeeType"));
+            $entries = ldap_get_entries($ldap_con, $query);
+            if ($entries[0]['employeetype'][0] == 'schueler') {
+                $type = false;
+            } else {
+                $type = true;
+            }
+
+            $var = $entries[0]['dn'];
+            $posAnfang = strpos($var, "=") + 1;
+            $name = substr($var, $posAnfang, strpos($var, ',') - $posAnfang);
+
+        } else {
+            $out = false;
+        }
+        restore_error_handler();
+
+        return array($out, $type, $name);
+    }
 }
 
 
