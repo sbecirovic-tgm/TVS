@@ -92,9 +92,11 @@
 
 <!-- Inhalt -->
 <div class="container">
-    <h1>Berechtigungen</h1>
-    <hr>
     <div class="row">
+        <div class="col-sm-12">
+            <h1>Highscore-Liste</h1>
+            <hr>
+        </div>
         <script type="application/javascript">
             function setAwardButton(value) {
                 document.getElementById("awardType").innerHTML = value;
@@ -176,7 +178,7 @@
         var selected = document.getElementById("anzahlSelected");
         var add = document.getElementById("lehrerListBackend");
 
-        for ( var i = 0; elements.length; i++ )
+        for ( var i = 0; i < elements.length; i++ )
         {
             var elm = elements[i];
             var id = elm.id;
