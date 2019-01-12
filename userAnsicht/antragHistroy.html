@@ -90,47 +90,45 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12 antragHistory">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success btn-filter" onclick="filter('bestätigt')">Bestätigt</button>
-                                    <button type="button" class="btn btn-warning btn-filter" onclick="filter('inbearbeitung')">in Bearbeitung</button>
-                                    <button type="button" class="btn btn-danger btn-filter" onclick="filter('abgelehnt')">Abgelehnt</button>
-                                    <button type="button" class="btn btn-default btn-filter" onclick="filter('alle')">Alle</button>
-                                </div>
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-success btn-filter" onclick="filter('bestätigt')">Bestätigt</button>
+                                <button type="button" class="btn btn-warning btn-filter" onclick="filter('inbearbeitung')">in Bearbeitung</button>
+                                <button type="button" class="btn btn-danger btn-filter" onclick="filter('abgelehnt')">Abgelehnt</button>
+                                <button type="button" class="btn btn-default btn-filter" onclick="filter('alle')">Alle</button>
                             </div>
+                        </div>
 
-                            <div class="table-container">
-                                <table id="filterTable" class="table table-filter">
-                                    <tbody>
-                                        <tr data-status="abgelehnt" class="clickable" data-toggle="collapse" data-target="#anfrage1" aria-expanded="false" aria-controls="anfrage1">
-                                            <td>
-                                                <div class="form-check">
-                                                    <input type="checkbox" id="editCheckBox">
+                        <div class="table-container">
+                            <table id="filterTable" class="table table-filter">
+                                <tbody>
+                                    <tr data-status="abgelehnt">
+                                        <td>
+                                            <div class="form-check">
+                                                <input type="checkbox" id="editCheckBox">
+                                            </div>
+                                        </td>
+                                        <td class="clickable" data-toggle="collapse" data-target="#anfrage1" aria-expanded="false" aria-controls="anfrage1"></td>
+                                        <td class="clickable" data-toggle="collapse" data-target="#anfrage1" aria-expanded="false" aria-controls="anfrage1">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <span class="media-meta pull-right">Dezember 5, 2018</span>
+                                                    <h4 class="title"> Betreff: Tag der offenen Tür
+                                                        <span class="pull-right abgelehnt">(Abgelehnt)</span>
+                                                    </h4>
+                                                    <p class="summary"></p>
                                                 </div>
-                                            </td>
-                                            <td></td>
-                                            <td>
-                                                <div class="media">
-                                                    <div class="media-body">
-                                                        <span class="media-meta pull-right">Dezember 5, 2018</span>
-                                                        <h4 class="title"> Betreff: Tag der offenen Tür
-                                                            <span class="pull-right abgelehnt">(Abgelehnt)</span>
-                                                        </h4>
-                                                        <p class="summary"></p>
-                                                    </div>
-                                                </div>
-                                                <div id="anfrage1" class="collapse">
-                                                    Restliche info
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                            </div>
+                                            <div id="anfrage1" class="collapse">
+                                                Restliche info
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

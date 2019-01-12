@@ -194,6 +194,35 @@ function listAllRequestsLimit($limit)
     return $out;
 }
 
+function listAllRequestsProSchueler( $kuerzel )
+{
+    global $db;
+    $out = array();
+
+    $sqlC = "select * from anfrage where skuerzel = '$kuerzel' order by datum desc, zeit desc";
+    $anfragen = mysqli_query($db, $sqlC);
+
+    for( $i = 0; $anfragen_array = mysqli_fetch_assoc($anfragen); $i++)
+    {
+        $out[$i] = array();
+        $out[$i]['id'] = $anfragen_array['id'];
+        $out[$i]['datum'] = $anfragen_array['datum'];
+        $out[$i]['zeit'] = $anfragen_array['zeit'];
+        $out[$i]['aName'] = $anfragen_array['aName'];
+        $out[$i]['eName'] = $anfragen_array['eName'];
+        $out[$i]['eDatum'] = $anfragen_array['eDatum'];
+        $out[$i]['untName'] = $anfragen_array['untName'];
+        $out[$i]['tokenAnzahl'] = $anfragen_array['tokenAnzahl'];
+        $out[$i]['beschreibung'] = $anfragen_array['beschreibung'];
+        $out[$i]['betreff'] = $anfragen_array['betreff'];
+        $out[$i]['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
+        $out[$i]['kommentar'] = $anfragen_array['kommentar'];
+        $out[$i]['superkuerzel'] = $anfragen_array['superkuerzel'];
+        $out[$i]['lehrerKuerzel'] = $anfragen_array['lehrerKuerzel'];
+    }
+
+    return $out;
+}
 
 function listAllRequestsProAward( $aName )
 {
