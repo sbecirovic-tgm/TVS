@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/tvs.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-grid.css">
+    <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="../img/open-iconic-master/font/css/open-iconic-bootstrap.css">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/multiselect.js"></script>
+
+    <!-- Using a local copy -->
+    <script src="multiselect.min.js"></script>
+
+    <!-- Using a CDN -->
+    <script src="https://cdn.rawgit.com/crlcu/multiselect/master/dist/js/multiselect.min.js"></script>
+
+    <title>Tokenverwaltung</title>
+</head>
+
+<body>
+<!--HEADER-->
+<header class="headerStartseite">
+    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <?php
+                                include_once("../php/userCheck.php");
+                                echo getNameFromKuerzel($userName);
+                            ?>
+                    </button>
+                    <div class="dropdown-menu">
+                        <!-- <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a> -->
+                        <form id="logoutForm" action="?logout=1" method="post">
+                            <a class="dropdown-item" style="cursor: pointer;" onclick="submitForm('logoutForm')"
+                               type="submit" name="logout">Logout</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<script language="JavaScript" type="text/javascript">
+    function submitForm(form) {
+        var myForm = document.getElementById(form);
+        myForm.submit();
+    }
+</script>
+<div class="nav-scroller bg-white shadow-md">
+    <div class="container">
+        <nav class="nav nav-underline">
+            <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
+            <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
+                <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('eventForm')">
+                    Events
+                </a>
+            </form>
+            <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
+                <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('anfragenForm')">Anfragen</a>
+            </form>
+            <a class="nav-link active" href="berechtigung.html">Berechtigen</a>
+            <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
+                <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('highscoreForm')">Highscores</a>
+            </form>
+        </nav>
+    </div>
+</div>
+<div class="container">
+    <h1>Berechtigungen</h1>
+    <hr>
+    <div class="row">
+        <!-- Left side select -->
+        <div class="col-xs-5 col-md-5 col-sm-5">
+            <h3 class="abstand1">Verfügbare Lehrer</h3>
+            <select name="from[]" id="mySideToSideSelect" class="form-control" size="16" multiple="multiple">
+                <option value="1">Item 1</option>
+                <option value="3">Item 3</option>
+                <option value="2">Item 2</option>
+            </select>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="col-xs-2 col-md-2 col-sm-2 linksrechts">
+            <button type="button" id="mySideToSideSelect_rightSelected" class="btn btn-block btn-primary">
+                <span class="oi oi-chevron-right"></span>
+            </button>
+            <button type="button" id="mySideToSideSelect_leftSelected" class="btn btn-block btn-primary">
+                <span class="oi oi-chevron-left"></span>
+            </button>
+        </div>
+
+        <!-- Right side select -->
+        <div class="col-xs-5 col-md-5 col-sm-5">
+            <h3 class="abstandHLehrer">Hinzugefügte Lehrer</h3>
+            <select name="to[]" id="mySideToSideSelect_to" class="form-control" size="16" multiple="multiple"></select>
+        </div>
+    </div>
+</div>
+<footer class="footerSticky">
+    © 2018 Wahl, Becirovic, Gavric, Filipovic
+</footer>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#mySideToSideSelect').multiselect();
+    });
+</script>
+
+</body>
+
+</html>
