@@ -89,30 +89,31 @@
             </nav>
         </div>
     </div>
+</div>
 
 
-    <!-- Inhalt -->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <h1>Highscore-Liste</h1>
-                <hr>
-            </div>
-            <script type="application/javascript">
-                function setAwardButton(value) {
-                    document.getElementById("awardType").innerHTML = value;
-                    document.getElementById("awardTypeBackend").value = value;
-                    var myForm = document.getElementById("awardForm");
-                    myForm.submit();
-                }
-            </script>
-            <div class="col-sm-6">
-                <div class="input-group">
-                    <div class="col-sm-6">
-                        <h5>Award auswählen:</h5>
-                    </div>
-                    <div class="col-sm-6">
-                        <?php
+<!-- Inhalt -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Highscore-Liste</h1>
+            <hr>
+        </div>
+        <script type="application/javascript">
+            function setAwardButton(value) {
+                document.getElementById("awardType").innerHTML = value;
+                document.getElementById("awardTypeBackend").value = value;
+                var myForm = document.getElementById("awardForm");
+                myForm.submit();
+            }
+        </script>
+        <div class="col-sm-6">
+            <div class="input-group">
+                <div class="col-sm-6">
+                    <h5>Award auswählen:</h5>
+                </div>
+                <div class="col-sm-6">
+                    <?php
                        //printAward();
                     ?>
                     </div>
@@ -166,6 +167,31 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
+=======
+</div>
+
+<footer class="footerSticky">
+    © 2018 Wahl, Becirovic, Gavric, Filipovic
+</footer>
+<!-- Optional JavaScript -->
+<script type="application/javascript">
+    function addToFrom()
+    {
+        var select = document.getElementById("mySideToSideSelect_to");
+        var elements = select.getElementsByTagName('*');
+        var selected = document.getElementById("anzahlSelected");
+        var add = document.getElementById("lehrerListBackend");
+
+        for ( var i = 0; i < elements.length; i++ )
+        {
+            var elm = elements[i];
+            var id = elm.id;
+
+            var out = '<input type="text" id="lehrer'+i+'" name="lehrer'+i+'" class="hiddenMeldung" value="'+id+'">';
+            add.innerHTML = add.innerHTML + out;
+        }
+>>>>>>> ed3a2d0d3ca4577ebf8aa5e5fa8ab88ccf40de51
 
     <footer class="footerSticky">
         © 2018 Wahl, Becirovic, Gavric, Filipovic
