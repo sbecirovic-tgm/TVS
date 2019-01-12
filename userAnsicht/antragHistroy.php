@@ -132,7 +132,7 @@ function printAntraege()
                 <td class="clickable" data-toggle="collapse" data-target="#anfrage' . $i . '" aria-expanded="false" aria-controls="anfrage' . $i . '">
                     <div class="media">
                         <div class="media-body">
-                            <span class="media-meta pull-right">'. $day . ' ' . $mon .', ' . $year . '</span>
+                            <span class="media-meta pull-right">'. $day . ' ' . $mon .', ' . $year . ' ' . $zeit . '</span>
                             <h4 class="title"> Betreff: ' . $betreff . '
                                 <span class="pull-right ' . $statusBackEnde . '">(' . $status . ')</span>
                             </h4>' . $komm . '
