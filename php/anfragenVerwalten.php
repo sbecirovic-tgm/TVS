@@ -203,6 +203,7 @@ function listAllRequestsLimit($limit)
         $out[$i]['betreff'] = $anfragen_array['betreff'];
         $out[$i]['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
         $out[$i]['kommentar'] = $anfragen_array['kommentar'];
+        $out[$i]['skuerzel'] = $anfragen_array['skuerzel'];
         $out[$i]['superkuerzel'] = $anfragen_array['superkuerzel'];
         $out[$i]['lehrerKuerzel'] = $anfragen_array['lehrerKuerzel'];
     }
@@ -251,7 +252,6 @@ function listAllRequestsProAward( $aName )
 
     for( $i = 0; $anfragen_array = mysqli_fetch_assoc($anfragen); $i++)
     {
-        $out[$i] = array();
         $out[$i]['id'] = $anfragen_array['id'];
         $out[$i]['datum'] = $anfragen_array['datum'];
         $out[$i]['zeit'] = $anfragen_array['zeit'];
@@ -260,10 +260,14 @@ function listAllRequestsProAward( $aName )
         $out[$i]['eDatum'] = $anfragen_array['eDatum'];
         $out[$i]['untName'] = $anfragen_array['untName'];
         $out[$i]['tokenAnzahl'] = $anfragen_array['tokenAnzahl'];
+        $out[$i]['tokenAnzahlNeu'] = $anfragen_array['tokenAnzahlNeu'];
         $out[$i]['beschreibung'] = $anfragen_array['beschreibung'];
         $out[$i]['betreff'] = $anfragen_array['betreff'];
         $out[$i]['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
         $out[$i]['kommentar'] = $anfragen_array['kommentar'];
+        $out[$i]['skuerzel'] = $anfragen_array['skuerzel'];
+        $out[$i]['superkuerzel'] = $anfragen_array['superkuerzel'];
+        $out[$i]['lehrerKuerzel'] = $anfragen_array['lehrerKuerzel'];
     }
 
     return $out;
@@ -291,6 +295,63 @@ function getAnfrageFromId( $id )
     $out['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
     $out['kommentar'] = $anfragen_array['kommentar'];
 
+    return $out;
+}
+
+function listAllRequestToLehrerErlaubnis ( $lKuerzel )
+{
+    global $db;
+    // requests holen
+    $sqlC = "select * from anfrage where aName in (select aName from erlaubnis where lKuerzel = '$lKuerzel') order by datum desc, zeit desc";
+    $temp = mysqli_query($db, $sqlC);
+    $out = array();
+    for ($i = 0; $anfrage = mysqli_fetch_assoc($temp); $i++ )
+    {
+        $out[$i]['id'] = $anfrage['id'];
+        $out[$i]['datum'] = $anfrage['datum'];
+        $out[$i]['zeit'] = $anfrage['zeit'];
+        $out[$i]['aName'] = $anfrage['aName'];
+        $out[$i]['eName'] = $anfrage['eName'];
+        $out[$i]['eDatum'] = $anfrage['eDatum'];
+        $out[$i]['untName'] = $anfrage['untName'];
+        $out[$i]['tokenAnzahl'] = $anfrage['tokenAnzahl'];
+        $out[$i]['tokenAnzahlNeu'] = $anfrage['tokenAnzahlNeu'];
+        $out[$i]['beschreibung'] = $anfrage['beschreibung'];
+        $out[$i]['betreff'] = $anfrage['betreff'];
+        $out[$i]['wirdBewilligt'] = $anfrage['wirdBewilligt'];
+        $out[$i]['kommentar'] = $anfrage['kommentar'];
+        $out[$i]['skuerzel'] = $anfrage['skuerzel'];
+        $out[$i]['superkuerzel'] = $anfrage['superkuerzel'];
+        $out[$i]['lehrerKuerzel'] = $anfrage['lehrerKuerzel'];
+    }
+    return $out;
+}
+
+function listAllRequestToLehrerErlaubnisLimit ( $limit, $lKuerzel )
+{
+    global $db;
+    $sqlC = "select * from anfrage where aName in (select aName from erlaubnis where lKuerzel = '$lKuerzel') order by datum desc, zeit desc limit $limit";
+    $temp = mysqli_query($db, $sqlC);
+    $out = array();
+    for ($i = 0; $anfrage = mysqli_fetch_assoc($temp); $i++ )
+    {
+        $out[$i]['id'] = $anfrage['id'];
+        $out[$i]['datum'] = $anfrage['datum'];
+        $out[$i]['zeit'] = $anfrage['zeit'];
+        $out[$i]['aName'] = $anfrage['aName'];
+        $out[$i]['eName'] = $anfrage['eName'];
+        $out[$i]['eDatum'] = $anfrage['eDatum'];
+        $out[$i]['untName'] = $anfrage['untName'];
+        $out[$i]['tokenAnzahl'] = $anfrage['tokenAnzahl'];
+        $out[$i]['tokenAnzahlNeu'] = $anfrage['tokenAnzahlNeu'];
+        $out[$i]['beschreibung'] = $anfrage['beschreibung'];
+        $out[$i]['betreff'] = $anfrage['betreff'];
+        $out[$i]['wirdBewilligt'] = $anfrage['wirdBewilligt'];
+        $out[$i]['kommentar'] = $anfrage['kommentar'];
+        $out[$i]['skuerzel'] = $anfrage['skuerzel'];
+        $out[$i]['superkuerzel'] = $anfrage['superkuerzel'];
+        $out[$i]['lehrerKuerzel'] = $anfrage['lehrerKuerzel'];
+    }
     return $out;
 }
 

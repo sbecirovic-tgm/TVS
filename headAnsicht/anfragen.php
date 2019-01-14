@@ -81,8 +81,8 @@ function printAllReqeusts()
         $temp = $anfrage['wirdBewilligt'];
         if ( $temp == '' )
         {
-            $status = "In Bearbeitung";
-            $statusBackEnde = "inbearbeitung";
+            $status = "Zu Bearbeitung";
+            $statusBackEnde = "zubearbeiten";
             $komm = '';
             $kommentar = '';
             $onclickCheck = 'onclick="addToDelete(' . $i . ')"';
@@ -137,7 +137,7 @@ function printAllReqeusts()
                     <div class="media">
                         <div class="media-body">
                             <span class="media-meta pull-right">'. $day . ' ' . $mon .', ' . $year . ' ' . $zeit . '</span>
-                            <h4 class="title"> Anfrage von: ' . $userName . '<br>Betreff: ' . $betreff . '
+                            <h4 class="title"> Anfrage von ' . getNameFromKuerzel($userName) . '('.$userName.')<br>Betreff: ' . $betreff . '
                                 <span class="pull-right ' . $statusBackEnde . '">(' . $status . ')</span>
                             </h4>' . $komm . '
                         </div>

@@ -77,6 +77,7 @@ function printAntraege()
         $temp = $anfrage['wirdBewilligt'];
         if ( $temp == '' )
         {
+            $div = "";
             $status = "In Bearbeitung";
             $statusBackEnde = "inbearbeitung";
             $komm = '';
@@ -85,6 +86,7 @@ function printAntraege()
         }
         else if ( $temp == true )
         {
+            $div = " disabledDiv";
             $status = "Bestätigt";
             $statusBackEnde = "bestätigt";
 
@@ -109,22 +111,23 @@ function printAntraege()
                 $kommentar = $kommentar . '<br><strong>Vom Lehrer geänderte Tokenanzahl:</strong> ' . $tokenNeu;
             }
             $kommentar = $kommentar . '</div></div>';
-            $onclickCheck = 'disabled';
+            $onclickCheck = '';
         }
         else if ( $temp == false )
         {
+            $div = " disabledDiv";
             $status = "Abgelehnt";
             $statusBackEnde = "abgelehnt";
             $komm = '';
             $kommentar = '';
-            $onclickCheck = 'disabled';
+            $onclickCheck = '';
         }
 
         $id = $anfrage['id'];
         // zum abfragen einer checkbox: isset($_POST['formWheelchair'] schauen ob vorhanden und dann value handeln
         echo '<tr data-status="' . $statusBackEnde . '">
                 <td>
-                    <div class="form-check">
+                    <div class="form-check'.$div.'">
                         <input type="checkbox" id="deleteCheckBox' . $i . '" name="deleteCheckBox" ' . $onclickCheck . ' value="' . $id . '">
                     </div>
                 </td>
