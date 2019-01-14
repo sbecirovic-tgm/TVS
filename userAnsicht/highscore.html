@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/tvs.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-grid.css">
     <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
@@ -65,7 +65,7 @@
             <nav class="nav nav-underline">
                 <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
                 <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
-                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('eventForm')">
+                    <a class="nav-link active fakeLink"   onclick="submitForm('eventForm')">
                         Events
                         <span class="badge badge-pill bg-light align-text-bottom">
                             <?php
@@ -78,7 +78,7 @@
 
                 <a class="nav-link active" href="antragHistroy.html">Antraghistory</a>
                 <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
-                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('highscoreForm')">Highscores</a>
+                    <a class="nav-link active fakeLink"   onclick="submitForm('highscoreForm')">Highscores</a>
                 </form>
             </nav>
         </div>
@@ -93,7 +93,7 @@
                 <hr>
             </div>
             <div class="col-sm-3" data-toggle="tooltip"  data-placement="bottom" title="Einfach und schnell nach einem Schülernamen suchen">
-                <input type="text" id="nameFilter" class="form-control" onkeyup="filterFunction()" placeholder="Nach Namen Filtern" aria-label="Sizing example input"
+                <input type="text" id="nameFilter" class="form-control" onkeyup="filterFunction()" placeholder="Nach Namen filtern" aria-label="Sizing example input"
                        aria-describedby="inputGroup-sizing-default" >
             </div>
         </div>
@@ -172,7 +172,7 @@
     <footer class="footerSticky">
             © 2018 Wahl, Becirovic, Gavric, Filipovic 
     </footer>
-    <script type="application/javascript">
+    <script>
 
         function applyFilter()
         {

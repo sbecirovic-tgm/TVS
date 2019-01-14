@@ -40,7 +40,7 @@ function printEvents()
      */
     $i = 0;
     // script ausgeben
-    echo '<script type="application/javascript">
+    echo '<script>
             function changeValues(name, beschreibung, tokenAnzahl, id) {
                 var flag;
                 if ( tokenAnzahl == -1)
@@ -236,7 +236,7 @@ function printVerwalten()
                                 </div>
                                 <div class="col-sm-4">
                                     <div>
-                                        <script type="application/javascript">
+                                        <script>
                                             function setAwardButton(value) {
                                                 document.getElementById("awardType").innerHTML = value;
                                                 document.getElementById("awardTypeBackend").value = value;
@@ -465,7 +465,7 @@ function printVerwalten()
                                 </div>
                                 <div class="col-sm-4">
                                     <div>
-                                        <script type="application/javascript">
+                                        <script>
                                             function setAwardButton(value) {
                                                 document.getElementById("awardType").innerHTML = value;
                                                 document.getElementById("awardTypeBackend").value = value;

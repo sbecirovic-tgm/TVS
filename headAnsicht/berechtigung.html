@@ -8,8 +8,8 @@
 
     <!-- Bootstrap CSS -->
     <script language="JavaScript" type="text/javascript" src="../js/jquery-3.3.1.js"></script>
-    <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/tvs.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-grid.css">
     <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
@@ -73,31 +73,30 @@
             <nav class="nav nav-underline">
                 <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
                 <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
-                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('eventForm')">
+                    <a class="nav-link active fakeLink"   onclick="submitForm('eventForm')">
                         Events
                     </a>
                 </form>
                 <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
-                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('anfragenForm')">Anfragen</a>
+                    <a class="nav-link active fakeLink"   onclick="submitForm('anfragenForm')">Anfragen</a>
                 </form>
                 <a class="nav-link active" href="berechtigung.html">Berechtigen</a>
                 <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
-                    <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('highscoreForm')">Highscores</a>
+                    <a class="nav-link active fakeLink"   onclick="submitForm('highscoreForm')">Highscores</a>
                 </form>
             </nav>
         </div>
     </div>
-</div>
 
 
 <!-- Inhalt -->
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h1>Highscore-Liste</h1>
+            <h1>Berechtigung verteilen</h1>
             <hr>
         </div>
-        <script type="application/javascript">
+        <script>
             function setAwardButton(value) {
                 document.getElementById("awardType").innerHTML = value;
                 document.getElementById("awardTypeBackend").value = value;
@@ -118,52 +117,9 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <!-- Left side select -->
-            <div class="col-xs-5 col-md-5 col-sm-5">
-                <h3>Verfügbare Lehrer</h3>
-                <select name="from[]" id="mySideToSideSelect" class="form-control" style="height:100%;" multiple="multiple">
-                    <?php
-                        printLehrerToAward();
-                    ?>
-                    <option value="3">Item 1</option>
-                    <option value="3">Item 2</option>
-                    <option value="3">Item 3</option>
-                </select>
-            </div>
-
-            <!-- Action buttons -->
-            <div class="col-xs-2 col-md-2 col-sm-2 linksrechts">
-                <button type="button" id="mySideToSideSelect_rightSelected" class="btn btn-block btn-primary">
-                    <span class="oi oi-chevron-right"></span>
-                </button>
-                <button type="button" id="mySideToSideSelect_leftSelected" class="btn btn-block btn-primary">
-                    <span class="oi oi-chevron-left"></span>
-                </button>
-            </div>
-
-            <!-- Right side select -->
-            <div class="col-xs-5 col-md-5 col-sm-5">
-                <h3>Hinzugefügte Lehrer</h3>
-                <select name="to[]" id="mySideToSideSelect_to" class="form-control" style="height:100%;" multiple="multiple">
-                    <?php
-                    //printLehrerBerechtigtToAward();
-                ?>
-                </select>
-            </div>
-        </div>
-        <div class="row abstand1">
-            <div class="col-sm-12">
-                <div class="text-right">
-                    <button type="button" class="btn btn-primary" onclick="addToFrom()">Speichern</button>
-                </div>
-                <form id="berechtigen" action="?berechtigen=1" method="post">
-                    <input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">
-                    <div id="lehrerListBackend">
-                    </div>
-                </form>
-            </div>
-        </div>
+        <?php
+            printBody();
+        ?>
     </div>
 
     <footer class="footerSticky">
@@ -177,20 +133,43 @@
         });
     </script>
 
-    <script type="application/javascript">
+    <script>
         function addToFrom() {
             var select = document.getElementById("mySideToSideSelect_to");
             var elements = select.getElementsByTagName('*');
-            var selected = document.getElementById("anzahlSelected");
             var add = document.getElementById("lehrerListBackend");
-            for (var i = 0; i < elements.length; i++) {
+            var i = 0;
+            for (; i < elements.length; i++) {
                 var elm = elements[i];
                 var id = elm.id;
                 var out = '<input type="text" id="lehrer' + i + '" name="lehrer' + i + '" class="hiddenMeldung" value="' + id + '">';
                 add.innerHTML = add.innerHTML + out;
             }
             var myForm = document.getElementById("berechtigen");
+            myForm.innerHTML = myForm.innerHTML + '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="'+i+'">';
             myForm.submit();
+        }
+
+        function filterFunction(tableName, inputName) {
+            var i;
+            var input = document.getElementById(inputName);
+            var filter = input.value.toLowerCase();
+            var table = document.getElementById(tableName);
+            var options = table.getElementsByTagName("option");
+
+            for (i = 0; i < options.length; i++) {
+                var child = options[i];
+                var kuerzel = child.id;
+                var name = child.value;
+                if ( name.toLowerCase().indexOf(filter) > -1 || kuerzel.toLowerCase().indexOf(filter) > -1 )
+                {
+                    child.style = "";
+                }
+                else
+                {
+                    child.style.display = "none";
+                }
+            }
         }
     </script>
 

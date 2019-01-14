@@ -197,7 +197,6 @@ function insertLehrerShort ( $kuerzel, $lName )
 {
     global $db;
     $sqlC = "insert into lehrer ( kuerzel, lName ) values ( '$kuerzel', '$lName')";
-    echo $sqlC;
     return mysqli_query($db, $sqlC);
 }
 
@@ -224,6 +223,48 @@ function getBerechtigteLehrerToAward( $aName )
     for ( $i = 0; $erlaubnisArray = mysqli_fetch_assoc($temp); $i++ )
     {
         $out[$i] = $erlaubnisArray['lKuerzel'];
+    }
+    return $out;
+}
+
+function deleteBerechtigungLehrerToAward ( $kuerzel, $aName )
+{
+    global $db;
+    $sqlC = "delete from erlaubnis where aName = '$aName' and lKuerzel = '$kuerzel'";
+    $result = mysqli_query($db, $sqlC);
+    return $result;
+}
+
+function deleteBerechtigungLehrerArrayToAward ( $lehrerArray, $aName )
+{
+    $out = true;
+    foreach ($lehrerArray as $lehrer )
+    {
+        if ( deleteBerechtigungLehrerToAward($lehrer, $aName) == false )
+        {
+            $out = false;
+        }
+    }
+    return $out;
+}
+
+function berechtigeLehrerToAward ( $kuerzel, $aName )
+{
+    global $db;
+    $sqlC = "insert into erlaubnis (aName, lKuerzel) values('$aName', '$kuerzel')";
+    $result = mysqli_query($db, $sqlC);
+    return $result;
+}
+
+function berechtigeLehrerArrayToAward ( $lehrerArray, $aName )
+{
+    $out = true;
+    foreach ($lehrerArray as $lehrer )
+    {
+        if ( berechtigeLehrerToAward($lehrer, $aName) == false )
+        {
+            $out = false;
+        }
     }
     return $out;
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -7,21 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/tvs.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/bootstrap-grid.css">
-    <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="../img/open-iconic-master/font/css/open-iconic-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/antragHistory.css"/>
 
-    <title>Token Anfragen Liste</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <!--<script src="../js/antragHistory.js"> </script> Mal ohne script hab ne eigene Lösung gefunden - seb -->
+
+
+
+    <title>Tokenverwaltung</title>
 </head>
-
-<body>
 <?php
-        include_once("anfragen.php");
-    ?>
-
+    include_once("anfragen.php");
+?>
+<body>
 <!--HEADER-->
 
 <header class="headerStartseite">
@@ -66,39 +72,189 @@
         <nav class="nav nav-underline">
             <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
             <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
-                <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('eventForm')">
+                <a class="nav-link active fakeLink"  onclick="submitForm('eventForm')">
                     Events
                 </a>
             </form>
             <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
-                <a class="nav-link active" style="cursor: pointer;"onclick="submitForm('anfragenForm')">Anfragen</a>
+                <a class="nav-link active fakeLink"  onclick="submitForm('anfragenForm')">Anfragen</a>
             </form>
             <a class="nav-link active" href="berechtigung.html">Berechtigen</a>
             <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
-                <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('highscoreForm')">Highscores</a>
+                <a class="nav-link active fakeLink"   onclick="submitForm('highscoreForm')">Highscores</a>
             </form>
         </nav>
     </div>
 </div>
 
-
-<!-- Inhalt -->
+<!--Inhalt-->
 <div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Anträge bearbeiten</h1>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="text-right abstand1RightTop">
+                                <h5>Anfragen filtern</h5>
+                            </div>
+                            <hr class="nullAbstand">
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="text-right abstand1AllAround">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success btn-filter" onclick="filter('bestätigt')">Bestätigt</button>
+                                    <button type="button" class="btn btn-warning btn-filter" onclick="filter('inbearbeitung')">in Bearbeitung</button>
+                                    <button type="button" class="btn btn-danger btn-filter" onclick="filter('abgelehnt')">Abgelehnt</button>
+                                    <button type="button" class="btn btn-default btn-filter" onclick="filter('alle')">Alle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="filterTable" class="table table-filter">
+                            <tbody>
+                                <!-- erstes zum testen drinnen -->
+                                <tr data-status="abgelehnt">
+                                    <td>
+                                        <div class="form-check">
+                                            <input type="checkbox" id="editCheckBox">
+                                        </div>
+                                    </td>
+                                    <td class="clickable" data-toggle="collapse" data-target="#anfrage-1" aria-expanded="false" aria-controls="anfrage-1"></td>
+                                    <td class="clickable" data-toggle="collapse" data-target="#anfrage-1" aria-expanded="false" aria-controls="anfrage-1">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <span class="media-meta pull-right">Dezember 5, 2018</span>
+                                                <h4 class="title"> Betreff: Tag der offenen Tür
+                                                    <span class="pull-right abgelehnt">(Abgelehnt)</span>
+                                                </h4>
+                                                <p class="summary"></p>
+                                            </div>
+                                        </div>
+                                        <div id="anfrage-1" class="collapse">
+                                            Restliche info
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php
+                                    printAllReqeusts();
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="radio">
+                            <label><input type="radio" name="optradio" checked>Option 1</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="optradio" checked>Option 1</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="optradio" checked>Option 1</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11 abstand1AllAround">
+                            <div class="form-group">
+                                <label>Kommentar:</label>
+                                <textarea class="form-control" rows="3" minlength="1" id="lehrerKommentar" name="lehrerKommentar"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="deleteForm" action="?deleteAntraege=1" method="post">
+                        <input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">
+                        <div id="antrListBackend">
+                        </div>
+                    </form>
+                    <div class="text-right">
+                        <button type="button" class="btn btn-primary abstand1AllAround" onclick="submitForm('deleteForm')" >Ausgew&auml;hle Anträge bearbeiten</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
-
 <footer class="footerSticky">
     © 2018 Wahl, Becirovic, Gavric, Filipovic
 </footer>
+<script>
+    function addToDelete( num )
+    {
+        var id = "deleteCheckBox" + num;
+        var checkBox = document.getElementById(id);
+        var addDiv = document.getElementById("antrListBackend");
+        var myForm = document.getElementById("deleteForm");
+        var selected = document.getElementById("anzahlSelected");
+        var selectedValue = selected.value;
+
+        var checkID = checkBox.value;
+        if ( checkBox.checked )
+        {
+            var add = '<input type="text" id="antrag'+selectedValue+'" name="antrag'+selectedValue+'" class="hiddenMeldung" value="'+checkID+'">';
+            addDiv.innerHTML = addDiv.innerHTML + add;
+            selectedValue++;
+            myForm.removeChild(selected);
+            myForm.innerHTML = myForm.innerHTML + '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="'+selectedValue+'">';
+        }
+        else
+        {
+            var children = addDiv.getElementsByTagName('*');
+            for ( var i = 0; i < children.length; i++ )
+            {
+                var child = children[i];
+                if ( child.value = checkBox.id )
+                {
+                    addDiv.removeChild(child);
+                }
+            }
+            selectedValue--;
+            myForm.removeChild(selected);
+            myForm.innerHTML = myForm.innerHTML + '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="'+selectedValue+'">';
+        }
+
+    }
+    function filter(state)
+    {
+        var parent = document.getElementById("filterTable");
+        var tbody = parent.getElementsByTagName('*')[0];
+
+        var i, child, tag;
+        var childrenArray = tbody.getElementsByTagName('TR');
+        if ( state === "alle" )
+        {
+            for ( i = 0; i < childrenArray.length; i++ )
+            {
+                child = childrenArray[i];
+                child.style = "";
+            }
+        }
+        else {
+            for (i = 0; i < childrenArray.length; i++) {
+                child = childrenArray[i];
+                tag = child.getAttribute("data-status");
+                if (tag === state) {
+                    child.style = "";
+                }
+                else {
+                    child.style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-<script type="text/javascript"></script>
+
+
+
 </body>
 
 </html>

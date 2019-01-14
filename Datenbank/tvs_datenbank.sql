@@ -273,3 +273,65 @@ values ('Test event 2', '2019-1-15', Null, Null, 'Test-Award1', NULL, 'Dieses Ev
 
 insert into unterkategorie(name, eName, aName, eDatum, tokenAnzahl, beschreibung)
 values ('Bericht', 'Test event 2', 'Test-Award1', '2019-1-15', 2, 'Du hast einen Bericht geschrieben');
+
+
+-- Lehrer inserts
+insert into lehrer values ( 'atat', 'Atanasoska Tatjana', null);
+insert into lehrer values ( 'bacp', 'Bacsics Peter', null);
+insert into lehrer values ( 'bauw0', 'Baumgartner Wolfgang', null);
+insert into lehrer values ( 'borm', 'Borko Michael', null);
+insert into lehrer values ( 'brah', 'Brabenetz Hans', null);
+insert into lehrer values ( 'brec', 'Brein Christoph', null);
+insert into lehrer values ( 'clac', 'Claucig Christian', null);
+insert into lehrer values ( 'dold', 'Dolezal Dominik', null);
+insert into lehrer values ( 'eftr', 'Efthekhar Roshanak', null);
+insert into lehrer values ( 'ehrn', 'Ehrenberger Natascha', null);
+insert into lehrer values ( 'fejw', 'Fejan Wolfgang', null);
+insert into lehrer values ( 'fisb', 'Fischer Bettina', null);
+insert into lehrer values ( 'fism', 'Fischer Michael', null);
+insert into lehrer values ( 'fued', 'Fürnsin Dominik', null);
+insert into lehrer values ( 'gras', 'Gradnitzer-Pekovits Stefanie', null);
+insert into lehrer values ( 'gram', 'Graf Michael', null);
+insert into lehrer values ( 'guem', 'Günthör Michael', null);
+insert into lehrer values ( 'hohd', 'Hohenwarter Dieter', null);
+insert into lehrer values ( 'hoek', 'Höher Kai', null);
+insert into lehrer values ( 'janj', 'Janik Jennifer', null);
+insert into lehrer values ( 'jire', 'Jiresch Eugen Robert', null);
+insert into lehrer values ( 'kolk', 'Kollitsch Kerstin', null);
+insert into lehrer values ( 'kopg', 'Koppensteiner Gottfried', null);
+insert into lehrer values ( 'krah0', 'Kraus Helmut', null);
+insert into lehrer values ( 'kruc', 'Kruisz Christian', null);
+insert into lehrer values ( 'marm', 'Martinides Michael', null);
+insert into lehrer values ( 'mict', 'Micheler Thomas', null);
+insert into lehrer values ( 'nimw', 'Nimmervoll Wolfgang', null);
+insert into lehrer values ( 'norh', 'Nordin Henrik', null);
+insert into lehrer values ( 'pamt', 'Pamperl Thomas', null);
+insert into lehrer values ( 'paum', 'Paulitsch Manfred', null);
+insert into lehrer values ( 'pawd', 'Pawelak Daniela', null);
+insert into lehrer values ( 'pesa', 'Pesek Alfred', null);
+insert into lehrer values ( 'posa', 'Posekany Alexandra', null);
+insert into lehrer values ( 'posa0', 'Poszvek Alexander', null);
+insert into lehrer values ( 'radj0', 'Radatz Johann', null);
+insert into lehrer values ( 'rafw', 'Rafeiner-Magor', null);
+insert into lehrer values ( 'reim2', 'Reichart Monika', null);
+insert into lehrer values ( 'rosc', 'Roschger Christoph', null);
+insert into lehrer values ( 'sabp', 'Schabasser Peter', null);
+insert into lehrer values ( 'sabm', 'Schabel Markus', null);
+insert into lehrer values ( 'soeb', 'Schoell Barbara', null);
+insert into lehrer values ( 'sult', 'Schuller Tamara', null);
+insert into lehrer values ( 'stow0', 'Stoiber Wolfgang', null);
+insert into lehrer values ( 'thut', 'Thun Thomas', null);
+insert into lehrer values ( 'tree', 'Trenner Erich', null);
+insert into lehrer values ( 'tred', 'Trenner Denis', null);
+insert into lehrer values ( 'trif', 'Tripolt Franz', null);
+insert into lehrer values ( 'tues', 'Tuerkmen Salih', null);
+insert into lehrer values ( 'umaa', 'Umar Adeel', null);
+insert into lehrer values ( 'urbb', 'Urbarz Brigitte', null);
+insert into lehrer values ( 'vikc', 'Vikoler Carolin', null);
+insert into lehrer values ( 'vitl', 'Vittori Lisa', null);
+insert into lehrer values ( 'vocm', 'Vock Mathias', null);
+insert into lehrer values ( 'webm', 'Weber Michael', null);
+insert into lehrer values ( 'weij', 'Weiser Johann', null);
+insert into lehrer values ( 'wile', 'Wildling Elisabeth', null);
+insert into lehrer values ( 'wimr', 'Wimberger Robert', null);
+insert into lehrer values ( 'zaks', 'Zakall Stefan', null);

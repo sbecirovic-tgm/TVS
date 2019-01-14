@@ -246,6 +246,14 @@ footer p:last-child {
   color: #000000 !important;
 }
 
+.fakeLink {
+  cursor: pointer !important;
+}
+
+.fakeLink:hover {
+  color: #007bff !important;
+}
+
 /*
 * Filips blödsinn
 */
@@ -273,9 +281,7 @@ tbody.collapse.in {
 .panel .btn-group {
   margin: 15px 0 30px;
 }
-.panel .btn-group .btn {
-  transition: background-color .3 ease;
-}
+
 .table-filter {
   background-color: #fff;
   border-bottom: 1px solid #eee;
@@ -404,6 +410,31 @@ tbody.collapse.in {
   margin-right: 1em;
 }
 
+.abstand05TopBot {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.abstand1RightTop {
+  margin-top: 1em;
+  margin-right: 1em;
+}
+
+.abstand1Right {
+  margin-right: 1em;
+}
+
+
+/*
+
+.menueLink {
+  cursor: pointer !important;
+}
+.menueLink:hover {
+  cursor: pointer !important;
+  color: #007bff !important;
+}
+*/
 @media(max-width: 575.98px) {
   .linksrechts {
     margin-top: 1rem;

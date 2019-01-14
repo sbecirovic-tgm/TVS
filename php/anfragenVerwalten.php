@@ -76,25 +76,25 @@ function deleteTokenRequest ( $id, $userKeurzel )
     }
 }
 
-function bewilligeToken ( $id, $datum, $zeit , $schuelerKuerzel, $userName, $tokenNeu, $kommentar, $wirdBewilligt)
+function bewilligeToken ( $id, $schuelerKuerzel, $userName, $tokenNeu, $kommentar, $wirdBewilligt)
 {
     global $db;
     include_once ("userCheck.php");
     if ( checkIfUserIsSuperUser($userName) )
     {
-        $sqlC = "update anfrage set tokenAnzahlNeu = '$tokenNeu', wirdBewilligt = '$wirdBewilligt', kommentar = '$kommentar', superkuerzel = '$userName' where id = '$id' and datum = '$datum' and zeit = '$zeit' and skuerzel = '$schuelerKuerzel'";
+        $sqlC = "update anfrage set tokenAnzahlNeu = '$tokenNeu', wirdBewilligt = '$wirdBewilligt', kommentar = '$kommentar', superkuerzel = '$userName' where id = '$id' and skuerzel = '$schuelerKuerzel'";
     }
     else
     {
-        $sqlC = "update anfrage set tokenAnzahlNeu = '$tokenNeu', wirdBewilligt = '$wirdBewilligt', kommentar = '$kommentar', lehrerKuerzel = '$userName' where id = '$id' and datum = '$datum' and zeit = '$zeit' and skuerzel = '$schuelerKuerzel'";
+        $sqlC = "update anfrage set tokenAnzahlNeu = '$tokenNeu', wirdBewilligt = '$wirdBewilligt', kommentar = '$kommentar', lehrerKuerzel = '$userName' where id = '$id' and skuerzel = '$schuelerKuerzel'";
     }
     $results[0] = mysqli_query($db, $sqlC);
 
-    $sqlC2 = "select aName from anfrage where id = '$id' and datum = '$datum' and zeit = '$zeit' and skuerzel = '$schuelerKuerzel'";
+    $sqlC2 = "select aName, datum from anfrage where id = '$id' and skuerzel = '$schuelerKuerzel'";
     $name = mysqli_query($db, $sqlC2);
     $nameArray = mysqli_fetch_assoc($name);
 
-    $results[1] = addTokenToLeistung($schuelerKuerzel, $nameArray['aName'] , $tokenNeu, getSaisonNumbFromDate($datum) );
+    $results[1] = addTokenToLeistung($schuelerKuerzel, $nameArray['aName'] , $tokenNeu, getSaisonNumbFromDate($nameArray['datum']) );
     return $results;
 }
 
@@ -103,8 +103,8 @@ function addTokenToLeistung ( $schuelerKuerzel, $aName, $token, $saisonNumb)
     global $db;
     // schauen ob der Schüler schon genug token für einen Award hat
     $sqlC = "select tokenAnzahl from leistung where aName = '$aName' and sKuerzel = '$schuelerKuerzel' and saisonNummer = '$saisonNumb'";
-    $token = mysqli_query($db, $sqlC);
-    $tokenArray = mysqli_fetch_assoc($token);
+    $tokenRes = mysqli_query($db, $sqlC);
+    $tokenArray = mysqli_fetch_assoc($tokenRes);
     $anzahlToken = $tokenArray['tokenAnzahl'];
     $anzahlToken += $token;
 
@@ -158,18 +158,22 @@ function listAllRequests()
     for( $i = 0; $anfragen_array = mysqli_fetch_assoc($anfragen); $i++)
     {
         $out[$i] = array();
+        $out[$i]['id'] = $anfragen_array['id'];
         $out[$i]['datum'] = $anfragen_array['datum'];
         $out[$i]['zeit'] = $anfragen_array['zeit'];
-        $out[$i]['skuerzel'] = $anfragen_array['skuerzel'];
         $out[$i]['aName'] = $anfragen_array['aName'];
         $out[$i]['eName'] = $anfragen_array['eName'];
         $out[$i]['eDatum'] = $anfragen_array['eDatum'];
         $out[$i]['untName'] = $anfragen_array['untName'];
         $out[$i]['tokenAnzahl'] = $anfragen_array['tokenAnzahl'];
+        $out[$i]['tokenAnzahlNeu'] = $anfragen_array['tokenAnzahlNeu'];
         $out[$i]['beschreibung'] = $anfragen_array['beschreibung'];
         $out[$i]['betreff'] = $anfragen_array['betreff'];
         $out[$i]['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
         $out[$i]['kommentar'] = $anfragen_array['kommentar'];
+        $out[$i]['skuerzel'] = $anfragen_array['skuerzel'];
+        $out[$i]['superkuerzel'] = $anfragen_array['superkuerzel'];
+        $out[$i]['lehrerKuerzel'] = $anfragen_array['lehrerKuerzel'];
     }
 
     return $out;
@@ -189,16 +193,18 @@ function listAllRequestsLimit($limit)
         $out[$i]['id'] = $anfragen_array['id'];
         $out[$i]['datum'] = $anfragen_array['datum'];
         $out[$i]['zeit'] = $anfragen_array['zeit'];
-        $out[$i]['skuerzel'] = $anfragen_array['skuerzel'];
         $out[$i]['aName'] = $anfragen_array['aName'];
         $out[$i]['eName'] = $anfragen_array['eName'];
         $out[$i]['eDatum'] = $anfragen_array['eDatum'];
         $out[$i]['untName'] = $anfragen_array['untName'];
         $out[$i]['tokenAnzahl'] = $anfragen_array['tokenAnzahl'];
+        $out[$i]['tokenAnzahlNeu'] = $anfragen_array['tokenAnzahlNeu'];
         $out[$i]['beschreibung'] = $anfragen_array['beschreibung'];
         $out[$i]['betreff'] = $anfragen_array['betreff'];
         $out[$i]['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
         $out[$i]['kommentar'] = $anfragen_array['kommentar'];
+        $out[$i]['superkuerzel'] = $anfragen_array['superkuerzel'];
+        $out[$i]['lehrerKuerzel'] = $anfragen_array['lehrerKuerzel'];
     }
 
     return $out;

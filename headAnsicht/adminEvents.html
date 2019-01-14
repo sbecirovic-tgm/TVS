@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/tvs.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
 
     <title>Tokenverwaltung</title>
@@ -62,16 +62,16 @@
         <nav class="nav nav-underline">
             <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
             <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
-                <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('eventForm')">
+                <a class="nav-link active fakeLink"  onclick="submitForm('eventForm')">
                     Events
                 </a>
             </form>
             <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
-                <a class="nav-link active" style="cursor: pointer;"onclick="submitForm('anfragenForm')">Anfragen</a>
+                <a class="nav-link active fakeLink"  onclick="submitForm('anfragenForm')">Anfragen</a>
             </form>
             <a class="nav-link active" href="berechtigung.html">Berechtigen</a>
             <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
-                <a class="nav-link active" style="cursor: pointer;" onclick="submitForm('highscoreForm')">Highscores</a>
+                <a class="nav-link active fakeLink"   onclick="submitForm('highscoreForm')">Highscores</a>
             </form>
         </nav>
     </div>
@@ -83,7 +83,7 @@
     <?php
             printVerwalten();
         ?>
-    <script type="application/javascript">
+    <script>
         function setEventInForm( name, datum, aName )
         {
             var myForm = document.getElementById("verwaltenForm");
@@ -100,8 +100,8 @@
     </form>
     <div class="col-sm-12">
         <?php
-                printEvents();
-            ?>
+            printEvents();
+        ?>
     </div>
 </div>
 <!-- Print error -->
@@ -139,7 +139,7 @@
         })
     })
 </script>
-<script type="application/javascript">
+<script>
     function changeDiv()
     {
         var button = document.getElementById("wildcardButton");
