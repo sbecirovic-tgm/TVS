@@ -83,14 +83,15 @@ function printAllReqeusts()
         {
             $status = "Zu Bearbeitung";
             $statusBackEnde = "zubearbeiten";
+            $statusBackEnde2 = "inbearbeitung";
             $komm = '';
             $kommentar = '';
-            $onclickCheck = 'onclick="addToDelete(' . $i . ')"';
         }
         else if ( $temp == true )
         {
             $status = "Bestätigt";
             $statusBackEnde = "bestätigt";
+            $statusBackEnde2 = $statusBackEnde;
 
             if ( $lehrer == "" )
             {
@@ -113,23 +114,22 @@ function printAllReqeusts()
                 $kommentar = $kommentar . '<br><strong>Vom Lehrer geänderte Tokenanzahl:</strong> ' . $tokenNeu;
             }
             $kommentar = $kommentar . '</div></div>';
-            $onclickCheck = 'disabled';
         }
         else if ( $temp == false )
         {
             $status = "Abgelehnt";
             $statusBackEnde = "abgelehnt";
+            $statusBackEnde2 = $statusBackEnde;
             $komm = '';
             $kommentar = '';
-            $onclickCheck = 'disabled';
         }
 
         $id = $anfrage['id'];
         // zum abfragen einer checkbox: isset($_POST['formWheelchair'] schauen ob vorhanden und dann value handeln
-        echo '<tr data-status="' . $statusBackEnde . '">
+        echo '<tr data-status="' . $statusBackEnde . '" data-name="'. getNameFromKuerzel($userName) . '" data-kuerzel="' . $userName . '">
                 <td>
                     <div class="form-check">
-                        <input type="checkbox" id="deleteCheckBox' . $i . '" name="deleteCheckBox" ' . $onclickCheck . ' value="' . $id . '">
+                        <input type="checkbox" id="adAddCheckBox' . $i . '" name="adAddCheckBox" onclick="addToChangeList(' . $i . ')" value="' . $id . '">
                     </div>
                 </td>
                 <td class="clickable" data-toggle="collapse" data-target="#anfrage' . $i . '" aria-expanded="false" aria-controls="anfrage' . $i . '"></td>
@@ -137,8 +137,8 @@ function printAllReqeusts()
                     <div class="media">
                         <div class="media-body">
                             <span class="media-meta pull-right">'. $day . ' ' . $mon .', ' . $year . ' ' . $zeit . '</span>
-                            <h4 class="title"> Anfrage von ' . getNameFromKuerzel($userName) . '('.$userName.')<br>Betreff: ' . $betreff . '
-                                <span class="pull-right ' . $statusBackEnde . '">(' . $status . ')</span>
+                            <h4 class="title"> Anfrage von ' . getNameFromKuerzel($userName) . ' ('.$userName.')<br>Betreff: ' . $betreff . '
+                                <span class="pull-right ' . $statusBackEnde2 . '">(' . $status . ')</span>
                             </h4>' . $komm . '
                         </div>
                     </div>
@@ -164,6 +164,42 @@ function printAllReqeusts()
                 </td>
             </tr>';
         $i++;
+    }
+}
+
+
+if ( isset($_GET['changeAntraege']))
+{
+    include_once ("../php/anfragenVerwalten.php");
+    $selected = $_POST['anzahlSelected'];
+    $toDo = $_POST['toDo'];
+    $tokenNew = $_POST['tokenAnzahlNeu'];
+    $kommentar = $_POST['kommentar'];
+    
+    if ( $tokenNew == '' )
+    {
+        $tokenNew = null;
+    }
+    $toChange = array();
+    for ( $i = 0; $i < $selected; $i++ )
+    {
+        $toChange[$i] = $_POST['antrag'.$i];
+    }
+
+    if ( $toDo == 1 )
+    {
+        // bestätigen
+        $wirdBewilligt = true;
+    }
+    else
+    {
+        // ablehnen
+        $wirdBewilligt = false;
+    }
+
+    foreach ($toChange as $id )
+    {
+        bewilligeToken($id, $userName, $tokenNew, $kommentar, $wirdBewilligt);
     }
 }
 

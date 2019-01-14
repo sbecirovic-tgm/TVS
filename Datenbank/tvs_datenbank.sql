@@ -335,3 +335,11 @@ insert into lehrer values ( 'weij', 'Weiser Johann', null);
 insert into lehrer values ( 'wile', 'Wildling Elisabeth', null);
 insert into lehrer values ( 'wimr', 'Wimberger Robert', null);
 insert into lehrer values ( 'zaks', 'Zakall Stefan', null);
+
+-- Award inserts
+INSERT INTO award VALUES ('Pulitzer', 15);
+INSERT INTO award VALUES ('Editor', 15);
+INSERT INTO award VALUES ('Favorite', 15);
+INSERT INTO award VALUES ('Architect', 15);
+-- Der wird speziell behandelt (wenn alle 4 dann auch den)
+INSERT INTO award VALUES ('Spirit of HIT', 15);

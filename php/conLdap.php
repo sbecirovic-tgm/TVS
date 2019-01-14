@@ -58,6 +58,8 @@ function checkUserPass( $userName, $password)
 
         } else {
             $out = false;
+            $type = false;
+            $name = "";
         }
         restore_error_handler();
 

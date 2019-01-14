@@ -21,7 +21,7 @@ function printEvents()
     echo '<script>
             function changeValues(name, beschreibung, tokenAnzahl, id) {
                 var flag;
-                if ( tokenAnzahl == -1)
+                if ( tokenAnzahl === -1)
                 {
                     document.getElementById(("tokenAnzahlUnterKat"+id)).readOnly = false;
                     document.getElementById(("tokenAnzahlUnterKat"+id)).disabled = false;
@@ -37,7 +37,7 @@ function printEvents()
                 document.getElementById(("katTyp"+id)).innerHTML = name;
                 document.getElementById(("katTypBackend"+id)).value = name;
                 // tokenAnzahl
-                if ( flag == false)
+                if ( flag === false)
                 {
                     document.getElementById(("tokenAnzahlUnterKat"+id)).value = tokenAnzahl;
                     document.getElementById(("tokenAnzahlUnterKatBackend"+id)).value = tokenAnzahl;
@@ -56,7 +56,12 @@ function printEvents()
                     document.getElementById("eventNameBackend").value = document.getElementById(("eventNameBackend"+id)).value;
                     document.getElementById("eventDateBackend").value = document.getElementById(("eventDateBackend"+id)).value;
                     document.getElementById("katTypBackend").value = document.getElementById(("katTypBackend"+id)).value;
-                    document.getElementById("tokenAnzahlUnterKatBackend").value = document.getElementById(("tokenAnzahlUnterKatBackend"+id)).value;
+                    var token = document.getElementById(("tokenAnzahlUnterKatBackend"+id)).value;
+                    if ( token === "" )
+                    {
+                        token = document.getElementById(("tokenAnzahlUnterKat"+id)).value;   
+                    }
+                    document.getElementById("tokenAnzahlUnterKatBackend").value = token;
                     document.getElementById("betreffBackend").value = document.getElementById(("betreff"+id)).value;
                     document.getElementById("beschreibungBackend").value = document.getElementById(("beschreibung"+id)).value;
                     

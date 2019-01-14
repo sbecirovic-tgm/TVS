@@ -10,15 +10,15 @@
     <link rel="stylesheet" href="../css/tvs.css">
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/antragHistory.css" />
+    <link rel="stylesheet" type="text/css" href="../css/antragHistory.css"/>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
     <!--<script src="../js/antragHistory.js"> </script> Mal ohne script hab ne eigene Lösung gefunden - seb -->
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
@@ -112,8 +112,18 @@
                                 </div>
                                 <hr class="nullAbstand">
                             </div>
-                            <div class="col-sm-12">
-                                <div class="text-right abstand1AllAround">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="abstand1LeftTop"  data-toggle="tooltip"  data-placement="bottom" title="Einfach und schnell nach einem Schulernamen suchen">
+                                    <div>
+                                        <input type="text" id="nameFilterLeft" class="form-control" onkeyup="filterFunction()" placeholder="Nach Namen oder K&uuml;rzel filtern" aria-label="Sizing example input"
+                                               aria-describedby="inputGroup-sizing-default" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-right abstand1Right">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-success btn-filter" onclick="filter('bestätigt')">Bestätigt</button>
                                         <button type="button" class="btn btn-warning btn-filter" onclick="filter('zubearbeiten')">Zu Bearbeiten</button>
@@ -123,74 +133,52 @@
                                 </div>
                             </div>
                         </div>
+                        <hr>
+                        <div>
+                            <form id="addForm" action="?changeAntraege=1" method="post">
+                                <div class="container">
+                                    <div class="container">
+                                        <label class="abstand1Right btn btn-success">
+                                            <input type="radio" name="optradio" onclick="setBearbeitenBackend(true)">
+                                            <span class="custom-control-description">Bestätigen</span>
+                                        </label>
+                                        <label class="abstand1Right btn btn-danger">
+                                            <input type="radio" name="optradio" onclick="setBearbeitenBackend(false)">
+                                            <span class="custom-control-description">Ablehnen</span>
+                                        </label>
+                                        <div class="input-group mb-3 abstand05TopBot" style="width: 50%" data-toggle="tooltip"  data-placement="bottom" title="Möglichkeit die Tokenanzahl eines Antrags zu veränden. Wenn nicht nötig, einfach überspringen">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-primary text-light">Neue Tokenanzahl</span>
+                                            </div>
+                                            <input type="number" placeholder="Wenn nicht nötig, einfach überspringen" min="0" id="tokenAnzahlNeu" name="tokenAnzahlNeu" class="form-control tokens"
+                                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                        </div>
+                                        <div class="abstandKommentar abstand05TopBot">
+                                            <label>Kommentar:</label>
+                                            <textarea class="form-control" rows="3" minlength="1" id="kommentar" name="kommentar"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="0">
+                                <input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">
+                                <div id="antrListBackend">
+                                </div>
+                            </form>
+                            <div class="text-right">
+                                <button type="button" class="btn btn-primary abstand1AllAround" onclick="submitForm('addForm')">Ausgew&auml;hle
+                                    Anträge bearbeiten</button>
+                            </div>
+                        </div>
                         <div class="table-container">
                             <table id="filterTable" class="table table-filter">
                                 <tbody>
-                                    <!-- erstes zum testen drinnen -->
-                                    <tr data-status="abgelehnt">
-                                        <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" id="editCheckBox">
-                                            </div>
-                                        </td>
-                                        <td class="clickable" data-toggle="collapse" data-target="#anfrage-1"
-                                            aria-expanded="false" aria-controls="anfrage-1"></td>
-                                        <td class="clickable" data-toggle="collapse" data-target="#anfrage-1"
-                                            aria-expanded="false" aria-controls="anfrage-1">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <span class="media-meta pull-right">Dezember 5, 2018</span>
-                                                    <h4 class="title"> Betreff: Tag der offenen Tür
-                                                        <span class="pull-right abgelehnt">(Abgelehnt)</span>
-                                                    </h4>
-                                                    <p class="summary"></p>
-                                                </div>
-                                            </div>
-                                            <div id="anfrage-1" class="collapse">
-                                                Restliche info
-                                            </div>
-                                        </td>
-                                    </tr>
                                     <?php
-                                    printAllReqeusts();
-                                ?>
+                                        printAllReqeusts();
+                                    ?>
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="container">
-                            <div class="container">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">Bestätigen</span>
-                                </label>
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">Ablehnen</span>
-                                </label>
-                                <div class="input-group mb-3 abstand05TopBot" style="width: 50%" data-toggle="tooltip"  data-placement="bottom" title="Möglichkeit die Tokenanzahl eines Antrags zu veränden. Wenn nicht nötig, einfach überspringen">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text bg-primary text-light">Neue Tokenanzahl</span>
-                                    </div>
-                                    <input type="number" placeholder="Wenn nicht nötig, einfach überspringen" min="0" id="tokenAnzahl" name="tokenAnzahl" class="form-control tokens"
-                                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                </div>
-                                <div class="abstandKommentar abstand05TopBot">
-                                    <label>Kommentar:</label>
-                                    <textarea class="form-control" rows="3" minlength="1" id="beschreibung" name="beschreibung"></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <form id="deleteForm" action="?deleteAntraege=1" method="post">
-                            <input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">
-                            <div id="antrListBackend">
-                            </div>
-                        </form>
-                        <div class="text-right">
-                            <button type="button" class="btn btn-primary abstand1AllAround" onclick="submitForm('deleteForm')">Ausgew&auml;hle
-                                Anträge bearbeiten</button>
                         </div>
                     </div>
                 </div>
@@ -202,11 +190,25 @@
         © 2018 Wahl, Becirovic, Gavric, Filipovic
     </footer>
     <script>
-        function addToDelete(num) {
-            var id = "deleteCheckBox" + num;
+        function setBearbeitenBackend(type)
+        {
+            var myForm = document.getElementById("addForm");
+            var toDo = document.getElementById("toDo");
+            myForm.removeChild(toDo);
+            if ( type )
+            {
+                myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="1">'
+            }
+            else
+            {
+                myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="0">'
+            }
+        }
+        function addToChangeList(num) {
+            var id = "adAddCheckBox" + num;
             var checkBox = document.getElementById(id);
             var addDiv = document.getElementById("antrListBackend");
-            var myForm = document.getElementById("deleteForm");
+            var myForm = document.getElementById("addForm");
             var selected = document.getElementById("anzahlSelected");
             var selectedValue = selected.value;
 
@@ -254,6 +256,30 @@
                     else {
                         child.style.display = "none";
                     }
+                }
+            }
+        }
+
+        function filterFunction()
+        {
+            var input = document.getElementById("nameFilterLeft");
+            var filter = input.value.toLowerCase();
+            var parent = document.getElementById("filterTable");
+            var tbody = parent.getElementsByTagName('*')[0];
+
+            var i, child, tag, tag2;
+            var childrenArray = tbody.getElementsByTagName('TR');
+            for (i = 0; i < childrenArray.length; i++) {
+                child = childrenArray[i];
+                tag = child.getAttribute("data-name");
+                tag2 = child.getAttribute("data-kuerzel");
+                if ( tag.toLowerCase().indexOf(filter) > -1 || tag2.toLowerCase().indexOf(filter) > -1 )
+                {
+                    child.style = "";
+                }
+                else
+                {
+                    child.style.display = "none";
                 }
             }
         }

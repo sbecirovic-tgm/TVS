@@ -25,7 +25,6 @@ function requestTokenExt ( $awardTyp, $eventName, $eventDate, $unterKatName, $us
     global $db;
     // inserten, alles andere auf NULL setzten --> bei der normalen abfrage nicht notwendig
     $sqlC = "insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, tokenAnzahlNeu, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), '$awardTyp', NULL, NULL, '$eventName', '$eventDate', '$unterKatName', '$userKuerzel', $tokenAnzahl, NULL, '$beschreibung', '$betreff', NULL, NULL)";
-
     $result = mysqli_query($db, $sqlC);
     return $result;
 }
@@ -35,7 +34,6 @@ function requestTokenExtOhneKat ( $awardTyp, $eventName, $eventDate, $userKuerze
     global $db;
     // inserten, alles andere auf NULL setzten --> bei der normalen abfrage nicht notwendig
     $sqlC = "insert into anfrage( datum, zeit, aName, superkuerzel, lehrerKuerzel, eName, eDatum, untName, skuerzel, tokenAnzahl, tokenAnzahlNeu, beschreibung, betreff, wirdBewilligt, kommentar ) values (CURDATE(), CURTIME(), '$awardTyp', NULL, NULL, '$eventName', '$eventDate', NULL, '$userKuerzel', $tokenAnzahl, NULL, '$beschreibung', '$betreff', NULL, NULL)";
-
     $result = mysqli_query($db, $sqlC);
     return $result;
 }
@@ -76,40 +74,76 @@ function deleteTokenRequest ( $id, $userKeurzel )
     }
 }
 
-function bewilligeToken ( $id, $schuelerKuerzel, $userName, $tokenNeu, $kommentar, $wirdBewilligt)
+function bewilligeToken ( $id, $userName, $tokenNeu, $kommentar, $wirdBewilligt)
 {
     global $db;
+    include_once ("saisonVerwalten.php");
     include_once ("userCheck.php");
-    if ( checkIfUserIsSuperUser($userName) )
+    if ( $wirdBewilligt )
     {
-        $sqlC = "update anfrage set tokenAnzahlNeu = '$tokenNeu', wirdBewilligt = '$wirdBewilligt', kommentar = '$kommentar', superkuerzel = '$userName' where id = '$id' and skuerzel = '$schuelerKuerzel'";
+        $wirdBewilligtString = 'true';
     }
     else
     {
-        $sqlC = "update anfrage set tokenAnzahlNeu = '$tokenNeu', wirdBewilligt = '$wirdBewilligt', kommentar = '$kommentar', lehrerKuerzel = '$userName' where id = '$id' and skuerzel = '$schuelerKuerzel'";
+        $wirdBewilligtString = 'false';
     }
+    if ( $tokenNeu == null )
+    {
+        if ( checkIfUserIsSuperUser($userName) )
+        {
+            $sqlC = "update anfrage set wirdBewilligt = $wirdBewilligtString, kommentar = '$kommentar', superkuerzel = '$userName' where id = $id";
+        }
+        else
+        {
+            $sqlC = "update anfrage set wirdBewilligt = $wirdBewilligtString, kommentar = '$kommentar', lehrerKuerzel = '$userName' where id = $id";
+        }
+
+        $sqlC2 = "select tokenAnzahl from anfrage where id = $id";
+        $temp = mysqli_query($db, $sqlC2);
+        $tokenNeu = mysqli_fetch_assoc($temp)['tokenAnzahl'];
+    }
+    else
+    {
+        if ( checkIfUserIsSuperUser($userName) )
+        {
+            $sqlC = "update anfrage set tokenAnzahlNeu = $tokenNeu, wirdBewilligt = $wirdBewilligtString, kommentar = '$kommentar', superkuerzel = '$userName' where id = $id";
+        }
+        else
+        {
+            $sqlC = "update anfrage set tokenAnzahlNeu = $tokenNeu, wirdBewilligt = $wirdBewilligtString, kommentar = '$kommentar', lehrerKuerzel = '$userName' where id = $id";
+        }
+    }
+
+    echo $sqlC . '<br>';
     $results[0] = mysqli_query($db, $sqlC);
 
-    $sqlC2 = "select aName, datum from anfrage where id = '$id' and skuerzel = '$schuelerKuerzel'";
-    $name = mysqli_query($db, $sqlC2);
-    $nameArray = mysqli_fetch_assoc($name);
-
-    $results[1] = addTokenToLeistung($schuelerKuerzel, $nameArray['aName'] , $tokenNeu, getSaisonNumbFromDate($nameArray['datum']) );
+    if ( $wirdBewilligt )
+    {
+        $sqlC2 = "select aName, datum, skuerzel from anfrage where id = $id";
+        echo $sqlC2 . '<br>';
+        $name = mysqli_query($db, $sqlC2);
+        $nameArray = mysqli_fetch_assoc($name);
+        $results[1] = addTokenToLeistung($nameArray['skuerzel'], $nameArray['aName'] , $tokenNeu, getSaisonNumbFromDate($nameArray['datum']) );
+    }
     return $results;
 }
 
 function addTokenToLeistung ( $schuelerKuerzel, $aName, $token, $saisonNumb)
 {
     global $db;
+    include_once ("saisonVerwalten.php");
+    include_once ("userCheck.php");
     // schauen ob der Schüler schon genug token für einen Award hat
-    $sqlC = "select tokenAnzahl from leistung where aName = '$aName' and sKuerzel = '$schuelerKuerzel' and saisonNummer = '$saisonNumb'";
+    $sqlC = "select tokenAnzahl from leistung where aName = '$aName' and sKuerzel = '$schuelerKuerzel' and saisonNummer = $saisonNumb";
+    echo $sqlC . '<br>';
     $tokenRes = mysqli_query($db, $sqlC);
     $tokenArray = mysqli_fetch_assoc($tokenRes);
     $anzahlToken = $tokenArray['tokenAnzahl'];
     $anzahlToken += $token;
 
     $sqlC2 = "select tokenLimit from award where name = '$aName'";
-    $tokenA = mysqli_query($db, $sqlC);
+    echo $sqlC2 . '<br>';
+    $tokenA = mysqli_query($db, $sqlC2);
     $tokenAArray = mysqli_fetch_assoc($tokenA);
     $tokenLimit = $tokenAArray['tokenLimit'];
     if ( $anzahlToken >= $tokenLimit )
@@ -117,12 +151,48 @@ function addTokenToLeistung ( $schuelerKuerzel, $aName, $token, $saisonNumb)
         $token = $anzahlToken - $tokenLimit;
         //auszeichnung erstellen wenn
         $sqlA = "insert into auszeichnung ( datum, zeit, skuerzel, awardName, saisonNummer ) values ( CURDATE(), CURTIME(), '$schuelerKuerzel', '$aName', $saisonNumb )";
+        echo $sqlA . '<br>';
         mysqli_query($db, $sqlA);
+
+        $sqlA = "select awardName from auszeichnung where saisonNummer = $saisonNumb and skuerzel = '$schuelerKuerzel'";
+        echo $sqlA . '<br>';
+        $awards = mysqli_query($db, $sqlA);
+        $aNameArray = array();
+        for ( $i = 0; $array = mysqli_fetch_assoc($awards); $i++ )
+        {
+            $aNameArray[$i] = $array['awardName'];
+        }
+
+        if ( in_array('Pulitzer', $aNameArray) && in_array('Editor', $aNameArray) && in_array('Favorite', $aNameArray) && in_array('Architect', $aNameArray) && !in_array('Spirit of HIT', $aNameArray) )
+        {
+            $sqlC = "insert into auszeichnung ( datum, zeit, skuerzel, awardName, saisonNummer ) values ( CURDATE(), CURTIME(), '$schuelerKuerzel', 'Spirit of HIT', $saisonNumb )";
+            echo $sqlC . '<br>';
+            mysqli_query($db, $sqlC);
+        }
+
+    }
+    else
+    {
+        $token = $anzahlToken;
     }
 
+    $sqlC = "select count(tokenAnzahl) as anzahl from leistung where saisonNummer = $saisonNumb";
+    echo $sqlC. '<br>';
+    $temp = mysqli_query($db, $sqlC);
+    $anzahl = mysqli_fetch_assoc($temp)['anzahl'];
 
-    $sqlC2 = "update leistung set tokenAnzahl = '$token' where aName = '$aName' and sKuerzel = '$schuelerKuerzel' and saisonNummer = '$saisonNumb'";
-    return mysqli_query($db, $sqlC2);
+    if ( $anzahl == 0 )
+    {
+        $sqlC2 = "insert into leistung (aName, sKuerzel, tokenAnzahl, saisonNummer) values('$aName', '$schuelerKuerzel', $token, $saisonNumb )";
+    }
+    else
+    {
+        $sqlC2 = "update leistung set tokenAnzahl = $token where aName = '$aName' and sKuerzel = '$schuelerKuerzel' and saisonNummer = $saisonNumb";
+    }
+
+    echo $sqlC2 . '<br>';
+    $result = mysqli_query($db, $sqlC2);
+    return $result;
 }
 
 

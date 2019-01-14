@@ -22,8 +22,13 @@ header {
   margin-top: 1em;
 }
 
+.abstand1LeftTop {
+  margin-top: 1em;
+  margin-left: 1em;
+}
+
 .abstand2 {
-  margin-top: 2em;
+  margin-top: 2em !important;
 }
 
 .login {
@@ -35,7 +40,7 @@ header {
     padding-bottom: 40px;
     background-color: #f8f9fa;
   }
-  
+
   .falsch {
     color: #FF0000;
     text-align: center;
@@ -158,7 +163,7 @@ footer p:last-child {
     left: 100%;
     width: 100%;
     padding-right: 1rem;
-    padding-left: 1rem; 
+    padding-left: 1rem;
     overflow-y: auto;
     visibility: hidden;
     background-color: #343a40;
@@ -236,7 +241,7 @@ footer p:last-child {
 .list-group{
   max-height: 300px;
   margin-bottom: 10px;
-  overflow-y:scroll; 
+  overflow-y:scroll;
   -webkit-overflow-scrolling: touch;
 }
 
