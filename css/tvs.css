@@ -10,6 +10,10 @@ header {
   margin-top: 3em;
 }
 
+.abstandKommentar {
+  margin-right: -1rem;
+}
+
 .tokenAnfragen {
   margin: 0 0 2em 0;
 }
