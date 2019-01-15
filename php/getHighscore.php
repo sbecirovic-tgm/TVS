@@ -266,7 +266,6 @@ function getAwardHighscoreAllTime()
 function getAwardHighscoreProAwardPerSaison( $saisonNummer, $aName )
 {
     global $db;
-
     $out = array();
 
     $sqlC = "select kuerzel, sName from schueler order by kuerzel";

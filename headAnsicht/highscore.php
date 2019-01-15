@@ -54,9 +54,7 @@ function setAwardType()
         if ($_SESSION['highscoreAwardType'] == -1) {
             echo '<button type="button" id="AwardType" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All Awards</button><input id="AwardTypeTemp" name="AwardTypeTemp" class="hiddenMeldung" value="All Awards">';
         } else {
-            include_once("../php/awardsVerwalten.php");
-            $awards = getAllAwardsOrderedByName();
-            $name = $awards[$_SESSION['highscoreAwardType']]['name'];
+            $name = $_SESSION['highscoreAwardType'];
             echo '<button type="button" id="AwardType" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' . $name . '</button><input id="AwardTypeTemp" name="AwardTypeTemp" class="hiddenMeldung" value="' . $name . '">';
         }
     }
@@ -163,7 +161,6 @@ function printHighscore()
         $award = -1;
     }
 
-
     if ($typ == 1) {
         printTokenHighscore($award, $saison, $sortiert);
     } else {
@@ -246,11 +243,11 @@ function printAwardHighscore($award, $saison, $sortiert)
         elseif ( $saison == 0 )
         {
             include_once ("../php/saisonVerwalten.php");
-            $out = getAwardHighscoreProAwardPerSaison($award, getSaisonNumb());
+            $out = getAwardHighscoreProAwardPerSaison(getSaisonNumb(), $award);
         }
         else
         {
-            $out = getAwardHighscoreProAwardPerSaison($award, $saison);
+            $out = getAwardHighscoreProAwardPerSaison($saison, $award);
         }
         if ( $sortiert == 1 )
         {
@@ -288,28 +285,14 @@ if (isset($_GET['highscoreForm']))
 
 if (isset($_GET['awardForm']))
 {
-    include_once ("../php/awardsVerwalten.php");
     $award = $_POST['AwardTypeTemp'];
-    $awards = getAllAwardsOrderedByName();
-    $i = 0;
-    foreach ($awards as $a)
-    {
-        $val = $a['name'];
-        if ($val == $award)
-        {
-            break;
-        }
-        else {
-            $i++;
-        }
-    }
     if ( $award == 'All Awards' )
     {
         $_SESSION['highscoreAwardType'] = -1;
     }
     else
     {
-        $_SESSION['highscoreAwardType'] = $i;
+        $_SESSION['highscoreAwardType'] = $award;
     }
 }
 

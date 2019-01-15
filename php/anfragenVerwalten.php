@@ -205,7 +205,7 @@ function addTokenToLeistung ( $schuelerKuerzel, $aName, $token, $saisonNumb)
         $token = $anzahlToken;
     }
 
-    $sqlC = "select count(tokenAnzahl) as anzahl from leistung where saisonNummer = $saisonNumb";
+    $sqlC = "select count(tokenAnzahl) as anzahl from leistung where saisonNummer = $saisonNumb and sKuerzel = '$schuelerKuerzel'";
     $temp = mysqli_query($db, $sqlC);
     $anzahl = mysqli_fetch_assoc($temp)['anzahl'];
 

@@ -154,7 +154,6 @@ function printAllReqeusts()
             if ( $id == $idVerwalten )
             {
                 $checkBox = "checked";
-                $_SESSION['foundAnfrage'] = $id;
             }
         }
         // zum abfragen einer checkbox: isset($_POST['formWheelchair'] schauen ob vorhanden und dann value handeln
@@ -201,17 +200,18 @@ function printAllReqeusts()
 
 function printVor()
 {
-    if ( key_exists('foundAnfrage', $_SESSION))
+    $anfrageVerwalten = $_SESSION['anfrageVerwaltung'];
+    if ( $anfrageVerwalten != null )
     {
-        $id = $_SESSION['foundAnfrage'];
+        $id = $anfrageVerwalten['id'];
         echo '<input type="text" id="antrag0" name="antrag0" class="hiddenMeldung" value="' . $id . '">';
-        unset($_SESSION['foundAnfrage']);
     }
 }
 
 function printVorSelected()
 {
-    if ( key_exists('foundAnfrage', $_SESSION))
+    $anfrageVerwalten = $_SESSION['anfrageVerwaltung'];
+    if ( $anfrageVerwalten != null )
     {
         echo '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="1">';
     }
