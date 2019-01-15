@@ -227,6 +227,19 @@ function getBerechtigteLehrerToAward( $aName )
     return $out;
 }
 
+function getBerechtigteAwardsProLehrer ( $lKuerzel )
+{
+    global $db;
+    $sqlC = "select * from erlaubnis where lKuerzel = '$lKuerzel'";
+    $temp = mysqli_query($db, $sqlC);
+    $out = array();
+    for ( $i = 0; $erlaubnisArray = mysqli_fetch_assoc($temp); $i++ )
+    {
+        $out[$i] = $erlaubnisArray['lKuerzel'];
+    }
+    return $out;
+}
+
 function deleteBerechtigungLehrerToAward ( $kuerzel, $aName )
 {
     global $db;

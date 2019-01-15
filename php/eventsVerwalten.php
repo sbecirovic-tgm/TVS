@@ -62,6 +62,24 @@ function listAllEventsLimit($limit)
     return $out;
 }
 
+function listAllEventsBerechtigtLimit ($limit, $lKuerzel )
+{
+    global $db;
+    $sqlC = "select * from event where aName in (select aName from erlaubnis where lKuerzel = '$lKuerzel') order by datum desc limit $limit";
+    $events = mysqli_query($db, $sqlC);
+    $out = array();
+    for ($i = 0; $event_array = mysqli_fetch_assoc($events); $i++) {
+        $out[$i] = array();
+        $out[$i]['name'] = $event_array['name'];
+        $out[$i]['datum'] = $event_array['datum'];
+        $out[$i]['superKuerzel'] = $event_array['superKuerzel'];
+        $out[$i]['lKuerzel'] = $event_array['lKuerzel'];
+        $out[$i]['aName'] = $event_array['aName'];
+        $out[$i]['beschreibung'] = $event_array['beschreibung'];
+    }
+    return $out;
+}
+
 function getEvent( $name, $datum, $aName )
 {
     global $db;

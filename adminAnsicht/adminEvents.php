@@ -997,51 +997,61 @@ if ( isset($_GET['deleteKuerzel']))
 if ( isset($_GET['addEvent']))
 {
     include_once ("../php/eventsVerwalten.php");
+    include_once ("../php/userCheck.php");
     $name = $_POST['name'];
     $datum = $_POST['date'];
     $aName = $_POST['awardTypeBackend'];
     $beschreibung = $_POST['beschreibung'];
+    $berechtigtArray = getBerechtigteAwardsProLehrer($userName);
 
-    if ( strlen($name) == 0 && strlen($datum) == 0 && strlen($aName) == 0 )
+    if ( in_array($aName, $berechtigtArray))
     {
-        $_SESSION['addEventError'] = true;
-    }
-    else {
-        if ( key_exists('eventWildTemp', $_SESSION))
+        if ( strlen($name) == 0 && strlen($datum) == 0 && strlen($aName) == 0 )
         {
-            $result = addWildcard($_SESSION['eventWildTemp']);
+            $_SESSION['addEventError'] = true;
         }
-        else
-        {
-            $result[0] = Null;
-        }
-        addEvent($name, $datum, $userName, $aName, $beschreibung, $result[0]);
+        else {
+            if ( key_exists('eventWildTemp', $_SESSION))
+            {
+                $result = addWildcard($_SESSION['eventWildTemp']);
+            }
+            else
+            {
+                $result[0] = Null;
+            }
+            addEvent($name, $datum, $userName, $aName, $beschreibung, $result[0]);
 
 
-        if ( key_exists('kategorienListe', $_SESSION))
-        {
-            $unterKatArr = $_SESSION['kategorienListe'];
+            if ( key_exists('kategorienListe', $_SESSION))
+            {
+                $unterKatArr = $_SESSION['kategorienListe'];
 
-            foreach ($unterKatArr as $unterKat) {
-                /*
-                 ['name']
-                 ['tokenAnzahl']
-                 ['beschreibung']
-                 */
-                addUnterkategorie($unterKat['name'], $name, $aName, $datum, $unterKat['tokenAnzahl'], $unterKat['beschreibung']);
+                foreach ($unterKatArr as $unterKat) {
+                    /*
+                     ['name']
+                     ['tokenAnzahl']
+                     ['beschreibung']
+                     */
+                    addUnterkategorie($unterKat['name'], $name, $aName, $datum, $unterKat['tokenAnzahl'], $unterKat['beschreibung']);
+                }
+
+                unset($unterKatArr);
+                unset($unterKat);
             }
 
-            unset($unterKatArr);
-            unset($unterKat);
+
+            // dinger löschen
+            unset($_SESSION['eventWildTemp']);
+            unset($_SESSION['kategorienListe']);
+
+            unset($result);
+
         }
 
-
-        // dinger löschen
-        unset($_SESSION['eventWildTemp']);
-        unset($_SESSION['kategorienListe']);
-
-        unset($result);
-
+    }
+    else
+    {
+        $_SESSION['berechtigungError'] = true;
     }
 
     unset($name);
@@ -1066,6 +1076,24 @@ function printEventError()
 if (isset($_GET['alertEventDismiss']))
 {
     unset($_SESSION['addEventError']);
+}
+
+// error popup
+function printEventBerechtigungError()
+{
+    if ( key_exists('berechtigungError', $_SESSION))
+    {
+        $error = $_SESSION['berechtigungError'];
+        if ( $error )
+        {
+            echo '<script>function f() {var form = document.getElementById("alertEventBerechtigungForm"); form.submit();}</script><div class="bottomAlert"><div class="alert alert-danger alert-dismissible fade show abstand1" role="alert"><form id="alertEventBerechtigungForm" action="?alertEventBerechtigungDismiss=1" method="post"><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="f()"><span aria-hidden="true">&times;</span></button>Sie haben nicht die n&ouml;tige Berechtigung um ein Event zu diesem Award hinzuzuf&uuml;gen.</form></div></div>';
+        }
+    }
+}
+// popup dismiss
+if (isset($_GET['alertEventBerechtigungDismiss']))
+{
+    unset($_SESSION['berechtigungError']);
 }
 
 if ( isset($_GET['deleteEvent']))

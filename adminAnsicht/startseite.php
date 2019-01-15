@@ -39,7 +39,7 @@ function printEventLimit4()
 {
     include_once ("../php/eventsVerwalten.php");
     global $userName;
-    $events = listAllRequestToLehrerErlaubnisLimit($userName,4);
+    $events = listAllEventsBerechtigtLimit(4, $userName);
     $i = 0;
     foreach ($events as $event )
     {
@@ -64,7 +64,8 @@ function printAnfragenLimit4()
 {
     include_once ("../php/anfragenVerwalten.php");
     include_once ("../php/userCheck.php");
-    $anfragen = listAllRequestsLimit(4);
+    global $userName;
+    $anfragen = listAllRequestToLehrerErlaubnisLimit(4, $userName);
     $i = 0;
     foreach ($anfragen as $anfrage )
     {

@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
           crossorigin="anonymous">
 
-    <title>Tokenverwaltung</title>
+    <title href="starseite.html">Tokenverwaltung</title>
 </head>
 
 <body>
@@ -137,6 +137,15 @@
                         <form id="addForm" action="?changeAntraege=1" method="post">
                             <div class="container">
                                 <div class="container">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary active">
+                                            <input type="radio" name="options" id="bestButton" autocomplete="off"> Bestätigen
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="ablButton" autocomplete="off"> Ablehnen
+                                        </label>
+                                    </div>
+                                    <!--
                                     <div class="noAbstand btn-group" data-toggle="buttons">
                                         <label class="btn btn-primary active" onclick="setBearbeitenBackend(true)">
                                             <input type="radio" name="options" id="option1" autocomplete="off" > Bestätigen
@@ -144,7 +153,7 @@
                                         <label class="btn btn-primary" onclick="setBearbeitenBackend(false)">
                                             <input type="radio" name="options" id="option2" autocomplete="off"> Ablehnen
                                         </label>
-                                    </div>
+                                    </div> -->
                                     <div class="input-group mb-3 abstand05TopBot" style="width: 50%" data-toggle="tooltip"  data-placement="bottom" title="Möglichkeit die Tokenanzahl eines Antrags zu veränden. Wenn nicht nötig, einfach überspringen">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text bg-primary text-light">Neue Tokenanzahl</span>
@@ -207,8 +216,22 @@
         var checkBox = document.getElementById(id);
         var addDiv = document.getElementById("antrListBackend");
         var myForm = document.getElementById("addForm");
+        var toDo = document.getElementById("toDo");
         var selected = document.getElementById("anzahlSelected");
         var selectedValue = selected.value;
+        // buttons
+        var bestbutton = document.getElementById("bestButton");
+        var ablButton = document.getElementById("ablButton");
+
+        myForm.removeChild(toDo);
+        if ( bestbutton.checked )
+        {
+            myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="1">'
+        }
+        else if ( ablButton.checked )
+        {
+            myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="0">'
+        }
 
         var checkID = checkBox.value;
         if (checkBox.checked) {

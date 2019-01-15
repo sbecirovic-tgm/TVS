@@ -18,6 +18,11 @@ function printAllReqeusts()
     $requests = listAllRequestToLehrerErlaubnis($userName);
     $anfrageVerwalten = $_SESSION['anfrageVerwaltung'];
 
+    if ( count($requests) == 0 )
+    {
+
+    }
+
     $i = 0;
     foreach ($requests as $anfrage )
     {
@@ -91,8 +96,8 @@ function printAllReqeusts()
         }
         else if ( $temp == true )
         {
-            $status = "Bestätigt";
-            $statusBackEnde = "bestätigt";
+            $status = "Best&auml;tigt";
+            $statusBackEnde = "best&auml;tigt";
             $statusBackEnde2 = $statusBackEnde;
 
             if ( $lehrer == "" )
@@ -113,7 +118,7 @@ function printAllReqeusts()
 
             if ( $tokenNeu != '' )
             {
-                $kommentar = $kommentar . '<br><strong>Vom Lehrer geänderte Tokenanzahl:</strong> ' . $tokenNeu;
+                $kommentar = $kommentar . '<br><strong>Vom Lehrer ge&auml;nderte Tokenanzahl:</strong> ' . $tokenNeu;
             }
             $kommentar = $kommentar . '</div></div>';
         }
