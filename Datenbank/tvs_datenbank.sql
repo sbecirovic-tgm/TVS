@@ -224,7 +224,7 @@ CREATE TABLE saisonEinstellung (
 
 -- Koppensteiner als Superuser:
 insert into superuser( kuerzel, lName)
-values ('gkoppensteiner', "G. Koppensteiner");
+values ('kopg', "Gottfried Koppensteiner");
 
 -- Saison Länge default YYYY-MM-DD
 insert into saisonEinstellung ( startJahr, startDatumWSem, endDatumWSem, startDatumSSem, endDatumSSem)

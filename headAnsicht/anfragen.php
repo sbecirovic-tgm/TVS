@@ -14,9 +14,29 @@ $userName = $_SESSION['userName'];
 function printAllReqeusts()
 {
     include_once ("../php/anfragenVerwalten.php");
+    include_once ("../php/userCheck.php");
     $requests = listAllRequests();
     $anfrageVerwalten = $_SESSION['anfrageVerwaltung'];
     $i = 0;
+
+    if ( count($requests) == 0 )
+    {
+        echo '<tr>
+                <td>
+                </td>
+                <td></td>
+                <td>
+                    <div class="media">
+                        <div class="media-body">
+                            <span class="media-meta pull-right"></span>
+                            <h4 class="title"> Noch keine Anfragen
+                            </h4>
+                        </div>
+                    </div>
+                </td>
+            </tr>';
+    }
+
     foreach ($requests as $anfrage )
     {
         /**
@@ -104,29 +124,29 @@ function printAllReqeusts()
         }
         else if ( $temp == true )
         {
-            $status = "Bestätigt";
-            $statusBackEnde = "bestätigt";
+            $status = "Best&auml;tigt";
+            $statusBackEnde = "best&auml;tigt";
             $statusBackEnde2 = $statusBackEnde;
 
             if ( $lehrer == "" )
             {
-                $bearbeitetVon = "";
+                $bearbeitetVon = getNameFormSuper($super);
             }
             else if ( $super == "" )
             {
-                $bearbeitetVon = "";
+                $bearbeitetVon = getNameToLehrerKuerzel($lehrer);
             }
             else
             {
                 $bearbeitetVon = "Gott?";
             }
-            $komm = '<p class="summary smallFont"><strong>Bewertet von:</strong>' . $bearbeitetVon . '</p>';
+            $komm = '<p class="summary smallFont"><strong>Bewertet von:</strong> ' . $bearbeitetVon . '</p>';
             $tokenNeu = $anfrage['tokenAnzahlNeu'];
-            $kommentar = '<div class="row smallFont"><div class="col-sm-12"><strong>Kommentar des Lehrers</strong><hr>' . $anfrage['kommentar'];
+            $kommentar = '<div class="row smallFont abstand1"><div class="col-sm-12"><strong>Kommentar des Lehrers</strong><hr class="noAbstand">' . $anfrage['kommentar'];
 
             if ( $tokenNeu != '' )
             {
-                $kommentar = $kommentar . '<br><strong>Vom Lehrer geänderte Tokenanzahl:</strong> ' . $tokenNeu;
+                $kommentar = $kommentar . '<br><br><strong>Vom Lehrer ge&auml;nderte Tokenanzahl:</strong> ' . $tokenNeu;
             }
             $kommentar = $kommentar . '</div></div>';
         }
@@ -141,6 +161,7 @@ function printAllReqeusts()
 
         $id = $anfrage['id'];
 
+        $checkBox = "";
         if ( $anfrageVerwalten != null )
         {
             $idVerwalten = $anfrageVerwalten['id'];
@@ -149,7 +170,6 @@ function printAllReqeusts()
                 $checkBox = "checked";
             }
         }
-        $checkBox = "";
 
         // zum abfragen einer checkbox: isset($_POST['formWheelchair'] schauen ob vorhanden und dann value handeln
         echo '<tr data-status="' . $statusBackEnde . '" data-name="'. getNameFromKuerzel($userName) . '" data-kuerzel="' . $userName . '">

@@ -594,7 +594,7 @@ function printWildcard()
         {
             return '<div class="row">
                 <div class="col-sm-8">
-                    <h4>Zug&auml;nglichkeit</h4>
+                    <h4 data-toggle="tooltip"  data-placement="bottom" title="Setzen wer eine Anfrage zu diesem Event stellen kann.">Zug&auml;nglichkeit</h4>
                 </div>
                 <div class="col-sm-4">
                     <form id="changeWildcard" action="?changeWildcard=1" method="post">
@@ -629,7 +629,7 @@ function printWildcard()
         {
             return '<div class="row">
                 <div class="col-sm-8">
-                    <h4>Zug&auml;nglichkeit</h4>
+                    <h4 data-toggle="tooltip"  data-placement="bottom" title="Setzen wer eine Anfrage zu diesem Event stellen kann.">Zug&auml;nglichkeit</h4>
                 </div>
                 <div class="col-sm-4">
                     <form id="changeWildcard" action="?changeWildcard=1" method="post">
@@ -666,7 +666,7 @@ function printWildcard()
         $_SESSION['wildcardStatus'] = false;
         return '<div class="row">
                 <div class="col-sm-8">
-                    <h4>Zug&auml;nglichkeit</h4>
+                    <h4 data-toggle="tooltip"  data-placement="bottom" title="Setzen wer eine Anfrage zu diesem Event stellen kann.">Zug&auml;nglichkeit</h4>
                 </div>
                 <div class="col-sm-4">
                     <form id="changeWildcard" action="?changeWildcard=1" method="post">
