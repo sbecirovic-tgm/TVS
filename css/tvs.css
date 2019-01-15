@@ -97,32 +97,47 @@ header {
   height: 75%;
 }
 
-  @media (max-width: 575.98px){
-    .loginButtonText {
-      font-size: 1.1rem;
-    }
-    .loginIcon {
-      font-size: 1.1rem;
-    }
-  }
+.awardAuswaehlen {
+  
+  margin-top: 0.2rem;
 
-  @media (min-width: 1200px){
-    .loginButtonText {
-      font-size: 1.2rem;
-    }
-    .loginIcon {
-      font-size: 1.2rem;
-    }
-  }
+}
 
-  @media (min-width: 768px){
-    .loginButtonText {
-      font-size: 1.1rem;
-    }
-    .loginIcon {
-      font-size: 1.1rem;
-    }
+@media (max-width: 575.98px){
+  .loginButtonText {
+    font-size: 1.1rem;
   }
+  .loginIcon {
+    font-size: 1.1rem;
+  }
+  .tokenanzahl {
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 1200px){
+  .loginButtonText {
+    font-size: 1.2rem;
+  }
+  .loginIcon {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 768px){
+  .loginButtonText {
+    font-size: 1.1rem;
+  }
+  .loginIcon {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px){
+  .tokenanzahl {
+    margin-top: 1rem;
+  }
+}
 
 html
 {

@@ -23,34 +23,29 @@
         <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
             <div class="container">
                 <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav mr-auto">
-                    </ul>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <?php
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <?php
                                 include_once("../php/userCheck.php");
                                 echo getNameFromKuerzel($userName);
                             ?>
-                        </button>
-                        <div class="dropdown-menu">
-                            <!-- <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a> -->
-                            <form id="logoutForm" action="?logout=1" method="post">
-                                <a class="dropdown-item" style="cursor: pointer;" onclick="submitForm('logoutForm')" type="submit" name="logout">Logout</a>
-                            </form>
-                        </div>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <!-- <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a> -->
+                        <form id="logoutForm" action="?logout=1" method="post">
+                            <a class="dropdown-item" style="cursor: pointer;" onclick="submitForm('logoutForm')" type="submit"
+                                name="logout">Logout</a>
+                        </form>
                     </div>
                 </div>
+
 
             </div>
         </nav>
     </header>
-        
+
     <script language="JavaScript" type="text/javascript">
         function submitForm(form) {
             var myForm = document.getElementById(form);
@@ -62,7 +57,7 @@
             <nav class="nav nav-underline">
                 <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
                 <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
-                    <a class="nav-link active fakeLink"   onclick="submitForm('eventForm')">
+                    <a class="nav-link active fakeLink" onclick="submitForm('eventForm')">
                         Events
                         <span class="badge badge-pill bg-light align-text-bottom">
                             <?php
@@ -75,7 +70,7 @@
 
                 <a class="nav-link active" href="antragHistroy.html">Antraghistory</a>
                 <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
-                    <a class="nav-link active fakeLink"   onclick="submitForm('highscoreForm')">Highscores</a>
+                    <a class="nav-link active fakeLink" onclick="submitForm('highscoreForm')">Highscores</a>
                 </form>
             </nav>
         </div>
@@ -157,8 +152,10 @@
                                             }
                                         </script>
                                         <button type="button" name="awardType" id="awardType" class="btn btn-primary dropdown-toggle btn-outline-primary"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Award auswählen</button>
-                                        <input type="text" min="0" id="awardTypeBackend" name="awardTypeBackend" class="hiddenMeldung" value="">
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Award
+                                            auswählen</button>
+                                        <input type="text" min="0" id="awardTypeBackend" name="awardTypeBackend" class="hiddenMeldung"
+                                            value="">
 
                                         <div class="dropdown-menu">
                                             <?php
@@ -168,11 +165,11 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <div class="input-group mb-3">
+                                    <div class="input-group mb-3 tokenanzahl">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text bg-primary text-light">Token</span>
                                         </div>
-                                        <input type="number" min="0" id="tokenAnzahl" name="tokenAnzahl" class="form-control tokens"
+                                        <input type="number" min="0" id="tokenAnzahl" name="tokenAnzahl" class="form-control tokens d-inline"
                                             aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                     </div>
                                 </div>
@@ -198,7 +195,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 text-center">
-                                    <input type="button" class="btn btn-outline-primary dashboardButtons" onclick="msg()" readonly value="Anfordern">
+                                    <input type="button" class="btn btn-outline-primary dashboardButtons" onclick="msg()"
+                                        readonly value="Anfordern">
                                 </div>
                             </div>
                             <div id="antragErrorMsg"></div>
@@ -290,7 +288,7 @@
         </div>
     </div>
     <footer class="footerSticky">
-            © 2018 Wahl, Becirovic, Gavric, Filipovic 
+        © 2018 Wahl, Becirovic, Gavric, Filipovic
     </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
