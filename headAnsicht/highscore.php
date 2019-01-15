@@ -158,7 +158,13 @@ function printHighscore()
     $saison = $_SESSION['highscoreSaisonNum'];
     $sortiert = $_SESSION['highscoreSortiert'];
 
-    if ($typ == "Token Highscore") {
+    if ( $award == 'All Awards')
+    {
+        $award = -1;
+    }
+
+
+    if ($typ == 1) {
         printTokenHighscore($award, $saison, $sortiert);
     } else {
         printAwardHighscore($award, $saison, $sortiert);

@@ -13,14 +13,13 @@ $userName = $_SESSION['userName'];
 
 function printAllReqeusts()
 {
-    include_once ("../php/anfragenVerwalten.php");
-    include_once ("../php/userCheck.php");
+    include_once("../php/anfragenVerwalten.php");
+    include_once("../php/userCheck.php");
     $requests = listAllRequests();
     $anfrageVerwalten = $_SESSION['anfrageVerwaltung'];
     $i = 0;
 
-    if ( count($requests) == 0 )
-    {
+    if (count($requests) == 0) {
         echo '<tr>
                 <td>
                 </td>
@@ -37,24 +36,23 @@ function printAllReqeusts()
             </tr>';
     }
 
-    foreach ($requests as $anfrage )
-    {
+    foreach ($requests as $anfrage) {
         /**
-        $out[$i]['id'] = $anfragen_array['id'];
-        $out[$i]['datum'] = $anfragen_array['datum'];
-        $out[$i]['zeit'] = $anfragen_array['zeit'];
-        $out[$i]['aName'] = $anfragen_array['aName'];
-        $out[$i]['eName'] = $anfragen_array['eName'];
-        $out[$i]['eDatum'] = $anfragen_array['eDatum'];
-        $out[$i]['untName'] = $anfragen_array['untName'];
-        $out[$i]['tokenAnzahl'] = $anfragen_array['tokenAnzahl'];
-        $out[$i]['tokenAnzahlNeu'] = $anfragen_array['tokenAnzahlNeu'];
-        $out[$i]['beschreibung'] = $anfragen_array['beschreibung'];
-        $out[$i]['betreff'] = $anfragen_array['betreff'];
-        $out[$i]['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
-        $out[$i]['kommentar'] = $anfragen_array['kommentar'];
-        $out[$i]['superkuerzel'] = $anfragen_array['superkuerzel'];
-        $out[$i]['lehrerKuerzel'] = $anfragen_array['lehrerKuerzel'];
+         * $out[$i]['id'] = $anfragen_array['id'];
+         * $out[$i]['datum'] = $anfragen_array['datum'];
+         * $out[$i]['zeit'] = $anfragen_array['zeit'];
+         * $out[$i]['aName'] = $anfragen_array['aName'];
+         * $out[$i]['eName'] = $anfragen_array['eName'];
+         * $out[$i]['eDatum'] = $anfragen_array['eDatum'];
+         * $out[$i]['untName'] = $anfragen_array['untName'];
+         * $out[$i]['tokenAnzahl'] = $anfragen_array['tokenAnzahl'];
+         * $out[$i]['tokenAnzahlNeu'] = $anfragen_array['tokenAnzahlNeu'];
+         * $out[$i]['beschreibung'] = $anfragen_array['beschreibung'];
+         * $out[$i]['betreff'] = $anfragen_array['betreff'];
+         * $out[$i]['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
+         * $out[$i]['kommentar'] = $anfragen_array['kommentar'];
+         * $out[$i]['superkuerzel'] = $anfragen_array['superkuerzel'];
+         * $out[$i]['lehrerKuerzel'] = $anfragen_array['lehrerKuerzel'];
          */
 
         /*
@@ -87,8 +85,7 @@ function printAllReqeusts()
         $tokenAnzahl = $anfrage['tokenAnzahl'];
 
         $eName = $anfrage['eName'];
-        if ( $eName != '' )
-        {
+        if ($eName != '') {
             $eventDatumString = $anfrage['eDatum'];
             $eDatum = strtotime($eventDatumString);
             $eday = date("d", $eDatum);
@@ -98,14 +95,11 @@ function printAllReqeusts()
             $event = '<div class="row smallFont abstand1"><div class="col-sm-12"><strong>Event</strong><hr class="nullAbstand">' . $eName . ', ' . $eday . ' ' . $emon . ', ' . $eyear;
 
             $uKat = $anfrage['untName'];
-            if ( $uKat != '' )
-            {
+            if ($uKat != '') {
                 $event = $event . '<br>Anfrage in der Unterkategorie "' . $uKat . '" gestellt';
             }
             $event = $event . '</div></div>';
-        }
-        else
-        {
+        } else {
             $event = '';
         }
 
@@ -114,44 +108,33 @@ function printAllReqeusts()
         $super = $anfrage['superkuerzel'];
 
         $temp = $anfrage['wirdBewilligt'];
-        if ( $temp == '' )
-        {
+        if ($temp == '') {
             $status = "Zu Bearbeitung";
             $statusBackEnde = "zubearbeiten";
             $statusBackEnde2 = "inbearbeitung";
             $komm = '';
             $kommentar = '';
-        }
-        else if ( $temp == true )
-        {
+        } else if ($temp == true) {
             $status = "Best&auml;tigt";
             $statusBackEnde = "best&auml;tigt";
             $statusBackEnde2 = $statusBackEnde;
 
-            if ( $lehrer == "" )
-            {
+            if ($lehrer == "") {
                 $bearbeitetVon = getNameFormSuper($super);
-            }
-            else if ( $super == "" )
-            {
+            } else if ($super == "") {
                 $bearbeitetVon = getNameToLehrerKuerzel($lehrer);
-            }
-            else
-            {
+            } else {
                 $bearbeitetVon = "Gott?";
             }
             $komm = '<p class="summary smallFont"><strong>Bewertet von:</strong> ' . $bearbeitetVon . '</p>';
             $tokenNeu = $anfrage['tokenAnzahlNeu'];
             $kommentar = '<div class="row smallFont abstand1"><div class="col-sm-12"><strong>Kommentar des Lehrers</strong><hr class="noAbstand">' . $anfrage['kommentar'];
 
-            if ( $tokenNeu != '' )
-            {
+            if ($tokenNeu != '') {
                 $kommentar = $kommentar . '<br><br><strong>Vom Lehrer ge&auml;nderte Tokenanzahl:</strong> ' . $tokenNeu;
             }
             $kommentar = $kommentar . '</div></div>';
-        }
-        else if ( $temp == false )
-        {
+        } else if ($temp == false) {
             $status = "Abgelehnt";
             $statusBackEnde = "abgelehnt";
             $statusBackEnde2 = $statusBackEnde;
@@ -162,28 +145,27 @@ function printAllReqeusts()
         $id = $anfrage['id'];
 
         $checkBox = "";
-        if ( $anfrageVerwalten != null )
-        {
+        if ($anfrageVerwalten != null) {
             $idVerwalten = $anfrageVerwalten['id'];
-            if ( $id == $idVerwalten )
-            {
+            if ($id == $idVerwalten) {
                 $checkBox = "checked";
+                $_SESSION['foundAnfrage'] = $id;
             }
         }
 
         // zum abfragen einer checkbox: isset($_POST['formWheelchair'] schauen ob vorhanden und dann value handeln
-        echo '<tr data-status="' . $statusBackEnde . '" data-name="'. getNameFromKuerzel($userName) . '" data-kuerzel="' . $userName . '">
+        echo '<tr data-status="' . $statusBackEnde . '" data-name="' . getNameFromKuerzel($userName) . '" data-kuerzel="' . $userName . '">
                 <td>
                     <div class="form-check">
-                        <input type="checkbox" id="adAddCheckBox' . $i . '" name="adAddCheckBox" onclick="addToChangeList(' . $i . ')" value="' . $id . '" ' .$checkBox .'>
+                        <input type="checkbox" id="adAddCheckBox' . $i . '" name="adAddCheckBox" onclick="addToChangeList(' . $i . ')" value="' . $id . '" ' . $checkBox . '>
                     </div>
                 </td>
                 <td class="clickable" data-toggle="collapse" data-target="#anfrage' . $i . '" aria-expanded="false" aria-controls="anfrage' . $i . '"></td>
                 <td class="clickable" data-toggle="collapse" data-target="#anfrage' . $i . '" aria-expanded="false" aria-controls="anfrage' . $i . '">
                     <div class="media">
                         <div class="media-body">
-                            <span class="media-meta pull-right">'. $day . ' ' . $mon .', ' . $year . ' ' . $zeit . '</span>
-                            <h4 class="title"> Anfrage von ' . getNameFromKuerzel($userName) . ' ('.$userName.')<br>Betreff: ' . $betreff . '
+                            <span class="media-meta pull-right">' . $day . ' ' . $mon . ', ' . $year . ' ' . $zeit . '</span>
+                            <h4 class="title"> Anfrage von ' . getNameFromKuerzel($userName) . ' (' . $userName . ')<br>Betreff: ' . $betreff . '
                                 <span class="pull-right ' . $statusBackEnde2 . '">(' . $status . ')</span>
                             </h4>' . $komm . '
                         </div>
@@ -210,6 +192,29 @@ function printAllReqeusts()
                 </td>
             </tr>';
         $i++;
+    }
+}
+
+function printVor()
+{
+    if ( key_exists('foundAnfrage', $_SESSION))
+    {
+        $id = $_SESSION['foundAnfrage'];
+        echo '<input type="text" id="antrag0" name="antrag0" class="hiddenMeldung" value="' . $id . '">';
+        unset($_SESSION['foundAnfrage']);
+    }
+}
+
+function printVorSelected()
+{
+    if ( key_exists('foundAnfrage', $_SESSION))
+    {
+        echo '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="1">';
+    }
+    else
+    {
+        echo '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">';
+
     }
 }
 

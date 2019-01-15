@@ -26,11 +26,11 @@ function checkUserPass( $userName, $password)
     {
         return array(true, false);
     }
-    else if ( $userName == 'khoeher' && $password == '3' )
+    else if ( $userName == 'hoek' && $password == '3' )
     {
         return array(true, true);
     }
-    else if ( $userName == 'gkoppensteiner' && $password == '4')
+    else if ( $userName == 'kopg' && $password == '4')
     {
         return array(true, -1);
     }

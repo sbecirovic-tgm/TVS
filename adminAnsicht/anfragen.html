@@ -160,8 +160,13 @@
                             </div>
 
                             <input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="1">
-                            <input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">
+                            <?php
+                                printVorSelected();
+                            ?>
                             <div id="antrListBackend">
+                                <?php
+                                    printVor();
+                                ?>
                             </div>
                         </form>
                         <div class="text-right">

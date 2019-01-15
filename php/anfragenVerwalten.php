@@ -150,13 +150,11 @@ function bewilligeToken ( $id, $userName, $tokenNeu, $kommentar, $wirdBewilligt)
         }
     }
 
-    echo $sqlC . '<br>';
     $results[0] = mysqli_query($db, $sqlC);
 
     if ( $wirdBewilligt )
     {
         $sqlC2 = "select aName, datum, skuerzel from anfrage where id = $id";
-        echo $sqlC2 . '<br>';
         $name = mysqli_query($db, $sqlC2);
         $nameArray = mysqli_fetch_assoc($name);
         $results[1] = addTokenToLeistung($nameArray['skuerzel'], $nameArray['aName'] , $tokenNeu, getSaisonNumbFromDate($nameArray['datum']) );
@@ -171,14 +169,12 @@ function addTokenToLeistung ( $schuelerKuerzel, $aName, $token, $saisonNumb)
     include_once ("userCheck.php");
     // schauen ob der Schüler schon genug token für einen Award hat
     $sqlC = "select tokenAnzahl from leistung where aName = '$aName' and sKuerzel = '$schuelerKuerzel' and saisonNummer = $saisonNumb";
-    echo $sqlC . '<br>';
     $tokenRes = mysqli_query($db, $sqlC);
     $tokenArray = mysqli_fetch_assoc($tokenRes);
     $anzahlToken = $tokenArray['tokenAnzahl'];
     $anzahlToken += $token;
 
     $sqlC2 = "select tokenLimit from award where name = '$aName'";
-    echo $sqlC2 . '<br>';
     $tokenA = mysqli_query($db, $sqlC2);
     $tokenAArray = mysqli_fetch_assoc($tokenA);
     $tokenLimit = $tokenAArray['tokenLimit'];
@@ -187,11 +183,9 @@ function addTokenToLeistung ( $schuelerKuerzel, $aName, $token, $saisonNumb)
         $token = $anzahlToken - $tokenLimit;
         //auszeichnung erstellen wenn
         $sqlA = "insert into auszeichnung ( datum, zeit, skuerzel, awardName, saisonNummer ) values ( CURDATE(), CURTIME(), '$schuelerKuerzel', '$aName', $saisonNumb )";
-        echo $sqlA . '<br>';
         mysqli_query($db, $sqlA);
 
         $sqlA = "select awardName from auszeichnung where saisonNummer = $saisonNumb and skuerzel = '$schuelerKuerzel'";
-        echo $sqlA . '<br>';
         $awards = mysqli_query($db, $sqlA);
         $aNameArray = array();
         for ( $i = 0; $array = mysqli_fetch_assoc($awards); $i++ )
@@ -202,7 +196,6 @@ function addTokenToLeistung ( $schuelerKuerzel, $aName, $token, $saisonNumb)
         if ( in_array('Pulitzer', $aNameArray) && in_array('Editor', $aNameArray) && in_array('Favorite', $aNameArray) && in_array('Architect', $aNameArray) && !in_array('Spirit of HIT', $aNameArray) )
         {
             $sqlC = "insert into auszeichnung ( datum, zeit, skuerzel, awardName, saisonNummer ) values ( CURDATE(), CURTIME(), '$schuelerKuerzel', 'Spirit of HIT', $saisonNumb )";
-            echo $sqlC . '<br>';
             mysqli_query($db, $sqlC);
         }
 
@@ -213,7 +206,6 @@ function addTokenToLeistung ( $schuelerKuerzel, $aName, $token, $saisonNumb)
     }
 
     $sqlC = "select count(tokenAnzahl) as anzahl from leistung where saisonNummer = $saisonNumb";
-    echo $sqlC. '<br>';
     $temp = mysqli_query($db, $sqlC);
     $anzahl = mysqli_fetch_assoc($temp)['anzahl'];
 
@@ -226,7 +218,6 @@ function addTokenToLeistung ( $schuelerKuerzel, $aName, $token, $saisonNumb)
         $sqlC2 = "update leistung set tokenAnzahl = $token where aName = '$aName' and sKuerzel = '$schuelerKuerzel' and saisonNummer = $saisonNumb";
     }
 
-    echo $sqlC2 . '<br>';
     $result = mysqli_query($db, $sqlC2);
     return $result;
 }
