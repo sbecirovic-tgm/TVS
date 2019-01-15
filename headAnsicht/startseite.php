@@ -101,6 +101,7 @@ if (isset($_GET['anfrageVerwalten']))
 
 if (isset($_GET['anfrageVerwalten0']))
 {
+    include_once ("../php/anfragenVerwalten.php");
     $id = $_POST['idBackend'];
     $anfrage = getAnfrageFromId($id);
 
@@ -110,6 +111,7 @@ if (isset($_GET['anfrageVerwalten0']))
 
 if (isset($_GET['anfrageVerwalten1']))
 {
+    include_once ("../php/anfragenVerwalten.php");
     $id = $_POST['idBackend'];
     $anfrage = getAnfrageFromId($id);
 
@@ -119,6 +121,7 @@ if (isset($_GET['anfrageVerwalten1']))
 
 if (isset($_GET['anfrageVerwalten2']))
 {
+    include_once ("../php/anfragenVerwalten.php");
     $id = $_POST['idBackend'];
     $anfrage = getAnfrageFromId($id);
 
@@ -128,6 +131,7 @@ if (isset($_GET['anfrageVerwalten2']))
 
 if (isset($_GET['anfrageVerwalten3']))
 {
+    include_once ("../php/anfragenVerwalten.php");
     $id = $_POST['idBackend'];
     $anfrage = getAnfrageFromId($id);
 

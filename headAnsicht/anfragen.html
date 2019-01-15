@@ -13,10 +13,10 @@
     <link rel="stylesheet" type="text/css" href="../css/antragHistory.css"/>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
     <!--<script src="../js/antragHistory.js"> </script> Mal ohne script hab ne eigene Lösung gefunden - seb -->
@@ -138,14 +138,14 @@
                             <form id="addForm" action="?changeAntraege=1" method="post">
                                 <div class="container">
                                     <div class="container">
-                                        <label class="abstand1Right btn btn-success">
-                                            <input type="radio" name="optradio" onclick="setBearbeitenBackend(true)">
-                                            <span class="custom-control-description">Bestätigen</span>
-                                        </label>
-                                        <label class="abstand1Right btn btn-danger">
-                                            <input type="radio" name="optradio" onclick="setBearbeitenBackend(false)">
-                                            <span class="custom-control-description">Ablehnen</span>
-                                        </label>
+                                        <div class="noAbstand btn-group" data-toggle="buttons">
+                                            <label class="btn btn-primary active" onclick="setBearbeitenBackend(true)">
+                                                <input type="radio" name="options" id="option1" autocomplete="off" > Bestätigen
+                                            </label>
+                                            <label class="btn btn-primary" onclick="setBearbeitenBackend(false)">
+                                                <input type="radio" name="options" id="option2" autocomplete="off"> Ablehnen
+                                            </label>
+                                        </div>
                                         <div class="input-group mb-3 abstand05TopBot" style="width: 50%" data-toggle="tooltip"  data-placement="bottom" title="Möglichkeit die Tokenanzahl eines Antrags zu veränden. Wenn nicht nötig, einfach überspringen">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-primary text-light">Neue Tokenanzahl</span>
@@ -160,8 +160,7 @@
                                     </div>
                                 </div>
 
-
-                                <input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="0">
+                                <input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="1">
                                 <input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="0">
                                 <div id="antrListBackend">
                                 </div>
@@ -283,10 +282,6 @@
                 }
             }
         }
-
-        $('input[type="checkbox"]').on('change', function () {
-            $('input[type="checkbox"]').not(this).prop('checked', false);
-        });
 
     </script>
     <script type="text/javascript">

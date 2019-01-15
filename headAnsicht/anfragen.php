@@ -15,7 +15,7 @@ function printAllReqeusts()
 {
     include_once ("../php/anfragenVerwalten.php");
     $requests = listAllRequests();
-
+    $anfrageVerwalten = $_SESSION['anfrageVerwaltung'];
     $i = 0;
     foreach ($requests as $anfrage )
     {
@@ -35,6 +35,21 @@ function printAllReqeusts()
         $out[$i]['kommentar'] = $anfragen_array['kommentar'];
         $out[$i]['superkuerzel'] = $anfragen_array['superkuerzel'];
         $out[$i]['lehrerKuerzel'] = $anfragen_array['lehrerKuerzel'];
+         */
+
+        /*
+        $out['id'] = $anfragen_array['id'];
+        $out['datum'] = $anfragen_array['datum'];
+        $out['zeit'] = $anfragen_array['zeit'];
+        $out['aName'] = $anfragen_array['aName'];
+        $out['eName'] = $anfragen_array['eName'];
+        $out['eDatum'] = $anfragen_array['eDatum'];
+        $out['untName'] = $anfragen_array['untName'];
+        $out['tokenAnzahl'] = $anfragen_array['tokenAnzahl'];
+        $out['beschreibung'] = $anfragen_array['beschreibung'];
+        $out['betreff'] = $anfragen_array['betreff'];
+        $out['wirdBewilligt'] = $anfragen_array['wirdBewilligt'];
+        $out['kommentar'] = $anfragen_array['kommentar'];
          */
 
         $userName = $anfrage['skuerzel'];
@@ -125,11 +140,22 @@ function printAllReqeusts()
         }
 
         $id = $anfrage['id'];
+
+        if ( $anfrageVerwalten != null )
+        {
+            $idVerwalten = $anfrageVerwalten['id'];
+            if ( $id == $idVerwalten )
+            {
+                $checkBox = "checked";
+            }
+        }
+        $checkBox = "";
+
         // zum abfragen einer checkbox: isset($_POST['formWheelchair'] schauen ob vorhanden und dann value handeln
         echo '<tr data-status="' . $statusBackEnde . '" data-name="'. getNameFromKuerzel($userName) . '" data-kuerzel="' . $userName . '">
                 <td>
                     <div class="form-check">
-                        <input type="checkbox" id="adAddCheckBox' . $i . '" name="adAddCheckBox" onclick="addToChangeList(' . $i . ')" value="' . $id . '">
+                        <input type="checkbox" id="adAddCheckBox' . $i . '" name="adAddCheckBox" onclick="addToChangeList(' . $i . ')" value="' . $id . '" ' .$checkBox .'>
                     </div>
                 </td>
                 <td class="clickable" data-toggle="collapse" data-target="#anfrage' . $i . '" aria-expanded="false" aria-controls="anfrage' . $i . '"></td>
@@ -175,7 +201,7 @@ if ( isset($_GET['changeAntraege']))
     $toDo = $_POST['toDo'];
     $tokenNew = $_POST['tokenAnzahlNeu'];
     $kommentar = $_POST['kommentar'];
-    
+
     if ( $tokenNew == '' )
     {
         $tokenNew = null;

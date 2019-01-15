@@ -87,6 +87,42 @@ function bewilligeToken ( $id, $userName, $tokenNeu, $kommentar, $wirdBewilligt)
     {
         $wirdBewilligtString = 'false';
     }
+    // wenn schon bewilligt war und geändert wird..
+    $sqlC = "select wirdBewilligt, skuerzel, tokenAnzahl, datum, zeit, aName from anfrage where id = $id";
+    $res = mysqli_query($db, $sqlC);
+    $resArray = mysqli_fetch_assoc($res);
+    $wirdBewilligtOld = $resArray['wirdBewilligt'];
+    $tokenAnzahlOld = $resArray['tokenAnzahl'];
+    $sKuerzel = $resArray['skuerzel'];
+    $datum = $resArray['datum'];
+    $zeit = $resArray['zeit'];
+    $aName = $resArray['aName'];
+    if ( $wirdBewilligtOld && !$wirdBewilligt )
+    {
+        // leistung muss abgezogen werden
+        $saisonNummer = getSaisonNumbFromDate($datum);
+        $sqlC = "select tokenAnzahl from leistung where saisonNummer = $saisonNummer and sKuerzel = '$sKuerzel' and aName = '$aName'";
+        $res = mysqli_query($db, $sqlC);
+        $resArray = mysqli_fetch_assoc($res);
+        if ( $tokenAnzahlOld < $resArray['tokenAnzahl'])
+        {
+            $tokenNeu = $resArray['tokenAnzahl'] - $tokenAnzahlOld;
+        }
+        else
+        {
+            // award wegnehmen
+            $sqlC = "select tokenLimit from award where name = '$aName";
+            $res = mysqli_query($db, $sqlC);
+            $tokenAward = mysqli_fetch_assoc($res)['tokenLimit'];
+
+            $tokenNeu = $tokenAward - $tokenAnzahlOld;
+
+            // auszeichnung löschen
+            $sqlC = "delete from auszeichnung where skuerzel = '$sKuerzel' and saisonNummer = $saisonNummer order by datum desc limit 1";
+            mysqli_query($db, $sqlC);
+        }
+
+    }
     if ( $tokenNeu == null )
     {
         if ( checkIfUserIsSuperUser($userName) )

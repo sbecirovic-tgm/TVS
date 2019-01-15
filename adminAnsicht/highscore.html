@@ -14,13 +14,13 @@
     <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="../img/open-iconic-master/font/css/open-iconic-bootstrap.css">
 
-    <title>Highscore-Liste</title>
+    <title>Tokenverwaltung</title>
 </head>
 
 <body>
 <?php
-        include_once("highscore.php");
-    ?>
+    include_once("highscore.php");
+?>
 <!--HEADER-->
 
 <header class="headerStartseite">
@@ -99,8 +99,8 @@
             <div class="btn-group">
                 <form id="highscoreFrom" action="?highscoreForm=1" method="post">
                     <?php
-                            setHighscoreType();
-                        ?>
+                        setHighscoreType();
+                    ?>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" onclick="setHighscoreButton('Award Highscore')" style="cursor: pointer;">Award Highscore</a>
                         <a class="dropdown-item" onclick="setHighscoreButton('Token Highscore')" style="cursor: pointer;">Token Highscore</a>
