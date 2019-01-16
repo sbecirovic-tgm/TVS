@@ -235,7 +235,7 @@ function getBerechtigteAwardsProLehrer ( $lKuerzel )
     $out = array();
     for ( $i = 0; $erlaubnisArray = mysqli_fetch_assoc($temp); $i++ )
     {
-        $out[$i] = $erlaubnisArray['lKuerzel'];
+        $out[$i] = $erlaubnisArray['aName'];
     }
     return $out;
 }
