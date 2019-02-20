@@ -87,8 +87,8 @@ function printAntraege()
         else if ( $temp == true )
         {
             $div = " disabledDiv";
-            $status = "Bestätigt";
-            $statusBackEnde = "bestätigt";
+            $status = "Best&auml;tigt";
+            $statusBackEnde = "best&auml;tigt";
 
             if ( $lehrer == "" )
             {
@@ -108,7 +108,7 @@ function printAntraege()
 
             if ( $tokenNeu != '' )
             {
-                $kommentar = $kommentar . '<br><strong>Vom Lehrer geänderte Tokenanzahl:</strong> ' . $tokenNeu;
+                $kommentar = $kommentar . '<br><strong>Vom Lehrer ge&auml;nderte Tokenanzahl:</strong> ' . $tokenNeu;
             }
             $kommentar = $kommentar . '</div></div>';
             $onclickCheck = '';
