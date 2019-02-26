@@ -134,12 +134,26 @@ function printAllReqeusts()
                 $kommentar = $kommentar . '<br><br><strong>Vom Lehrer ge&auml;nderte Tokenanzahl:</strong> ' . $tokenNeu;
             }
             $kommentar = $kommentar . '</div></div>';
-        } else if ($temp == false) {
+        } else if ( $temp == false )
+        {
+            if ( $lehrer == "" )
+            {
+                $bearbeitetVon = getNameFormSuper($super);
+            }
+            else if ( $super == "" )
+            {
+                $bearbeitetVon = getNameToLehrerKuerzel($lehrer);
+            }
+            else
+            {
+                $bearbeitetVon = "Gott?";
+            }
+            $komm = '<p class="summary smallFont"><strong>Bewertet von:</strong> ' . $bearbeitetVon . '</p>';
+            $kommentar = '<div class="row smallFont abstand1"><div class="col-sm-12"><strong>Kommentar des Lehrers</strong><hr class="noAbstand">' . $anfrage['kommentar'];
+
             $status = "Abgelehnt";
             $statusBackEnde = "abgelehnt";
             $statusBackEnde2 = $statusBackEnde;
-            $komm = '';
-            $kommentar = '';
         }
 
         $id = $anfrage['id'];
@@ -257,25 +271,25 @@ if ( isset($_GET['changeAntraege']))
 
 if (isset($_GET['anfrageVerwalten']))
 {
-$_SESSION['anfrageVerwaltung'] = NULL;
-header("Refresh:0; url=anfragen.html");
+    $_SESSION['anfrageVerwaltung'] = NULL;
+    header("Refresh:0; url=anfragen.html");
 }
 
 if (isset($_GET['highscoreAnzeigen']))
 {
-header("Refresh:0; url=highscore.html");
+    header("Refresh:0; url=highscore.html");
 }
 
 if (isset($_GET['eventAnzeigen']))
 {
-$_SESSION['eventVerwaltung'] = NULL;
-header("Refresh:0; url=adminEvents.html");
+    $_SESSION['eventVerwaltung'] = NULL;
+    header("Refresh:0; url=adminEvents.html");
 }
 
 if(isset($_GET['logout']))
 {
-include_once("../php/userCheck.php");
-logout();
+    include_once("../php/userCheck.php");
+    logout();
 }
 
 ?>

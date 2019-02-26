@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="../css/antragHistory.css"/>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
+            crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -22,7 +22,7 @@
     <!--<script src="../js/antragHistory.js"> </script> Mal ohne script hab ne eigene Lösung gefunden - seb -->
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
-        crossorigin="anonymous">
+          crossorigin="anonymous">
 
 
 
@@ -33,267 +33,293 @@
 ?>
 
 <body>
-    <!--HEADER-->
+<!--HEADER-->
 
-    <header class="headerStartseite">
-        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+<header class="headerStartseite">
+    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Tokenverwaltungssystem</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav mr-auto">
-                    </ul>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle btn-outline-primary" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                            <?php
+                        <?php
                                 include_once("../php/userCheck.php");
                                 echo getNameFormSuper($userName);
                             ?>
-                        </button>
-                        <div class="dropdown-menu">
-                            <!-- <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a> -->
-                            <form id="logoutForm" action="?logout=1" method="post">
-                                <a class="dropdown-item" style="cursor: pointer;" onclick="submitForm('logoutForm')"
-                                    type="submit" name="logout">Logout</a>
-                            </form>
-                        </div>
+                    </button>
+                    <div class="dropdown-menu">
+                        <!-- <a class="dropdown-item" style="cursor: pointer;">Mein Profil</a> -->
+                        <form id="logoutForm" action="?logout=1" method="post">
+                            <a class="dropdown-item" style="cursor: pointer;" onclick="submitForm('logoutForm')"
+                               type="submit" name="logout">Logout</a>
+                        </form>
                     </div>
                 </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
 
-    <script language="JavaScript" type="text/javascript">
-        function submitForm(form) {
-            var myForm = document.getElementById(form);
-            myForm.submit();
-        }
-    </script>
-    <div class="nav-scroller bg-white shadow-md">
-        <div class="container">
-            <nav class="nav nav-underline">
-                <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
-                <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
-                    <a class="nav-link active fakeLink" onclick="submitForm('eventForm')">
-                        Events
-                    </a>
-                </form>
-                <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
-                    <a class="nav-link active fakeLink" onclick="submitForm('anfragenForm')">Anfragen</a>
-                </form>
-                <a class="nav-link active" href="berechtigung.html">Berechtigen</a>
-                <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
-                    <a class="nav-link active fakeLink" onclick="submitForm('highscoreForm')">Highscores</a>
-                </form>
-            </nav>
+<script language="JavaScript" type="text/javascript">
+    function submitForm(form) {
+        var myForm = document.getElementById(form);
+        myForm.submit();
+    }
+</script>
+<div class="nav-scroller bg-white shadow-md">
+    <div class="container">
+        <nav class="nav nav-underline">
+            <a class="nav-link active" href="startseite.html" style="padding-left: 0;">Dashboard</a>
+            <form id="eventForm" class="menueColor" action="?eventAnzeigen=1" method="post">
+                <a class="nav-link active fakeLink" onclick="submitForm('eventForm')">
+                    Events
+                </a>
+            </form>
+            <form id="anfragenForm" class="menueColor" action="?anfrageVerwalten=1" method="post">
+                <a class="nav-link active fakeLink" onclick="submitForm('anfragenForm')">Anfragen</a>
+            </form>
+            <a class="nav-link active" href="berechtigung.html">Berechtigen</a>
+            <form id="highscoreForm" class="menueColor" action="?highscoreAnzeigen=1" method="post">
+                <a class="nav-link active fakeLink" onclick="submitForm('highscoreForm')">Highscores</a>
+            </form>
+        </nav>
+    </div>
+</div>
+
+<!--Inhalt-->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Anträge bearbeiten</h1>
+            <hr>
         </div>
     </div>
-
-    <!--Inhalt-->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <h1>Anträge bearbeiten</h1>
-                <hr>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="text-right abstand1RightTop">
-                                    <h5>Anfragen filtern</h5>
-                                </div>
-                                <hr class="nullAbstand">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="text-right abstand1RightTop">
+                                <h5>Anfragen filtern</h5>
                             </div>
+                            <hr class="nullAbstand">
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="abstand1LeftTop"  data-toggle="tooltip"  data-placement="bottom" title="Einfach und schnell nach einem Schulernamen suchen">
-                                    <div>
-                                        <input type="text" id="nameFilterLeft" class="form-control" onkeyup="filterFunction()" placeholder="Nach Namen oder K&uuml;rzel filtern" aria-label="Sizing example input"
-                                               aria-describedby="inputGroup-sizing-default" >
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="text-right abstand1Right">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-success btn-filter" onclick="filter('bestätigt')">Bestätigt</button>
-                                        <button type="button" class="btn btn-warning btn-filter" onclick="filter('zubearbeiten')">Zu Bearbeiten</button>
-                                        <button type="button" class="btn btn-danger btn-filter" onclick="filter('abgelehnt')">Abgelehnt</button>
-                                        <button type="button" class="btn btn-default btn-filter" onclick="filter('alle')">Alle</button>
-                                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="abstand1LeftTop"  data-toggle="tooltip"  data-placement="bottom" title="Einfach und schnell nach einem Schulernamen suchen">
+                                <div>
+                                    <input type="text" id="nameFilterLeft" class="form-control" onkeyup="filterFunction()" placeholder="Nach Namen oder K&uuml;rzel filtern" aria-label="Sizing example input"
+                                           aria-describedby="inputGroup-sizing-default" >
                                 </div>
                             </div>
                         </div>
-                        <hr>
-                        <div>
-                            <form id="addForm" action="?changeAntraege=1" method="post">
+                        <div class="col-sm-6">
+                            <div class="text-right abstand1Right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success btn-filter" onclick="filter('bestätigt')">Bestätigt</button>
+                                    <button type="button" class="btn btn-warning btn-filter" onclick="filter('zubearbeiten')">Zu Bearbeiten</button>
+                                    <button type="button" class="btn btn-danger btn-filter" onclick="filter('abgelehnt')">Abgelehnt</button>
+                                    <button type="button" class="btn btn-default btn-filter" onclick="filter('alle')">Alle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>
+                        <form id="addForm" action="?changeAntraege=1" method="post">
+                            <div class="container">
                                 <div class="container">
-                                    <div class="container">
-                                        <div class="noAbstand btn-group" data-toggle="buttons">
-                                            <label class="btn btn-primary active">
-                                                <input type="radio" name="options" id="bestButton" autocomplete="off"> Bestätigen
-                                            </label>
-                                            <label class="btn btn-primary">
-                                                <input type="radio" name="options" id="ablButton" autocomplete="off"> Ablehnen
-                                            </label>
+                                    <div class="noAbstand btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary active">
+                                            <input type="radio" name="options" id="bestButton" autocomplete="off"> Bestätigen
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="ablButton" autocomplete="off"> Ablehnen
+                                        </label>
+                                    </div>
+                                    <div class="input-group mb-3 abstand05TopBot" style="width: 50%" data-toggle="tooltip"  data-placement="bottom" title="Möglichkeit die Tokenanzahl eines Antrags zu veränden. Wenn nicht nötig, einfach überspringen">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-primary text-light">Neue Tokenanzahl</span>
                                         </div>
-                                        <div class="input-group mb-3 abstand05TopBot" style="width: 50%" data-toggle="tooltip"  data-placement="bottom" title="Möglichkeit die Tokenanzahl eines Antrags zu veränden. Wenn nicht nötig, einfach überspringen">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text bg-primary text-light">Neue Tokenanzahl</span>
-                                            </div>
-                                            <input type="number" placeholder="Wenn nicht nötig, einfach überspringen" min="0" id="tokenAnzahlNeu" name="tokenAnzahlNeu" class="form-control tokens"
-                                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                        </div>
-                                        <div class="abstandKommentar abstand05TopBot">
-                                            <label>Kommentar:</label>
-                                            <textarea class="form-control" rows="3" minlength="1" id="kommentar" name="kommentar"></textarea>
-                                        </div>
+                                        <input type="number" placeholder="Wenn nicht nötig, einfach überspringen" min="0" id="tokenAnzahlNeu" name="tokenAnzahlNeu" class="form-control tokens"
+                                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                    </div>
+                                    <div class="abstandKommentar abstand05TopBot">
+                                        <label>Kommentar:</label>
+                                        <textarea class="form-control" rows="3" minlength="1" id="kommentar" name="kommentar"></textarea>
                                     </div>
                                 </div>
+                            </div>
 
-                                <input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="1">
-                                <?php
+                            <input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="1">
+                            <?php
                                     printVorSelected();
                                 ?>
-                                <div id="antrListBackend">
-                                    <?php
+                            <div id="antrListBackend">
+                                <?php
                                         printVor();
                                     ?>
-                                </div>
-                            </form>
-                            <div class="text-right">
-                                <button type="button" class="btn btn-primary abstand1AllAround" onclick="submitForm('addForm')">Ausgew&auml;hle
-                                    Anträge bearbeiten</button>
                             </div>
+                        </form>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-primary abstand1AllAround" onclick="submitForm('addForm')">Ausgew&auml;hle
+                                Anträge bearbeiten</button>
                         </div>
-                        <div class="table-container">
-                            <table id="filterTable" class="table table-filter">
-                                <tbody>
-                                    <?php
+                    </div>
+                    <div class="table-container">
+                        <table id="filterTable" class="table table-filter">
+                            <tbody>
+                            <?php
                                         printAllReqeusts();
                                     ?>
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-    <footer class="footerSticky">
-        © 2018 Wahl, Becirovic, Gavric, Filipovic
-    </footer>
-    <script>
-        function setBearbeitenBackend(type)
+
+</div>
+<footer class="footerSticky">
+    © 2018 Wahl, Becirovic, Gavric, Filipovic
+</footer>
+<script>
+    function setBearbeitenBackend(type)
+    {
+        var myForm = document.getElementById("addForm");
+        var toDo = document.getElementById("toDo");
+        //myForm.removeChild(toDo);
+        if ( type )
         {
-            var myForm = document.getElementById("addForm");
-            var toDo = document.getElementById("toDo");
-            myForm.removeChild(toDo);
-            if ( type )
+            if (!document.getElementById("bestLabel").classList.contains("active"))
             {
-                myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="1">'
+                document.getElementById("bestLabel").classList.add("active");
+                document.getElementById("ablehnenLabel").classList.remove("active");
             }
-            else
-            {
-                myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="0">'
-            }
+            //myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="1">'
+            document.getElementById("toDo").value = 1;
         }
-        function addToChangeList(num) {
-            var id = "adAddCheckBox" + num;
-            var checkBox = document.getElementById(id);
-            var addDiv = document.getElementById("antrListBackend");
-            var myForm = document.getElementById("addForm");
-            var selected = document.getElementById("anzahlSelected");
-            var selectedValue = selected.value;
-
-            var checkID = checkBox.value;
-            if (checkBox.checked) {
-                var add = '<input type="text" id="antrag' + selectedValue + '" name="antrag' + selectedValue + '" class="hiddenMeldung" value="' + checkID + '">';
-                addDiv.innerHTML = addDiv.innerHTML + add;
-                selectedValue++;
-                myForm.removeChild(selected);
-                myForm.innerHTML = myForm.innerHTML + '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="' + selectedValue + '">';
-            }
-            else {
-                var children = addDiv.getElementsByTagName('*');
-                for (var i = 0; i < children.length; i++) {
-                    var child = children[i];
-                    if (child.value = checkBox.id) {
-                        addDiv.removeChild(child);
-                    }
-                }
-                selectedValue--;
-                myForm.removeChild(selected);
-                myForm.innerHTML = myForm.innerHTML + '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="' + selectedValue + '">';
-            }
-
-        }
-        function filter(state) {
-            var parent = document.getElementById("filterTable");
-            var tbody = parent.getElementsByTagName('*')[0];
-
-            var i, child, tag;
-            var childrenArray = tbody.getElementsByTagName('TR');
-            if (state === "alle") {
-                for (i = 0; i < childrenArray.length; i++) {
-                    child = childrenArray[i];
-                    child.style = "";
-                }
-            }
-            else {
-                for (i = 0; i < childrenArray.length; i++) {
-                    child = childrenArray[i];
-                    tag = child.getAttribute("data-status");
-                    if (tag === state) {
-                        child.style = "";
-                    }
-                    else {
-                        child.style.display = "none";
-                    }
-                }
-            }
-        }
-
-        function filterFunction()
+        else
         {
-            var input = document.getElementById("nameFilterLeft");
-            var filter = input.value.toLowerCase();
-            var parent = document.getElementById("filterTable");
-            var tbody = parent.getElementsByTagName('*')[0];
+            if (document.getElementById("bestLabel").classList.contains("active"))
+            {
+                document.getElementById("bestLabel").classList.remove("active");
+                document.getElementById("ablehnenLabel").classList.add("active");
+            }
+            //myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="0">'
+            document.getElementById("toDo").value = 0;
+        }
+    }
+    function addToChangeList(num) {
+        var id = "adAddCheckBox" + num;
+        var checkBox = document.getElementById(id);
+        var addDiv = document.getElementById("antrListBackend");
+        var myForm = document.getElementById("addForm");
+        var toDo = document.getElementById("toDo");
+        var selected = document.getElementById("anzahlSelected");
+        var selectedValue = selected.value;
+        // buttons
+        var bestbutton = document.getElementById("bestButton");
+        var ablButton = document.getElementById("ablButton");
 
-            var i, child, tag, tag2;
-            var childrenArray = tbody.getElementsByTagName('TR');
+        //myForm.removeChild(toDo);
+        if ( bestbutton.checked )
+        {
+            toDo.value = 1;
+        }
+        else if ( ablButton.checked )
+        {
+            toDo.value = 0;
+        }
+
+        var checkID = checkBox.value;
+        if (checkBox.checked) {
+            var add = '<input type="text" id="antrag' + selectedValue + '" name="antrag' + selectedValue + '" class="hiddenMeldung" value="' + checkID + '">';
+            addDiv.innerHTML = addDiv.innerHTML + add;
+            selectedValue++;
+            myForm.removeChild(selected);
+            myForm.innerHTML = myForm.innerHTML + '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="' + selectedValue + '">';
+        }
+        else {
+            var children = addDiv.getElementsByTagName('*');
+            for (var i = 0; i < children.length; i++) {
+                var child = children[i];
+                if (child.value = checkBox.id) {
+                    addDiv.removeChild(child);
+                }
+            }
+            selectedValue--;
+            myForm.removeChild(selected);
+            myForm.innerHTML = myForm.innerHTML + '<input type="number" id="anzahlSelected" name="anzahlSelected" class="hiddenMeldung" value="' + selectedValue + '">';
+        }
+
+    }
+    function filter(state) {
+        var parent = document.getElementById("filterTable");
+        var tbody = parent.getElementsByTagName('*')[0];
+
+        var i, child, tag;
+        var childrenArray = tbody.getElementsByTagName('TR');
+        if (state === "alle") {
             for (i = 0; i < childrenArray.length; i++) {
                 child = childrenArray[i];
-                tag = child.getAttribute("data-name");
-                tag2 = child.getAttribute("data-kuerzel");
-                if ( tag.toLowerCase().indexOf(filter) > -1 || tag2.toLowerCase().indexOf(filter) > -1 )
-                {
+                child.style = "";
+            }
+        }
+        else {
+            for (i = 0; i < childrenArray.length; i++) {
+                child = childrenArray[i];
+                tag = child.getAttribute("data-status");
+                if (tag === state) {
                     child.style = "";
                 }
-                else
-                {
+                else {
                     child.style.display = "none";
                 }
             }
         }
+    }
 
-    </script>
-    <script type="text/javascript">
-        $("[data-toggle=\"tooltip\"]").tooltip();
-    </script>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    function filterFunction()
+    {
+        var input = document.getElementById("nameFilterLeft");
+        var filter = input.value.toLowerCase();
+        var parent = document.getElementById("filterTable");
+        var tbody = parent.getElementsByTagName('*')[0];
+
+        var i, child, tag, tag2;
+        var childrenArray = tbody.getElementsByTagName('TR');
+        for (i = 0; i < childrenArray.length; i++) {
+            child = childrenArray[i];
+            tag = child.getAttribute("data-name");
+            tag2 = child.getAttribute("data-kuerzel");
+            if ( tag.toLowerCase().indexOf(filter) > -1 || tag2.toLowerCase().indexOf(filter) > -1 )
+            {
+                child.style = "";
+            }
+            else
+            {
+                child.style.display = "none";
+            }
+        }
+    }
+
+</script>
+<script type="text/javascript">
+    $("[data-toggle=\"tooltip\"]").tooltip();
+</script>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
 
 

@@ -10,9 +10,7 @@
     <link rel="stylesheet" href="../css/tvs.css">
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/bootstrap-grid.css">
-    <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="../img/open-iconic-master/font/css/open-iconic-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/antragHistory.css"/>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous"></script>
@@ -138,10 +136,10 @@
                             <div class="container">
                                 <div class="container">
                                     <div class="noAbstand btn-group" data-toggle="buttons">
-                                        <label class="btn btn-primary active">
+                                        <label id="bestLabel" class="btn btn-primary active" onclick="setBearbeitenBackend(1)">
                                             <input type="radio" name="options" id="bestButton" autocomplete="off"> Bestätigen
                                         </label>
-                                        <label class="btn btn-primary">
+                                        <label id="ablehnenLabel" class="btn btn-primary" onclick="setBearbeitenBackend(0)">
                                             <input type="radio" name="options" id="ablButton" autocomplete="off"> Ablehnen
                                         </label>
                                     </div>
@@ -159,10 +157,10 @@
                                 </div>
                             </div>
 
-                            <input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="1">
                             <?php
                                 printVorSelected();
                             ?>
+                            <input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="1">
                             <div id="antrListBackend">
                                 <?php
                                     printVor();
@@ -197,14 +195,26 @@
     {
         var myForm = document.getElementById("addForm");
         var toDo = document.getElementById("toDo");
-        myForm.removeChild(toDo);
+        //myForm.removeChild(toDo);
         if ( type )
         {
-            myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="1">'
+            if (!document.getElementById("bestLabel").classList.contains("active"))
+            {
+                document.getElementById("bestLabel").classList.add("active");
+                document.getElementById("ablehnenLabel").classList.remove("active");
+            }
+            //myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="1">'
+            document.getElementById("toDo").value = 1;
         }
         else
         {
-            myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="0">'
+            if (document.getElementById("bestLabel").classList.contains("active"))
+            {
+                document.getElementById("bestLabel").classList.remove("active");
+                document.getElementById("ablehnenLabel").classList.add("active");
+            }
+            //myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="0">'
+            document.getElementById("toDo").value = 0;
         }
     }
     function addToChangeList(num) {
@@ -219,14 +229,14 @@
         var bestbutton = document.getElementById("bestButton");
         var ablButton = document.getElementById("ablButton");
 
-        myForm.removeChild(toDo);
+        //myForm.removeChild(toDo);
         if ( bestbutton.checked )
         {
-            myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="1">'
+            toDo.value = 1;
         }
         else if ( ablButton.checked )
         {
-            myForm.innerHTML = myForm.innerHTML + '<input type="number" id="toDo" name="toDo" class="hiddenMeldung" value="0">'
+            toDo.value = 0;
         }
 
         var checkID = checkBox.value;

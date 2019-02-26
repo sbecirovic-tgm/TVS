@@ -138,11 +138,24 @@ function printAllReqeusts()
         }
         else if ( $temp == false )
         {
+            if ( $lehrer == "" )
+            {
+                $bearbeitetVon = getNameFormSuper($super);
+            }
+            else if ( $super == "" )
+            {
+                $bearbeitetVon = getNameToLehrerKuerzel($lehrer);
+            }
+            else
+            {
+                $bearbeitetVon = "Gott?";
+            }
+            $komm = '<p class="summary smallFont"><strong>Bewertet von:</strong> ' . $bearbeitetVon . '</p>';
+            $kommentar = '<div class="row smallFont abstand1"><div class="col-sm-12"><strong>Kommentar des Lehrers</strong><hr class="noAbstand">' . $anfrage['kommentar'];
+
             $status = "Abgelehnt";
             $statusBackEnde = "abgelehnt";
             $statusBackEnde2 = $statusBackEnde;
-            $komm = '';
-            $kommentar = '';
         }
 
         $id = $anfrage['id'];
