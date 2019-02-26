@@ -57,6 +57,8 @@ function getTokenHighscoreThisSaison()
 {
     include_once ("saisonVerwalten.php");
     $saisonNummer = getSaisonNumb();
+    echo "<br>Hier sollte die saison Nummer stehen: ";
+    echo $saisonNummer;
     return getTokenHighscoreProSaison($saisonNummer);
 }
 

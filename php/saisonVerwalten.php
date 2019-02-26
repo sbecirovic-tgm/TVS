@@ -9,6 +9,7 @@ $db = mysqli_connect('localhost', 'tokenverwaltung', '1234', 'tvs_datenbank');
 
 function getSaisonNumbFromDate($date)
 {
+    // 2019-02-26
     global $db;
     $sqlC = "select startJahr, MONTH(startDatumWSem) as startWSemMon , DAY(startDatumWSem) as startWSemDay, MONTH(endDatumWSem) as endWSemMon , DAY(endDatumWSem) as endWSemDay, MONTH(startDatumsSem) as startSSemMon , DAY(startDatumSSem) as startSSemDay, MONTH(endDatumSSem) as endSSemMon , DAY(endDatumSSem) as endSSemDay  from saisonEinstellung";
     $result = mysqli_query($db, $sqlC);
@@ -20,13 +21,17 @@ function getSaisonNumbFromDate($date)
     $dateNow = date_create($dateNow);
     $tempMon = date_format($dateNow, "m");
 
-    if ( ($tempMon > 8 && $tempMon < 13) || ($tempMon < 3 && $tempMon > 0))
+    if ( ($tempMon > 8 && $tempMon <= 12) || ($tempMon < 2 && $tempMon >= 1))
     {
         $year = date_format($dateNow, "Y");
+        if ($tempMon < 2 && $tempMon >= 1)
+        {
+            $year = $year - 1;
+        }
     }
-    elseif( ($tempMon > 2 && $tempMon < 8) )
+    elseif( ($tempMon >= 2 && $tempMon < 9) )
     {
-        $year = date_format($dateNow, "Y")+1;
+        $year = date_format($dateNow, "Y");
     }
     else
     {
@@ -34,23 +39,24 @@ function getSaisonNumbFromDate($date)
     }
 
 
+
+
     $monTemp = $resArray['startWSemMon'];
     $dayTemp = $resArray['startWSemDay'];
 
-    $startWSem =date_create("'$year'-'$monTemp'-'$dayTemp'");
+    $startWSem =date_create("$year-$monTemp-$dayTemp");
 
     $monTemp = $resArray['endWSemMon'];
     $dayTemp = $resArray['endWSemDay'];
-    $endWSem =date_create("'$year'-'$monTemp'-'$dayTemp'");
-
+    $endWSem =date_create("$year-$monTemp-$dayTemp");
 
     $monTemp = $resArray['startSSemMon'];
     $dayTemp = $resArray['startSSemDay'];
-    $startSSem =date_create("'$year'-'$monTemp'-'$dayTemp'");
+    $startSSem =date_create("$year-$monTemp-$dayTemp");
 
     $monTemp = $resArray['endSSemMon'];
     $dayTemp = $resArray['endSSemDay'];
-    $endSSem =date_create("'$year'-'$monTemp'-'$dayTemp'");
+    $endSSem =date_create("$year-$monTemp-$dayTemp");
 
     $startYear = $resArray['startJahr'];
 
@@ -76,7 +82,8 @@ function getSaisonNumbFromDate($date)
  */
 function getSaisonNumb()
 {
-    return getSaisonNumbFromDate(date("Y-m-d"));
+    $date = date("Y-m-d");
+    return getSaisonNumbFromDate($date);
 }
 
 ?>
